@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-great-vibes: "Great Vibes", cursive;
+  --font-jost: "Jost", sans-serif;
+  --cream: #f5f0e8;
+  --cream-dark: #ede8dd;
+  --warm-gray: #8a8178;
+  --dark-warm: #2c2825;
+  --accent-warm: #c9a96e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Let GSAP handle scrolling */
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--dark-warm);
+  font-family: var(--font-jost);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-warm);
+  border-radius: 2px;
+}
+
+/* Base typography */
+.font-serif {
+  font-family: var(--font-cormorant);
+}
+.font-script {
+  font-family: var(--font-great-vibes);
+}
+.font-sans {
+  font-family: var(--font-jost);
+}
+
+/* Prevent FOUC for GSAP animations */
+.gsap-hidden {
+  opacity: 0;
+}
