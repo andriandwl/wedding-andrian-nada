@@ -2,18 +2,21 @@
  * lib/db.ts
  * MongoDB connection singleton — reuses connection across hot-reloads in dev.
  */
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define MONGODB_URI in your .env.local');
+  throw new Error("Please define MONGODB_URI in your .env");
 }
 
 // Cache on global to survive HMR in dev
 declare global {
   // eslint-disable-next-line no-var
-  var _mongooseCache: { conn: mongoose.Connection | null; promise: Promise<mongoose.Connection> | null };
+  var _mongooseCache: {
+    conn: mongoose.Connection | null;
+    promise: Promise<mongoose.Connection> | null;
+  };
 }
 
 let cached = global._mongooseCache;
