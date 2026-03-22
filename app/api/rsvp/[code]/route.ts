@@ -9,11 +9,11 @@
  *  - pax is validated against maxPax
  *  - All input validated via Zod
  */
-import { NextRequest } from 'next/server';
-import { connectDB } from '@/lib/db';
-import Guest from '@/models/Guest';
-import { rsvpSchema } from '@/lib/validations';
-import { ok, zodErr, notFound, err, serverError } from '@/lib/api-response';
+import { NextRequest } from "next/server";
+import { connectDB } from "@/lib/db";
+import Guest from "@/models/Guest";
+import { rsvpSchema } from "@/lib/validations";
+import { ok, zodErr, notFound, err, serverError } from "@/lib/api-response";
 
 // ── GET /api/rsvp/:code ────────────────────────────────────────────────────
 export async function GET(
@@ -24,14 +24,14 @@ export async function GET(
     await connectDB();
 
     const guest = await Guest.findOne({ invitationCode: params.code })
-      .select('name category maxPax status rsvp')
+      .select("name category maxPax status rsvp")
       .lean();
 
-    if (!guest) return notFound('Undangan tidak ditemukan');
+    if (!guest) return notFound("Undangan tidak ditemukan");
 
     return ok(guest);
   } catch (e) {
-    console.error('[GET /api/rsvp/:code]', e);
+    console.error("[GET /api/rsvp/:code]", e);
     return serverError();
   }
 }
@@ -45,29 +45,33 @@ export async function POST(
   try {
     body = await req.json();
   } catch {
-    return err('BAD_REQUEST', 'Request body harus berupa JSON', 400);
+    return err("BAD_REQUEST", "Request body harus berupa JSON", 400);
   }
 
   const parsed = rsvpSchema.safeParse(body);
   if (!parsed.success) return zodErr(parsed.error);
 
-  const { attending, pax, note } = parsed.data;
+  const { attending, pax, category, note } = parsed.data;
 
   try {
     await connectDB();
 
     const guest = await Guest.findOne({ invitationCode: params.code });
-    if (!guest) return notFound('Undangan tidak ditemukan');
+    if (!guest) return notFound("Undangan tidak ditemukan");
 
     // Validate pax against maxPax
     if (attending) {
+      if (!category) {
+        return err("VALIDATION_ERROR", "Pilih kategori undangan", 400);
+      }
+
       const finalPax = pax ?? 1;
       if (finalPax < 1) {
-        return err('VALIDATION_ERROR', 'Jumlah pax minimal 1', 400);
+        return err("VALIDATION_ERROR", "Jumlah pax minimal 1", 400);
       }
       if (finalPax > guest.maxPax) {
         return err(
-          'VALIDATION_ERROR',
+          "VALIDATION_ERROR",
           `Jumlah pax tidak boleh lebih dari ${guest.maxPax}`,
           400,
           { maxPax: guest.maxPax },
@@ -75,30 +79,34 @@ export async function POST(
       }
       guest.rsvp = {
         attending: true,
-        pax:         finalPax,
-        note:        note?.trim() || null,
+        pax: finalPax,
+        note: note?.trim() || null,
         respondedAt: new Date(),
       };
-      guest.status = 'CONFIRMED';
+      guest.category = category;
+      guest.status = "CONFIRMED";
     } else {
       guest.rsvp = {
-        attending:   false,
-        pax:         null,
-        note:        note?.trim() || null,
+        attending: false,
+        pax: null,
+        note: note?.trim() || null,
         respondedAt: new Date(),
       };
-      guest.status = 'DECLINED';
+      guest.category = null;
+      guest.status = "DECLINED";
     }
 
     await guest.save();
 
+    console.log(guest);
+
     return ok({
-      message: 'RSVP berhasil disimpan',
-      status:  guest.status,
-      name:    guest.name,
+      message: "RSVP berhasil disimpan",
+      status: guest.status,
+      name: guest.name,
     });
   } catch (e) {
-    console.error('[POST /api/rsvp/:code]', e);
+    console.error("[POST /api/rsvp/:code]", e);
     return serverError();
   }
 }

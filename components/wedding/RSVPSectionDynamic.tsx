@@ -11,6 +11,7 @@ interface GuestInfo {
   rsvp: {
     attending: boolean | null;
     pax: number | null;
+    category: string | null;
     note: string | null;
     respondedAt: string | null;
   };
@@ -24,12 +25,19 @@ export default function RSVPSectionDynamic({
   guestInfo: GuestInfo;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  
+
   // State from GuestInfo
-  const [attending, setAttending] = useState<boolean | null>(guestInfo.rsvp.attending);
+  const [attending, setAttending] = useState<boolean | null>(
+    guestInfo.rsvp.attending,
+  );
   const [pax, setPax] = useState<number>(guestInfo.rsvp.pax ?? 1);
+  const [rsvpCategory, setRsvpCategory] = useState<string>(
+    guestInfo.category || "",
+  );
   const [note, setNote] = useState<string>(guestInfo.rsvp.note || "");
-  const [submitted, setSubmitted] = useState<boolean>(guestInfo.rsvp.attending !== null);
+  const [submitted, setSubmitted] = useState<boolean>(
+    guestInfo.rsvp.attending !== null,
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorText, setErrorText] = useState("");
 
@@ -73,6 +81,10 @@ export default function RSVPSectionDynamic({
       setErrorText("Please select your attendance status.");
       return;
     }
+    if (attending === true && !rsvpCategory) {
+      setErrorText("Pilih Kategori Undangan yang akan dihadiri.");
+      return;
+    }
     setErrorText("");
     setIsSubmitting(true);
 
@@ -83,6 +95,7 @@ export default function RSVPSectionDynamic({
         body: JSON.stringify({
           attending,
           pax: attending ? pax : undefined,
+          category: attending ? rsvpCategory : undefined,
           note: note.trim() || undefined,
         }),
       });
@@ -91,7 +104,9 @@ export default function RSVPSectionDynamic({
       if (json.ok) {
         setSubmitted(true);
       } else {
-        setErrorText(json.error?.message ?? "An error occurred. Please try again.");
+        setErrorText(
+          json.error?.message ?? "An error occurred. Please try again.",
+        );
       }
     } catch {
       setErrorText("Connection failed. Please check your network.");
@@ -134,8 +149,8 @@ export default function RSVPSectionDynamic({
             className="text-[#8A8178] text-sm text-center max-w-sm leading-relaxed"
             style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
           >
-            Hi, {guestInfo.name}. We&apos;d love to celebrate with you. Please let us know
-            your attendance below.
+            Hi, {guestInfo.name}. We&apos;d love to celebrate with you. Please
+            let us know your attendance below.
           </p>
         )}
 
@@ -155,16 +170,27 @@ export default function RSVPSectionDynamic({
             </p>
             {attending && (
               <div className="bg-[#white/5] border border-white/10 rounded-2xl p-6 w-full max-w-md">
-                <p className="text-[#C9A96E] text-sm tracking-widest uppercase mb-2" style={{ fontFamily: "var(--font-jost)" }}>
+                <p
+                  className="text-[#C9A96E] text-sm tracking-widest uppercase mb-2"
+                  style={{ fontFamily: "var(--font-jost)" }}
+                >
                   Reservation Details
                 </p>
-                <div className="flex justify-between items-center text-[#F5F0E8] mt-4" style={{ fontFamily: "var(--font-jost)" }}>
+                <div
+                  className="flex justify-between items-center text-[#F5F0E8] mt-4"
+                  style={{ fontFamily: "var(--font-jost)" }}
+                >
                   <span className="text-sm">Guests</span>
                   <span className="font-medium">{pax}</span>
                 </div>
-                <div className="flex justify-between items-center text-[#F5F0E8] mt-2" style={{ fontFamily: "var(--font-jost)" }}>
+                <div
+                  className="flex justify-between items-center text-[#F5F0E8] mt-2"
+                  style={{ fontFamily: "var(--font-jost)" }}
+                >
                   <span className="text-sm">Invitation Code</span>
-                  <span className="font-medium font-mono tracking-widest bg-black/20 px-2 py-1 rounded">{code}</span>
+                  <span className="font-medium font-mono tracking-widest bg-black/20 px-2 py-1 rounded">
+                    {code}
+                  </span>
                 </div>
               </div>
             )}
@@ -189,9 +215,12 @@ export default function RSVPSectionDynamic({
                 {errorText}
               </div>
             )}
-            
+
             <div className="flex flex-col gap-2">
-              <label className="text-[#8A8178] text-xs tracking-widest uppercase ml-1" style={{ fontFamily: "var(--font-jost)" }}>
+              <label
+                className="text-[#8A8178] text-xs tracking-widest uppercase ml-1"
+                style={{ fontFamily: "var(--font-jost)" }}
+              >
                 Attendance
               </label>
               <div className="grid grid-cols-2 gap-4">
@@ -222,52 +251,108 @@ export default function RSVPSectionDynamic({
                       checked={attending === opt.value}
                       onChange={() => setAttending(opt.value)}
                     />
-                    <span className="font-medium tracking-wide">{opt.label}</span>
+                    <span className="font-medium tracking-wide">
+                      {opt.label}
+                    </span>
                   </label>
                 ))}
               </div>
             </div>
 
             {attending === true && (
-              <div className="flex flex-col gap-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                <div className="flex justify-between items-end ml-1">
-                  <label className="text-[#8A8178] text-xs tracking-widest uppercase" style={{ fontFamily: "var(--font-jost)" }}>
-                    Number of Guests
-                  </label>
-                  <span className="text-[#8A8178] text-xs" style={{ fontFamily: "var(--font-jost)" }}>
-                    max {guestInfo.maxPax}
-                  </span>
-                </div>
-                
-                <div className="flex items-center justify-between gap-4 bg-white/5 border border-white/10 rounded-xl p-2">
-                  <button
-                    type="button"
-                    onClick={() => setPax((p) => Math.max(1, p - 1))}
-                    disabled={pax <= 1}
-                    className="w-12 h-10 flex items-center justify-center rounded-lg bg-white/5 text-[#F5F0E8] text-lg hover:bg-[#C9A96E]/20 transition disabled:opacity-30 disabled:hover:bg-transparent"
-                  >
-                    −
-                  </button>
-                  <span
-                    className="text-[#F5F0E8] text-xl font-medium"
+              <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="text-[#8A8178] text-xs tracking-widest uppercase ml-1"
                     style={{ fontFamily: "var(--font-jost)" }}
                   >
-                    {pax}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setPax((p) => Math.min(guestInfo.maxPax, p + 1))}
-                    disabled={pax >= guestInfo.maxPax}
-                    className="w-12 h-10 flex items-center justify-center rounded-lg bg-white/5 text-[#F5F0E8] text-lg hover:bg-[#C9A96E]/20 transition disabled:opacity-30 disabled:hover:bg-transparent"
-                  >
-                    +
-                  </button>
+                    Kategori Undangan
+                  </label>
+                  <div className="flex gap-4 bg-white/5 border border-white/10 rounded-xl p-1 relative">
+                    <select
+                      value={rsvpCategory}
+                      onChange={(e) => setRsvpCategory(e.target.value)}
+                      className="w-full bg-transparent text-[#F5F0E8] text-sm py-3 px-4 focus:outline-none appearance-none"
+                      style={{ fontFamily: "var(--font-jost)" }}
+                      required
+                    >
+                      <option value="" disabled className="bg-[#2C2825]">
+                        Pilih Kategori
+                      </option>
+                      {/* {(guestInfo.category === "Both" || guestInfo.category === "Akad") &&  */}
+                      <option value="Akad" className="bg-[#2C2825]">
+                        Akad Nikah
+                      </option>
+                      {/* } */}
+                      {/* {(guestInfo.category === "Both" || guestInfo.category === "Resepsi") &&  */}
+                      <option value="Resepsi" className="bg-[#2C2825]">
+                        Resepsi
+                      </option>
+                      {/* } */}
+                      {/* {guestInfo.category === "Both" && (
+                     
+                      )} */}
+                      <option value="Both" className="bg-[#2C2825]">
+                        Akad Nikah & Resepsi
+                      </option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#8A8178]">
+                      ▼
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between items-end ml-1">
+                    <label
+                      className="text-[#8A8178] text-xs tracking-widest uppercase"
+                      style={{ fontFamily: "var(--font-jost)" }}
+                    >
+                      Number of Guests
+                    </label>
+                    <span
+                      className="text-[#8A8178] text-xs"
+                      style={{ fontFamily: "var(--font-jost)" }}
+                    >
+                      max {guestInfo.maxPax}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-4 bg-white/5 border border-white/10 rounded-xl p-2">
+                    <button
+                      type="button"
+                      onClick={() => setPax((p) => Math.max(1, p - 1))}
+                      disabled={pax <= 1}
+                      className="w-12 h-10 flex items-center justify-center rounded-lg bg-white/5 text-[#F5F0E8] text-lg hover:bg-[#C9A96E]/20 transition disabled:opacity-30 disabled:hover:bg-transparent"
+                    >
+                      −
+                    </button>
+                    <span
+                      className="text-[#F5F0E8] text-xl font-medium"
+                      style={{ fontFamily: "var(--font-jost)" }}
+                    >
+                      {pax}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setPax((p) => Math.min(guestInfo.maxPax, p + 1))
+                      }
+                      disabled={pax >= guestInfo.maxPax}
+                      className="w-12 h-10 flex items-center justify-center rounded-lg bg-white/5 text-[#F5F0E8] text-lg hover:bg-[#C9A96E]/20 transition disabled:opacity-30 disabled:hover:bg-transparent"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
 
             <div className="flex flex-col gap-2">
-              <label className="text-[#8A8178] text-xs tracking-widest uppercase ml-1 flex justify-between" style={{ fontFamily: "var(--font-jost)" }}>
+              <label
+                className="text-[#8A8178] text-xs tracking-widest uppercase ml-1 flex justify-between"
+                style={{ fontFamily: "var(--font-jost)" }}
+              >
                 <span>Wishes for the Couple</span>
                 <span className="opacity-60">(opsional)</span>
               </label>

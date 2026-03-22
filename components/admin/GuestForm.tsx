@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 interface GuestFormData {
-  name:     string;
-  phone:    string;
-  category: 'Akad' | 'Resepsi' | 'Both';
-  maxPax:   number;
+  name: string;
+  phone: string;
+  category: "Akad" | "Resepsi" | "Both";
+  maxPax: number;
 }
 
 interface Props {
   initialData?: Partial<GuestFormData>;
-  guestId?:     string;
+  guestId?: string;
 }
 
 type FieldErrors = Partial<Record<keyof GuestFormData, string[]>>;
@@ -24,54 +24,61 @@ export default function GuestForm({ initialData, guestId }: Props) {
   const isEdit = !!guestId;
 
   const [form, setForm] = useState<GuestFormData>({
-    name:     initialData?.name     ?? '',
-    phone:    initialData?.phone    ?? '',
-    category: initialData?.category ?? 'Both',
-    maxPax:   initialData?.maxPax   ?? 1,
+    name: initialData?.name ?? "",
+    phone: initialData?.phone ?? "",
+    category: initialData?.category ?? "Both",
+    maxPax: initialData?.maxPax ?? 1,
   });
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const [serverError, setServerError] = useState('');
-  const [loading,     setLoading]     = useState(false);
-  const [success,     setSuccess]     = useState(false);
+  const [serverError, setServerError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  function setField<K extends keyof GuestFormData>(key: K, value: GuestFormData[K]) {
+  function setField<K extends keyof GuestFormData>(
+    key: K,
+    value: GuestFormData[K],
+  ) {
     setForm((prev) => ({ ...prev, [key]: value }));
     // Clear field error on change
     if (fieldErrors[key]) {
-      setFieldErrors((prev) => { const n = { ...prev }; delete n[key]; return n; });
+      setFieldErrors((prev) => {
+        const n = { ...prev };
+        delete n[key];
+        return n;
+      });
     }
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setServerError('');
+    setServerError("");
     setFieldErrors({});
 
     // Simple client-side validation
     const errs: FieldErrors = {};
-    if (!form.name.trim())           errs.name    = ['Nama wajib diisi'];
-    if (form.maxPax < 1)             errs.maxPax  = ['Minimal 1'];
-    if (form.maxPax > 20)            errs.maxPax  = ['Maksimal 20'];
+    if (!form.name.trim()) errs.name = ["Nama wajib diisi"];
+    if (form.maxPax < 1) errs.maxPax = ["Minimal 1"];
+    if (form.maxPax > 20) errs.maxPax = ["Maksimal 20"];
     if (Object.keys(errs).length) {
       setFieldErrors(errs);
       setLoading(false);
       return;
     }
 
-    const url    = isEdit ? `/api/admin/guests/${guestId}` : '/api/admin/guests';
-    const method = isEdit ? 'PUT' : 'POST';
+    const url = isEdit ? `/api/admin/guests/${guestId}` : "/api/admin/guests";
+    const method = isEdit ? "PUT" : "POST";
 
     try {
-      const res  = await fetch(url, {
+      const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name:     form.name.trim(),
-          phone:    form.phone.trim(),
+          name: form.name.trim(),
+          phone: form.phone.trim(),
           category: form.category,
-          maxPax:   Number(form.maxPax),
+          maxPax: Number(form.maxPax),
         }),
       });
 
@@ -83,7 +90,9 @@ export default function GuestForm({ initialData, guestId }: Props) {
           // Zod field errors
           setFieldErrors(json.error.details as FieldErrors);
         } else {
-          setServerError(json.error?.message ?? 'Terjadi kesalahan. Coba lagi.');
+          setServerError(
+            json.error?.message ?? "Terjadi kesalahan. Coba lagi.",
+          );
         }
         return;
       }
@@ -91,13 +100,12 @@ export default function GuestForm({ initialData, guestId }: Props) {
       setSuccess(true);
       // Brief success flash, then redirect
       setTimeout(() => {
-        router.push('/admin/guests');
+        router.push("/admin/guests");
         router.refresh();
       }, 800);
-
     } catch {
       setLoading(false);
-      setServerError('Koneksi gagal. Periksa jaringan Anda.');
+      setServerError("Koneksi gagal. Periksa jaringan Anda.");
     }
   }
 
@@ -106,7 +114,7 @@ export default function GuestForm({ initialData, guestId }: Props) {
       <div className="flex flex-col items-center justify-center py-12 text-center gap-3">
         <span className="text-4xl">✅</span>
         <p className="font-semibold text-gray-800">
-          {isEdit ? 'Perubahan tersimpan!' : 'Tamu berhasil ditambahkan!'}
+          {isEdit ? "Perubahan tersimpan!" : "Tamu berhasil ditambahkan!"}
         </p>
         <p className="text-sm text-gray-500">Mengalihkan ke daftar tamu...</p>
       </div>
@@ -124,15 +132,11 @@ export default function GuestForm({ initialData, guestId }: Props) {
       )}
 
       {/* Name */}
-      <FormField
-        label="Nama Tamu"
-        required
-        error={fieldErrors.name?.[0]}
-      >
+      <FormField label="Nama Tamu" required error={fieldErrors.name?.[0]}>
         <input
           type="text"
           value={form.name}
-          onChange={(e) => setField('name', e.target.value)}
+          onChange={(e) => setField("name", e.target.value)}
           placeholder="Contoh: Budi Santoso"
           disabled={loading}
           className={inputClass(!!fieldErrors.name)}
@@ -149,7 +153,7 @@ export default function GuestForm({ initialData, guestId }: Props) {
         <input
           type="tel"
           value={form.phone}
-          onChange={(e) => setField('phone', e.target.value)}
+          onChange={(e) => setField("phone", e.target.value)}
           placeholder="Contoh: 0812-3456-7890"
           disabled={loading}
           className={inputClass(!!fieldErrors.phone)}
@@ -157,28 +161,29 @@ export default function GuestForm({ initialData, guestId }: Props) {
       </FormField>
 
       {/* Category */}
-      <FormField
-        label="Kategori Undangan"
-        error={fieldErrors.category?.[0]}
-      >
-        <div className="grid grid-cols-3 gap-3">
-          {(['Akad', 'Resepsi', 'Both'] as const).map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setField('category', cat)}
-              disabled={loading}
-              className={`py-2.5 rounded-xl border-2 text-sm font-medium transition
-                ${form.category === cat
-                  ? 'border-gray-900 bg-gray-900 text-white'
-                  : 'border-gray-200 text-gray-600 hover:border-gray-400'}
+      {!isEdit ? null : (
+        <FormField label="Kategori Undangan" error={fieldErrors.category?.[0]}>
+          <div className="grid grid-cols-3 gap-3">
+            {(["Akad", "Resepsi", "Both"] as const).map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setField("category", cat)}
+                disabled={loading}
+                className={`py-2.5 rounded-xl border-2 text-sm font-medium transition
+                ${
+                  form.category === cat
+                    ? "border-gray-900 bg-gray-900 text-white"
+                    : "border-gray-200 text-gray-600 hover:border-gray-400"
+                }
                 disabled:opacity-50`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </FormField>
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </FormField>
+      )}
 
       {/* Max Pax */}
       <FormField
@@ -189,7 +194,7 @@ export default function GuestForm({ initialData, guestId }: Props) {
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={() => setField('maxPax', Math.max(1, form.maxPax - 1))}
+            onClick={() => setField("maxPax", Math.max(1, form.maxPax - 1))}
             disabled={loading || form.maxPax <= 1}
             className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200 text-lg font-bold text-gray-600 hover:bg-gray-50 disabled:opacity-40 transition"
           >
@@ -200,13 +205,13 @@ export default function GuestForm({ initialData, guestId }: Props) {
             min={1}
             max={20}
             value={form.maxPax}
-            onChange={(e) => setField('maxPax', Number(e.target.value))}
+            onChange={(e) => setField("maxPax", Number(e.target.value))}
             disabled={loading}
             className={`w-16 text-center ${inputClass(!!fieldErrors.maxPax)}`}
           />
           <button
             type="button"
-            onClick={() => setField('maxPax', Math.min(20, form.maxPax + 1))}
+            onClick={() => setField("maxPax", Math.min(20, form.maxPax + 1))}
             disabled={loading || form.maxPax >= 20}
             className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200 text-lg font-bold text-gray-600 hover:bg-gray-50 disabled:opacity-40 transition"
           >
@@ -228,10 +233,12 @@ export default function GuestForm({ initialData, guestId }: Props) {
           {loading ? (
             <>
               <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              {isEdit ? 'Menyimpan...' : 'Menambahkan...'}
+              {isEdit ? "Menyimpan..." : "Menambahkan..."}
             </>
+          ) : isEdit ? (
+            "💾 Simpan Perubahan"
           ) : (
-            isEdit ? '💾 Simpan Perubahan' : '+ Tambah Tamu'
+            "+ Tambah Tamu"
           )}
         </button>
 
@@ -256,10 +263,10 @@ function FormField({
   error,
   children,
 }: {
-  label:    string;
+  label: string;
   required?: boolean;
-  hint?:    string;
-  error?:   string;
+  hint?: string;
+  error?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -267,7 +274,9 @@ function FormField({
       <label className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
         {label}
         {required && <span className="text-red-500 text-xs">*</span>}
-        {hint && <span className="text-gray-400 font-normal text-xs">({hint})</span>}
+        {hint && (
+          <span className="text-gray-400 font-normal text-xs">({hint})</span>
+        )}
       </label>
       {children}
       {error && <p className="text-red-500 text-xs">{error}</p>}
@@ -280,7 +289,9 @@ function inputClass(hasError: boolean) {
     placeholder:text-gray-400
     focus:outline-none focus:ring-2 focus:border-transparent transition
     disabled:bg-gray-50 disabled:cursor-not-allowed
-    ${hasError
-      ? 'border-red-300 focus:ring-red-400'
-      : 'border-gray-200 focus:ring-gray-900'}`;
+    ${
+      hasError
+        ? "border-red-300 focus:ring-red-400"
+        : "border-gray-200 focus:ring-gray-900"
+    }`;
 }

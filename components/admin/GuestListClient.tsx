@@ -7,6 +7,7 @@ import Link from 'next/link';
 interface Rsvp {
   attending:   boolean | null;
   pax:         number  | null;
+  category:    'Akad' | 'Resepsi' | 'Both' | null;
   note:        string  | null;
   respondedAt: string  | null;
 }
@@ -340,7 +341,12 @@ export default function GuestListClient() {
                     <td className="px-5 py-4 hidden md:table-cell text-center text-base">
                       {g.rsvp.attending === null ? (
                         <span className="text-gray-300">—</span>
-                      ) : g.rsvp.attending ? '✅' : '❌'}
+                      ) : g.rsvp.attending ? (
+                        <div className="flex flex-col items-center gap-0.5">
+                          <span>✅</span>
+                          {g.rsvp.category && <span className="text-[10px] text-gray-500 font-medium">{g.rsvp.category}</span>}
+                        </div>
+                      ) : '❌'}
                     </td>
 
                     {/* Pax confirmed */}

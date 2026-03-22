@@ -21,6 +21,7 @@ export const updateGuestSchema = createGuestSchema.partial();
 export const rsvpSchema = z.object({
   attending: z.boolean({ required_error: 'Pilih status kehadiran' }),
   pax:       z.coerce.number().int().min(1).optional(),
+  category:  GuestCategoryEnum.optional().nullable(),
   note:      z.string().max(500).optional().default(''),
 });
 
