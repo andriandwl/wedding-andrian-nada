@@ -6,7 +6,7 @@ import { galleryImages } from "@/lib/data";
 
 import groomPhoto from "@/assets/groom.png";
 import bridePhoto from "@/assets/bride.png";
-import { StaticImageData } from "next/image";
+import { MobileHero } from "./MobileHero";
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 const GROOM_PHOTO = groomPhoto;
@@ -637,232 +637,236 @@ export default function HeroScrollGallery({
   }, [isMobile]);
 
   // ── MOBILE: static hero layout (no scroll animation) ──────────────────────
+  // if (isMobile) {
+  //   return (
+  //     /*
+  //      * FIX SAFE AREA — Notch / Dynamic Island / Home Indicator
+  //      *
+  //      * WAJIB tambahkan di layout.tsx / _document.tsx:
+  //      *   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  //      *
+  //      * Tanpa viewport-fit=cover, env(safe-area-inset-*) tidak bekerja.
+  //      *
+  //      * Penjelasan masalah di screenshot:
+  //      *   1. Yellow strip kanan  → body/html punya default margin, atau scrollbar menambah lebar
+  //      *   2. Konten di balik navbar (notch/DI) → tidak ada padding-top safe area
+  //      *   3. Scroll hint terpotong → tidak ada padding-bottom safe area (home indicator)
+  //      */
+  //     <div
+  //       className="relative overflow-x-hidden"
+  //       style={{
+  //         background: "#F5F0E8",
+  //         // Gunakan 100% bukan 100vw untuk menghindari horizontal scrollbar
+  //         width: "100%",
+  //         // Safe area kiri-kanan untuk rounded corner device (misal iPhone landscape)
+  //         paddingLeft: "env(safe-area-inset-left, 0px)",
+  //         paddingRight: "env(safe-area-inset-right, 0px)",
+  //       }}
+  //     >
+  //       {/* Hero photo — 100dvh lebih akurat dari 100svh/100vh di mobile browser */}
+  //       <div
+  //         className="relative w-full overflow-hidden"
+  //         style={{ height: "100dvh" }}
+  //       >
+  //         <Image
+  //           src={galleryImages[0].src}
+  //           alt={galleryImages[0].alt}
+  //           fill
+  //           priority
+  //           className="object-cover"
+  //           sizes="100vw"
+  //           style={{ objectPosition: "center 15%" }}
+  //         />
+
+  //         {/* Gradient — lebih gelap di atas (area notch) supaya konten tetap terbaca */}
+  //         <div
+  //           className="absolute inset-0"
+  //           style={{
+  //             background: [
+  //               "linear-gradient(180deg, rgba(0,0,0,0.40) 0%, transparent 22%)",
+  //               "linear-gradient(0deg,   rgba(0,0,0,0.55) 0%, transparent 45%)",
+  //             ].join(", "),
+  //           }}
+  //         />
+
+  //         {/* Overlay teks — padding-top mengikuti safe-area-inset-top (tinggi notch/DI) */}
+  //         <div
+  //           className="absolute inset-0 flex flex-col items-center justify-center text-white pointer-events-none"
+  //           style={{
+  //             paddingTop: "env(safe-area-inset-top, 0px)",
+  //             paddingLeft: "clamp(20px, 6vw, 48px)",
+  //             paddingRight: "clamp(20px, 6vw, 48px)",
+  //           }}
+  //         >
+  //           {guestName ? (
+  //             <p
+  //               className="mb-2 text-[0.65rem] md:text-[0.7rem] tracking-[0.2em] uppercase text-white/90"
+  //               style={{ fontFamily: "var(--font-jost)" }}
+  //             >
+  //               Dear {guestName},
+  //             </p>
+  //           ) : (
+  //             <p
+  //               className="mb-2 text-[0.58rem] tracking-[0.32em] uppercase text-white/60"
+  //               style={{ fontFamily: "var(--font-jost)" }}
+  //             >
+  //               The Wedding of
+  //             </p>
+  //           )}
+
+  //           <p
+  //             className="leading-none text-center w-full"
+  //             style={{
+  //               fontFamily: "var(--font-great-vibes)",
+  //               fontSize: "clamp(36px, 10vw, 64px)",
+  //               textShadow: "0 2px 40px rgba(0,0,0,0.35)",
+  //               letterSpacing: "0.01em",
+  //               wordBreak: "break-word",
+  //               overflowWrap: "break-word",
+  //             }}
+  //           >
+  //             Denada &amp; Andrian
+  //           </p>
+
+  //           <p
+  //             className="mt-4 text-[0.58rem] tracking-[0.2em] uppercase text-white/70"
+  //             style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
+  //           >
+  //             Celebrating Our Love
+  //           </p>
+
+  //           <div className="mt-5 flex items-center gap-3">
+  //             <div
+  //               style={{
+  //                 width: 28,
+  //                 height: "0.5px",
+  //                 background: "rgba(255,255,255,0.35)",
+  //               }}
+  //             />
+  //             <svg width="7" height="7" viewBox="0 0 8 8" fill="none">
+  //               <path
+  //                 d="M4 0L4.8 3.2L8 4L4.8 4.8L4 8L3.2 4.8L0 4L3.2 3.2Z"
+  //                 fill="rgba(255,255,255,0.5)"
+  //               />
+  //             </svg>
+  //             <div
+  //               style={{
+  //                 width: 28,
+  //                 height: "0.5px",
+  //                 background: "rgba(255,255,255,0.35)",
+  //               }}
+  //             />
+  //           </div>
+  //         </div>
+
+  //         {/* Scroll hint — bottom mengikuti home indicator agar tidak terpotong */}
+  //         <div
+  //           className="absolute left-1/2 flex flex-col items-center gap-2"
+  //           style={{
+  //             transform: "translateX(-50%)",
+  //             bottom: "calc(env(safe-area-inset-bottom, 0px) + 20px)",
+  //           }}
+  //         >
+  //           <p
+  //             className="text-[9px] tracking-[0.3em] uppercase text-white/60"
+  //             style={{ fontFamily: "var(--font-jost)" }}
+  //           >
+  //             scroll
+  //           </p>
+  //           <svg
+  //             width="18"
+  //             height="26"
+  //             viewBox="0 0 18 26"
+  //             fill="none"
+  //             className="opacity-50"
+  //           >
+  //             <rect
+  //               x="1"
+  //               y="1"
+  //               width="16"
+  //               height="24"
+  //               rx="8"
+  //               stroke="white"
+  //               strokeWidth="1"
+  //             />
+  //             <rect
+  //               x="8"
+  //               y="5"
+  //               width="2"
+  //               height="5"
+  //               rx="1"
+  //               fill="white"
+  //               style={{ animation: "scrollWheel 1.8s ease-in-out infinite" }}
+  //             />
+  //           </svg>
+  //         </div>
+  //       </div>
+
+  //       {/* Mobile gallery grid */}
+  //       <div
+  //         className="grid grid-cols-2 gap-2"
+  //         style={{
+  //           background: "#F5F0E8",
+  //           padding: "16px",
+  //           paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 16px)",
+  //         }}
+  //       >
+  //         {/* Left Column */}
+  //         <div className="flex flex-col gap-2">
+  //           {[galleryImages[1], galleryImages[3]].map((img, i) => (
+  //             <div
+  //               key={`left-${i}`}
+  //               className="overflow-hidden rounded-2xl"
+  //               style={{ aspectRatio: i === 0 ? "3/4" : "1/1" }}
+  //             >
+  //               <Image
+  //                 src={img.src}
+  //                 alt={img.alt}
+  //                 width={img.width}
+  //                 height={img.height}
+  //                 className="w-full h-full object-cover"
+  //               />
+  //             </div>
+  //           ))}
+  //         </div>
+  //         {/* Right Column */}
+  //         <div className="flex flex-col gap-2">
+  //           {[galleryImages[2], galleryImages[4]].map((img, i) => (
+  //             <div
+  //               key={`right-${i}`}
+  //               className="overflow-hidden rounded-2xl"
+  //               style={{ aspectRatio: i === 0 ? "1/1" : "3/4" }}
+  //             >
+  //               <Image
+  //                 src={img.src}
+  //                 alt={img.alt}
+  //                 width={img.width}
+  //                 height={img.height}
+  //                 className="w-full h-full object-cover"
+  //               />
+  //             </div>
+  //           ))}
+  //         </div>
+  //       </div>
+
+  //       <style
+  //         dangerouslySetInnerHTML={{
+  //           __html: `
+  //         @keyframes scrollWheel {
+  //           0%   { opacity: 1; transform: translateY(0); }
+  //           70%  { opacity: 0; transform: translateY(6px); }
+  //           71%  { opacity: 0; transform: translateY(0); }
+  //           100% { opacity: 1; transform: translateY(0); }
+  //         }
+  //       `,
+  //         }}
+  //       />
+  //     </div>
+  //   );
+  // }
+
   if (isMobile) {
-    return (
-      /*
-       * FIX SAFE AREA — Notch / Dynamic Island / Home Indicator
-       *
-       * WAJIB tambahkan di layout.tsx / _document.tsx:
-       *   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-       *
-       * Tanpa viewport-fit=cover, env(safe-area-inset-*) tidak bekerja.
-       *
-       * Penjelasan masalah di screenshot:
-       *   1. Yellow strip kanan  → body/html punya default margin, atau scrollbar menambah lebar
-       *   2. Konten di balik navbar (notch/DI) → tidak ada padding-top safe area
-       *   3. Scroll hint terpotong → tidak ada padding-bottom safe area (home indicator)
-       */
-      <div
-        className="relative overflow-x-hidden"
-        style={{
-          background: "#F5F0E8",
-          // Gunakan 100% bukan 100vw untuk menghindari horizontal scrollbar
-          width: "100%",
-          // Safe area kiri-kanan untuk rounded corner device (misal iPhone landscape)
-          paddingLeft: "env(safe-area-inset-left, 0px)",
-          paddingRight: "env(safe-area-inset-right, 0px)",
-        }}
-      >
-        {/* Hero photo — 100dvh lebih akurat dari 100svh/100vh di mobile browser */}
-        <div
-          className="relative w-full overflow-hidden"
-          style={{ height: "100dvh" }}
-        >
-          <Image
-            src={galleryImages[0].src}
-            alt={galleryImages[0].alt}
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-            style={{ objectPosition: "center 15%" }}
-          />
-
-          {/* Gradient — lebih gelap di atas (area notch) supaya konten tetap terbaca */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: [
-                "linear-gradient(180deg, rgba(0,0,0,0.40) 0%, transparent 22%)",
-                "linear-gradient(0deg,   rgba(0,0,0,0.55) 0%, transparent 45%)",
-              ].join(", "),
-            }}
-          />
-
-          {/* Overlay teks — padding-top mengikuti safe-area-inset-top (tinggi notch/DI) */}
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-white pointer-events-none"
-            style={{
-              paddingTop: "env(safe-area-inset-top, 0px)",
-              paddingLeft: "clamp(20px, 6vw, 48px)",
-              paddingRight: "clamp(20px, 6vw, 48px)",
-            }}
-          >
-            {guestName ? (
-              <p
-                className="mb-2 text-[0.65rem] md:text-[0.7rem] tracking-[0.2em] uppercase text-white/90"
-                style={{ fontFamily: "var(--font-jost)" }}
-              >
-                Dear {guestName},
-              </p>
-            ) : (
-              <p
-                className="mb-2 text-[0.58rem] tracking-[0.32em] uppercase text-white/60"
-                style={{ fontFamily: "var(--font-jost)" }}
-              >
-                The Wedding of
-              </p>
-            )}
-
-            <p
-              className="leading-none text-center w-full"
-              style={{
-                fontFamily: "var(--font-great-vibes)",
-                fontSize: "clamp(36px, 10vw, 64px)",
-                textShadow: "0 2px 40px rgba(0,0,0,0.35)",
-                letterSpacing: "0.01em",
-                wordBreak: "break-word",
-                overflowWrap: "break-word",
-              }}
-            >
-              Denada &amp; Andrian
-            </p>
-
-            <p
-              className="mt-4 text-[0.58rem] tracking-[0.2em] uppercase text-white/70"
-              style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
-            >
-              Celebrating Our Love
-            </p>
-
-            <div className="mt-5 flex items-center gap-3">
-              <div
-                style={{
-                  width: 28,
-                  height: "0.5px",
-                  background: "rgba(255,255,255,0.35)",
-                }}
-              />
-              <svg width="7" height="7" viewBox="0 0 8 8" fill="none">
-                <path
-                  d="M4 0L4.8 3.2L8 4L4.8 4.8L4 8L3.2 4.8L0 4L3.2 3.2Z"
-                  fill="rgba(255,255,255,0.5)"
-                />
-              </svg>
-              <div
-                style={{
-                  width: 28,
-                  height: "0.5px",
-                  background: "rgba(255,255,255,0.35)",
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Scroll hint — bottom mengikuti home indicator agar tidak terpotong */}
-          <div
-            className="absolute left-1/2 flex flex-col items-center gap-2"
-            style={{
-              transform: "translateX(-50%)",
-              bottom: "calc(env(safe-area-inset-bottom, 0px) + 20px)",
-            }}
-          >
-            <p
-              className="text-[9px] tracking-[0.3em] uppercase text-white/60"
-              style={{ fontFamily: "var(--font-jost)" }}
-            >
-              scroll
-            </p>
-            <svg
-              width="18"
-              height="26"
-              viewBox="0 0 18 26"
-              fill="none"
-              className="opacity-50"
-            >
-              <rect
-                x="1"
-                y="1"
-                width="16"
-                height="24"
-                rx="8"
-                stroke="white"
-                strokeWidth="1"
-              />
-              <rect
-                x="8"
-                y="5"
-                width="2"
-                height="5"
-                rx="1"
-                fill="white"
-                style={{ animation: "scrollWheel 1.8s ease-in-out infinite" }}
-              />
-            </svg>
-          </div>
-        </div>
-
-        {/* Mobile gallery grid */}
-        <div
-          className="grid grid-cols-2 gap-2"
-          style={{
-            background: "#F5F0E8",
-            padding: "16px",
-            paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 16px)",
-          }}
-        >
-          {/* Left Column */}
-          <div className="flex flex-col gap-2">
-            {[galleryImages[1], galleryImages[3]].map((img, i) => (
-              <div
-                key={`left-${i}`}
-                className="overflow-hidden rounded-2xl"
-                style={{ aspectRatio: i === 0 ? "3/4" : "1/1" }}
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  width={img.width}
-                  height={img.height}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-          {/* Right Column */}
-          <div className="flex flex-col gap-2">
-            {[galleryImages[2], galleryImages[4]].map((img, i) => (
-              <div
-                key={`right-${i}`}
-                className="overflow-hidden rounded-2xl"
-                style={{ aspectRatio: i === 0 ? "1/1" : "3/4" }}
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  width={img.width}
-                  height={img.height}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-          @keyframes scrollWheel {
-            0%   { opacity: 1; transform: translateY(0); }
-            70%  { opacity: 0; transform: translateY(6px); }
-            71%  { opacity: 0; transform: translateY(0); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `,
-          }}
-        />
-      </div>
-    );
+    return <MobileHero guestName={guestName} />;
   }
 
   // ── TABLET & DESKTOP: scroll animation layout ──────────────────────────────
@@ -994,20 +998,37 @@ export default function HeroScrollGallery({
             transition: "none",
           }}
         >
-          <Image
+          {/* Static image fallback (shown while video loads) */}
+          {/* <Image
             src={galleryImages[0].src}
             alt={galleryImages[0].alt}
             fill
             priority
             className="object-cover"
             sizes="100vw"
-          />
+          /> */}
+
+          {/* Looping background video */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ opacity: 0.88 }}
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+
+          {/* Multi-layer gradient overlay for text legibility */}
           <div
             ref={heroOverlayRef}
             className="absolute inset-0"
             style={{
-              background:
-                "linear-gradient(180deg, rgba(0,0,0,0.08) 0%, transparent 40%, rgba(0,0,0,0.55) 100%)",
+              background: [
+                "linear-gradient(180deg, rgba(0,0,0,0.32) 0%, transparent 30%)",
+                "linear-gradient(0deg,   rgba(0,0,0,0.62) 0%, transparent 55%)",
+              ].join(", "),
             }}
           />
         </div>
@@ -1015,65 +1036,113 @@ export default function HeroScrollGallery({
         {/* Hero overlay text */}
         <div
           ref={overlayTextRef}
-          className="absolute inset-0 z-30 flex flex-col items-center justify-center text-white pointer-events-none"
-          style={{ paddingBottom: "4vh" }}
+          className="absolute inset-0 z-30 flex flex-col justify-end text-white pointer-events-none"
+          style={{ padding: "clamp(28px, 5vw, 56px) clamp(32px, 6vw, 64px)" }}
         >
-          {guestName ? (
+          <div
+            className="flex items-center gap-3"
+            style={{
+              marginTop: "clamp(14px, 2vw, 22px)",
+            }}
+          >
+            {/* "THE WEDDING OF" or guest label */}
             <p
-              className="mb-3 text-[0.7rem] tracking-[0.2em] uppercase text-white/90"
-              style={{ fontFamily: "var(--font-jost)" }}
-            >
-              Dear {guestName}, you&apos;re invited to
-            </p>
-          ) : (
-            <p
-              className="mb-3 text-[0.62rem] tracking-[0.38em] uppercase text-white/60"
-              style={{ fontFamily: "var(--font-jost)" }}
+              className="text-white/65"
+              style={{
+                fontFamily: "var(--font-jost)",
+                fontSize: "clamp(0.7rem, 0.85vw, 0.8rem)",
+                letterSpacing: "0.36em",
+                textTransform: "uppercase",
+                fontWeight: 500,
+                marginBottom: "clamp(14px, 2vw, 20px)",
+              }}
             >
               The Wedding of
             </p>
-          )}
+          </div>
+
+          {/* Couple names — large serif, left-aligned */}
           <p
             className="leading-none"
             style={{
-              fontFamily: "var(--font-great-vibes)",
-              // FIX: tablet-safe floor
-              fontSize: "clamp(44px, 9.5vw, 132px)",
-              textShadow: "0 2px 60px rgba(0,0,0,0.25)",
-              letterSpacing: "0.01em",
-              marginTop: 10,
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(42px, 7.5vw, 112px)",
+              fontWeight: 300,
+              letterSpacing: "0.015em",
+              textShadow: "0 4px 40px rgba(0,0,0,0.3)",
+              lineHeight: 0.92,
             }}
           >
-            Denada &amp; Andrian
+            Nada{" "}
+            <span
+              style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "clamp(38px, 7vw, 104px)",
+                fontWeight: 400,
+                opacity: 0.9,
+              }}
+            >
+              {" "}
+              &amp;
+            </span>{" "}
           </p>
           <p
-            className="mt-5 text-[0.72rem] tracking-[0.26em] uppercase text-white/70"
-            style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
+            className="leading-none"
+            style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(42px, 7.5vw, 112px)",
+              fontWeight: 300,
+              letterSpacing: "0.015em",
+              textShadow: "0 4px 40px rgba(0,0,0,0.3)",
+              lineHeight: 0.92,
+            }}
           >
-            Celebrating Our Love
+            Andrian
           </p>
-          <div className="mt-6 flex items-center gap-3">
+
+          {/* Bottom micro-line */}
+          <div
+            className="flex items-center gap-3"
+            style={{
+              marginTop: "clamp(14px, 2vw, 22px)",
+              marginBottom: "clamp(14px, 2vw, 22px)",
+            }}
+          >
             <div
               style={{
-                width: 40,
+                width: "clamp(20px, 3vw, 36px)",
                 height: "0.5px",
-                background: "rgba(255,255,255,0.35)",
+                background: "rgba(255,255,255,0.3)",
               }}
             />
-            <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-              <path
-                d="M4 0L4.8 3.2L8 4L4.8 4.8L4 8L3.2 4.8L0 4L3.2 3.2Z"
-                fill="rgba(255,255,255,0.5)"
-              />
-            </svg>
-            <div
+            <p
+              className="text-white/50"
               style={{
-                width: 40,
-                height: "0.5px",
-                background: "rgba(255,255,255,0.35)",
+                fontFamily: "var(--font-jost)",
+                fontSize: "clamp(0.45rem, 0.7vw, 0.6rem)",
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                fontWeight: 300,
               }}
-            />
+            >
+              Celebrating Our Love
+            </p>
           </div>
+          {guestName && (
+            <p
+              className="text-white/75"
+              style={{
+                fontFamily: "var(--font-jost)",
+                fontSize: "clamp(0.52rem, 0.9vw, 0.68rem)",
+                letterSpacing: "0.32em",
+                textTransform: "uppercase",
+                fontWeight: 400,
+                marginTop: "clamp(6px, 0.8vw, 10px)",
+              }}
+            >
+              Dear {guestName}, you&apos;re invited
+            </p>
+          )}
         </div>
 
         {/* Scroll hint */}
@@ -1124,6 +1193,14 @@ export default function HeroScrollGallery({
             70%  { opacity: 0; transform: translateY(6px); }
             71%  { opacity: 0; transform: translateY(0); }
             100% { opacity: 1; transform: translateY(0); }
+          }
+          /* Ken Burns: alternate between two positions for infinite variety */
+          @keyframes kenBurns {
+            0%   { transform: scale(1.0) translate(0%,    0%);   }
+            25%  { transform: scale(1.06) translate(-0.8%, -1%);  }
+            50%  { transform: scale(1.1) translate(1.2%,  0.5%); }
+            75%  { transform: scale(1.06) translate(0.4%,  1.2%); }
+            100% { transform: scale(1.0) translate(-0.6%, 0%);   }
           }
         `,
           }}
