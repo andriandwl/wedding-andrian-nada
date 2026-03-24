@@ -119,26 +119,26 @@ export default function RSVPSectionDynamic({
     <section
       id="rsvp"
       ref={sectionRef}
-      className="relative w-full py-32 px-6 bg-[#2C2825] overflow-hidden"
+      className="relative w-full py-32 px-6 bg-[#52363E] overflow-hidden"
     >
       {/* Background texture */}
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(circle at 20% 50%, #C9A96E 0%, transparent 60%), radial-gradient(circle at 80% 50%, #C9A96E 0%, transparent 60%)`,
+          backgroundImage: `radial-gradient(circle at 20% 50%, #D88C9C 0%, transparent 60%), radial-gradient(circle at 80% 50%, #D88C9C 0%, transparent 60%)`,
         }}
       />
 
       <div className="rsvp-content relative z-10 max-w-xl mx-auto flex flex-col items-center gap-8">
         <span
-          className="text-[#C9A96E] text-xs tracking-[0.22em] uppercase"
+          className="text-[#D88C9C] text-xs tracking-[0.22em] uppercase"
           style={{ fontFamily: "var(--font-jost)" }}
         >
           You&apos;re invited
         </span>
 
         <h2
-          className="text-[clamp(40px,7vw,80px)] leading-none text-[#F5F0E8] italic text-center"
+          className="text-[clamp(40px,7vw,80px)] leading-none text-[#FBE7EB] italic text-center"
           style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300 }}
         >
           {submitted ? "See you there!" : "Will you join us?"}
@@ -146,7 +146,7 @@ export default function RSVPSectionDynamic({
 
         {!submitted && (
           <p
-            className="text-[#8A8178] text-sm text-center max-w-sm leading-relaxed"
+            className="text-[#A6808B] text-sm text-center max-w-sm leading-relaxed"
             style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
           >
             Hi, {guestInfo.name}. We&apos;d love to celebrate with you. Please
@@ -157,7 +157,7 @@ export default function RSVPSectionDynamic({
         {submitted ? (
           <div className="text-center py-4 flex flex-col items-center gap-6 w-full">
             <p
-              className="text-[#8A8178] text-sm leading-relaxed px-4"
+              className="text-[#A6808B] text-sm leading-relaxed px-4"
               style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
             >
               {attending
@@ -171,20 +171,20 @@ export default function RSVPSectionDynamic({
             {attending && (
               <div className="bg-[#white/5] border border-white/10 rounded-2xl p-6 w-full max-w-md">
                 <p
-                  className="text-[#C9A96E] text-sm tracking-widest uppercase mb-2"
+                  className="text-[#D88C9C] text-sm tracking-widest uppercase mb-2"
                   style={{ fontFamily: "var(--font-jost)" }}
                 >
                   Reservation Details
                 </p>
                 <div
-                  className="flex justify-between items-center text-[#F5F0E8] mt-4"
+                  className="flex justify-between items-center text-[#FBE7EB] mt-4"
                   style={{ fontFamily: "var(--font-jost)" }}
                 >
                   <span className="text-sm">Guests</span>
                   <span className="font-medium">{pax}</span>
                 </div>
                 <div
-                  className="flex justify-between items-center text-[#F5F0E8] mt-2"
+                  className="flex justify-between items-center text-[#FBE7EB] mt-2"
                   style={{ fontFamily: "var(--font-jost)" }}
                 >
                   <span className="text-sm">Invitation Code</span>
@@ -196,7 +196,7 @@ export default function RSVPSectionDynamic({
             )}
             <button
               onClick={() => setSubmitted(false)}
-              className="mt-6 border-b border-[#C9A96E]/50 text-[#C9A96E] text-xs tracking-widest uppercase pb-1 hover:border-[#C9A96E] transition-colors"
+              className="mt-6 border-b border-[#D88C9C]/50 text-[#D88C9C] text-xs tracking-widest uppercase pb-1 hover:border-[#D88C9C] transition-colors"
               style={{ fontFamily: "var(--font-jost)" }}
             >
               Change Response
@@ -218,7 +218,7 @@ export default function RSVPSectionDynamic({
 
             <div className="flex flex-col gap-2">
               <label
-                className="text-[#8A8178] text-xs tracking-widest uppercase ml-1"
+                className="text-[#A6808B] text-xs tracking-widest uppercase ml-1"
                 style={{ fontFamily: "var(--font-jost)" }}
               >
                 Attendance
@@ -235,13 +235,13 @@ export default function RSVPSectionDynamic({
                       px-5 py-4 rounded-xl cursor-pointer
                       bg-white/5 border border-white/10
                       text-sm transition-all duration-200
-                      has-[:checked]:bg-[#C9A96E]/15
-                      has-[:checked]:border-[#C9A96E]/40
-                      has-[:checked]:text-[#F5F0E8]
+                      has-[:checked]:bg-[#D88C9C]/15
+                      has-[:checked]:border-[#D88C9C]/40
+                      has-[:checked]:text-[#FBE7EB]
                     "
                     style={{
                       fontFamily: "var(--font-jost)",
-                      color: attending === opt.value ? "#F5F0E8" : "#8A8178",
+                      color: attending === opt.value ? "#FBE7EB" : "#A6808B",
                     }}
                   >
                     <input
@@ -263,7 +263,7 @@ export default function RSVPSectionDynamic({
               <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-top-2 duration-300">
                 <div className="flex flex-col gap-2">
                   <label
-                    className="text-[#8A8178] text-xs tracking-widest uppercase ml-1"
+                    className="text-[#A6808B] text-xs tracking-widest uppercase ml-1"
                     style={{ fontFamily: "var(--font-jost)" }}
                   >
                     Kategori Undangan
@@ -272,31 +272,31 @@ export default function RSVPSectionDynamic({
                     <select
                       value={rsvpCategory}
                       onChange={(e) => setRsvpCategory(e.target.value)}
-                      className="w-full bg-transparent text-[#F5F0E8] text-sm py-3 px-4 focus:outline-none appearance-none"
+                      className="w-full bg-transparent text-[#FBE7EB] text-sm py-3 px-4 focus:outline-none appearance-none"
                       style={{ fontFamily: "var(--font-jost)" }}
                       required
                     >
-                      <option value="" disabled className="bg-[#2C2825]">
+                      <option value="" disabled className="bg-[#52363E]">
                         Pilih Kategori
                       </option>
                       {/* {(guestInfo.category === "Both" || guestInfo.category === "Akad") &&  */}
-                      <option value="Akad" className="bg-[#2C2825]">
+                      <option value="Akad" className="bg-[#52363E]">
                         Akad Nikah
                       </option>
                       {/* } */}
                       {/* {(guestInfo.category === "Both" || guestInfo.category === "Resepsi") &&  */}
-                      <option value="Resepsi" className="bg-[#2C2825]">
+                      <option value="Resepsi" className="bg-[#52363E]">
                         Resepsi
                       </option>
                       {/* } */}
                       {/* {guestInfo.category === "Both" && (
                      
                       )} */}
-                      <option value="Both" className="bg-[#2C2825]">
+                      <option value="Both" className="bg-[#52363E]">
                         Akad Nikah & Resepsi
                       </option>
                     </select>
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#8A8178]">
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#A6808B]">
                       ▼
                     </div>
                   </div>
@@ -305,13 +305,13 @@ export default function RSVPSectionDynamic({
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between items-end ml-1">
                     <label
-                      className="text-[#8A8178] text-xs tracking-widest uppercase"
+                      className="text-[#A6808B] text-xs tracking-widest uppercase"
                       style={{ fontFamily: "var(--font-jost)" }}
                     >
                       Number of Guests
                     </label>
                     <span
-                      className="text-[#8A8178] text-xs"
+                      className="text-[#A6808B] text-xs"
                       style={{ fontFamily: "var(--font-jost)" }}
                     >
                       max {guestInfo.maxPax}
@@ -323,12 +323,12 @@ export default function RSVPSectionDynamic({
                       type="button"
                       onClick={() => setPax((p) => Math.max(1, p - 1))}
                       disabled={pax <= 1}
-                      className="w-12 h-10 flex items-center justify-center rounded-lg bg-white/5 text-[#F5F0E8] text-lg hover:bg-[#C9A96E]/20 transition disabled:opacity-30 disabled:hover:bg-transparent"
+                      className="w-12 h-10 flex items-center justify-center rounded-lg bg-white/5 text-[#FBE7EB] text-lg hover:bg-[#D88C9C]/20 transition disabled:opacity-30 disabled:hover:bg-transparent"
                     >
                       −
                     </button>
                     <span
-                      className="text-[#F5F0E8] text-xl font-medium"
+                      className="text-[#FBE7EB] text-xl font-medium"
                       style={{ fontFamily: "var(--font-jost)" }}
                     >
                       {pax}
@@ -339,7 +339,7 @@ export default function RSVPSectionDynamic({
                         setPax((p) => Math.min(guestInfo.maxPax, p + 1))
                       }
                       disabled={pax >= guestInfo.maxPax}
-                      className="w-12 h-10 flex items-center justify-center rounded-lg bg-white/5 text-[#F5F0E8] text-lg hover:bg-[#C9A96E]/20 transition disabled:opacity-30 disabled:hover:bg-transparent"
+                      className="w-12 h-10 flex items-center justify-center rounded-lg bg-white/5 text-[#FBE7EB] text-lg hover:bg-[#D88C9C]/20 transition disabled:opacity-30 disabled:hover:bg-transparent"
                     >
                       +
                     </button>
@@ -350,7 +350,7 @@ export default function RSVPSectionDynamic({
 
             <div className="flex flex-col gap-2">
               <label
-                className="text-[#8A8178] text-xs tracking-widest uppercase ml-1 flex justify-between"
+                className="text-[#A6808B] text-xs tracking-widest uppercase ml-1 flex justify-between"
                 style={{ fontFamily: "var(--font-jost)" }}
               >
                 <span>Wishes for the Couple</span>
@@ -365,8 +365,8 @@ export default function RSVPSectionDynamic({
                 className="
                   w-full px-5 py-4 rounded-xl resize-none
                   bg-white/5 border border-white/10
-                  text-[#F5F0E8] placeholder-[#8A8178]/50
-                  text-sm focus:outline-none focus:border-[#C9A96E]/50
+                  text-[#FBE7EB] placeholder-[#A6808B]/50
+                  text-sm focus:outline-none focus:border-[#D88C9C]/50
                   transition-colors duration-200
                 "
                 style={{ fontFamily: "var(--font-jost)" }}
@@ -378,16 +378,16 @@ export default function RSVPSectionDynamic({
               disabled={isSubmitting}
               className="
                 w-full py-4 rounded-xl mt-4
-                bg-[#C9A96E] text-[#2C2825]
+                bg-[#D88C9C] text-[#52363E]
                 font-semibold text-sm tracking-[0.14em] uppercase
-                hover:bg-[#F5F0E8] disabled:opacity-50 disabled:hover:bg-[#C9A96E] transition-colors duration-300
+                hover:bg-[#FBE7EB] disabled:opacity-50 disabled:hover:bg-[#D88C9C] transition-colors duration-300
                 flex justify-center items-center gap-2
               "
               style={{ fontFamily: "var(--font-jost)" }}
             >
               {isSubmitting ? (
                 <>
-                  <span className="w-4 h-4 border-2 border-[#2C2825]/40 border-t-[#2C2825] rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-[#52363E]/40 border-t-[#52363E] rounded-full animate-spin" />
                   Sending...
                 </>
               ) : (

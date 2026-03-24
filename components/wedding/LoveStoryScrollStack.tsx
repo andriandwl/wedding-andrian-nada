@@ -131,13 +131,13 @@ export default function LoveStoryScrollStack() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#F5F0E8] py-24 overflow-hidden"
+      className="relative w-full bg-[#FBE7EB] py-24 overflow-hidden"
     >
       {/* ── Section title ── */}
       <div className="px-6 mb-20 text-center">
         <h2
           ref={titleRef}
-          className="text-[clamp(52px,9vw,120px)] leading-none text-[#2C2825] italic"
+          className="text-[clamp(52px,9vw,120px)] leading-none text-[#52363E] italic"
           style={{
             fontFamily: "var(--font-cormorant)",
             fontWeight: 300,
@@ -147,7 +147,7 @@ export default function LoveStoryScrollStack() {
           our love story
         </h2>
         <p
-          className="mt-4 text-[#8A8178] text-xs tracking-[0.2em] uppercase"
+          className="mt-4 text-[#A6808B] text-xs tracking-[0.2em] uppercase"
           style={{ fontFamily: "var(--font-jost)" }}
         >
           Four chapters of a life together
@@ -173,28 +173,28 @@ export default function LoveStoryScrollStack() {
               style={{ opacity: 0 }}
             >
               <span
-                className="text-[#C9A96E] text-xs tracking-[0.22em] uppercase"
+                className="text-[#D88C9C] text-xs tracking-[0.22em] uppercase"
                 style={{ fontFamily: "var(--font-jost)" }}
               >
                 {stage.label}
               </span>
 
               <h3
-                className="text-[clamp(32px,4vw,56px)] leading-tight text-[#2C2825] italic"
+                className="text-[clamp(32px,4vw,56px)] leading-tight text-[#52363E] italic"
                 style={{ fontFamily: "var(--font-cormorant)", fontWeight: 400 }}
               >
                 {stage.title}
               </h3>
 
               <p
-                className="text-[#8A8178] text-base leading-relaxed max-w-sm"
+                className="text-[#A6808B] text-base leading-relaxed max-w-sm"
                 style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
               >
                 {stage.description}
               </p>
 
               {/* Decorative line */}
-              <div className="w-12 h-px bg-[#C9A96E] mt-2" />
+              <div className="w-12 h-px bg-[#D88C9C] mt-2" />
             </div>
 
             {/* Polaroid photo stack */}
@@ -231,7 +231,7 @@ export default function LoveStoryScrollStack() {
                     </div>
                     {/* Caption below photo (polaroid style) */}
                     <p
-                      className="absolute bottom-2 left-0 right-0 text-center text-[10px] text-[#8A8178] tracking-wide"
+                      className="absolute bottom-2 left-0 right-0 text-center text-[10px] text-[#A6808B] tracking-wide"
                       style={{
                         fontFamily: "var(--font-great-vibes)",
                         fontSize: 14,
@@ -250,7 +250,7 @@ export default function LoveStoryScrollStack() {
       {/* Bottom ornament */}
       <div className="mt-32 flex justify-center">
         <p
-          className="text-[#C9A96E] text-4xl"
+          className="text-[#D88C9C] text-4xl"
           style={{ fontFamily: "var(--font-great-vibes)" }}
         >
           to be continued...

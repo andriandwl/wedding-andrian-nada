@@ -28,7 +28,7 @@ export async function generateMetadata(
 
   if (!guest) return { title: "Undangan Tidak Ditemukan" };
   return {
-    title: `Pernikahan Denada & Andrian - Undangan untuk ${guest.name}`,
+    title: `Pernikahan Nada & Andrian - Undangan untuk ${guest.name}`,
   };
 }
 
@@ -50,7 +50,7 @@ export default async function InvitationPage({ params }: Props) {
   };
 
   return (
-    <main className="relative w-full min-h-screen bg-[#F5F0E8]">
+    <main className="relative w-full min-h-screen bg-[#FBE7EB]">
       {/* Sticky pill navbar */}
       <Navbar />
 

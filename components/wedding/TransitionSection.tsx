@@ -183,14 +183,14 @@ export default function TransitionSection() {
         className="flex items-center gap-5 w-full max-w-xl mb-16"
         style={{ opacity: 0 }}
       >
-        <div className="flex-1 h-px bg-[#C9A96E]/40" />
+        <div className="flex-1 h-px bg-[#D88C9C]/40" />
         <span
-          className="text-[#C9A96E] text-2xl select-none"
+          className="text-[#D88C9C] text-2xl select-none"
           style={{ fontFamily: "var(--font-great-vibes)" }}
         >
           ✦
         </span>
-        <div className="flex-1 h-px bg-[#C9A96E]/40" />
+        <div className="flex-1 h-px bg-[#D88C9C]/40" />
       </div>
 
       {/* Quote */}
@@ -200,7 +200,7 @@ export default function TransitionSection() {
         style={{ opacity: 0 }}
       >
         <p
-          className="text-[clamp(28px,5vw,52px)] leading-tight text-[#2C2825] italic"
+          className="text-[clamp(28px,5vw,52px)] leading-tight text-[#52363E] italic"
           style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300 }}
         >
           &ldquo;Two souls, one heart — and a lifetime of adventures
@@ -224,13 +224,13 @@ export default function TransitionSection() {
               border: "0.5px solid rgba(201,169,110,0.22)",
             }}
           >
-            <span style={{ color: "#C9A96E" }}>
+            <span style={{ color: "#D88C9C" }}>
               <IconCalendar />
             </span>
             <div>
               <p
                 className="text-[0.62rem] tracking-[0.28em] uppercase mb-1"
-                style={{ color: "#C9A96E", fontFamily: "var(--font-jost)" }}
+                style={{ color: "#D88C9C", fontFamily: "var(--font-jost)" }}
               >
                 Date
               </p>
@@ -275,13 +275,13 @@ export default function TransitionSection() {
               border: "0.5px solid rgba(201,169,110,0.22)",
             }}
           >
-            <span style={{ color: "#C9A96E" }}>
+            <span style={{ color: "#D88C9C" }}>
               <IconClock />
             </span>
             <div>
               <p
                 className="text-[0.62rem] tracking-[0.28em] uppercase mb-1"
-                style={{ color: "#C9A96E", fontFamily: "var(--font-jost)" }}
+                style={{ color: "#D88C9C", fontFamily: "var(--font-jost)" }}
               >
                 Time
               </p>
@@ -327,13 +327,13 @@ export default function TransitionSection() {
               border: "0.5px solid rgba(201,169,110,0.22)",
             }}
           >
-            <span style={{ color: "#C9A96E" }}>
+            <span style={{ color: "#D88C9C" }}>
               <IconPin />
             </span>
             <div>
               <p
                 className="text-[0.62rem] tracking-[0.28em] uppercase mb-1"
-                style={{ color: "#C9A96E", fontFamily: "var(--font-jost)" }}
+                style={{ color: "#D88C9C", fontFamily: "var(--font-jost)" }}
               >
                 Venue
               </p>
@@ -384,7 +384,7 @@ export default function TransitionSection() {
             className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full transition-all duration-300 group"
             style={{
               border: "0.5px solid rgba(201,169,110,0.5)",
-              color: "#C9A96E",
+              color: "#D88C9C",
               fontFamily: "var(--font-jost)",
               fontSize: "0.72rem",
               letterSpacing: "0.18em",
@@ -393,7 +393,7 @@ export default function TransitionSection() {
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.background =
                 "rgba(201,169,110,0.08)";
-              (e.currentTarget as HTMLElement).style.borderColor = "#C9A96E";
+              (e.currentTarget as HTMLElement).style.borderColor = "#D88C9C";
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLElement).style.background = "transparent";

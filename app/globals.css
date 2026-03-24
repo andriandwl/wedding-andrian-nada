@@ -8,11 +8,11 @@
   --font-cormorant: "Cormorant Garamond", Georgia, serif;
   --font-great-vibes: "Great Vibes", cursive;
   --font-jost: "Jost", sans-serif;
-  --cream: #f5f0e8;
-  --cream-dark: #ede8dd;
-  --warm-gray: #8a8178;
-  --dark-warm: #2c2825;
-  --accent-warm: #c9a96e;
+  --cream: #FBE7EB;
+  --cream-dark: #F2D5DD;
+  --warm-gray: #A6808B;
+  --dark-warm: #52363E;
+  --accent-warm: #D88C9C;
 }
 
 * {

@@ -25,8 +25,8 @@ export default function Navbar() {
           transition-all duration-500 ease-out
           ${
             scrolled
-              ? "bg-[#F5F0E8]/80 backdrop-blur-md shadow-[0_2px_24px_rgba(44,40,37,0.08)] border border-[#C9A96E]/20"
-              : "bg-[#F5F0E8]/60 backdrop-blur-sm shadow-[0_1px_12px_rgba(44,40,37,0.04)]"
+              ? "bg-[#FBE7EB]/80 backdrop-blur-md shadow-[0_2px_24px_rgba(44,40,37,0.08)] border border-[#D88C9C]/20"
+              : "bg-[#FBE7EB]/60 backdrop-blur-sm shadow-[0_1px_12px_rgba(44,40,37,0.04)]"
           }
         `}
         style={{ minWidth: "min(680px, calc(100% - 32px))" }}
@@ -34,10 +34,10 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="font-serif text-xl font-medium tracking-wider text-[#2C2825] shrink-0"
+          className="font-serif text-xl font-medium tracking-wider text-[#52363E] shrink-0"
           style={{ fontFamily: "var(--font-cormorant)" }}
         >
-          D &amp; A
+          N &amp; A
         </Link>
 
         {/* Nav links — hidden on small mobile */}
@@ -46,7 +46,7 @@ export default function Navbar() {
             <li key={item}>
               <Link
                 href={`#${item.toLowerCase()}`}
-                className="font-sans text-xs tracking-[0.12em] uppercase text-[#8A8178] hover:text-[#2C2825] transition-colors duration-200"
+                className="font-sans text-xs tracking-[0.12em] uppercase text-[#A6808B] hover:text-[#52363E] transition-colors duration-200"
                 style={{ fontFamily: "var(--font-jost)" }}
               >
                 {item}
@@ -61,9 +61,9 @@ export default function Navbar() {
           className="
             shrink-0
             px-5 py-2 rounded-full
-            bg-[#2C2825] text-[#F5F0E8]
+            bg-[#52363E] text-[#FBE7EB]
             font-sans text-xs tracking-[0.14em] uppercase
-            hover:bg-[#C9A96E] transition-colors duration-300
+            hover:bg-[#D88C9C] transition-colors duration-300
           "
           style={{ fontFamily: "var(--font-jost)" }}
         >

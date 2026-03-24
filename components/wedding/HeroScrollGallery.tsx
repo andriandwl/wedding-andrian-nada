@@ -49,7 +49,7 @@ function BotanicalDivider({ wide = false }: { wide?: boolean }) {
           y1="0.5"
           x2={wide ? 80 : 48}
           y2="0.5"
-          stroke="#C9A96E"
+          stroke="#D88C9C"
           strokeWidth="0.5"
           strokeDasharray="3 2"
         />
@@ -57,16 +57,16 @@ function BotanicalDivider({ wide = false }: { wide?: boolean }) {
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path
           d="M12 4 C10 7 7 9 4 10 C7 10 10 11 12 14 C14 11 17 10 20 10 C17 9 14 7 12 4Z"
-          fill="#C9A96E"
+          fill="#D88C9C"
           fillOpacity="0.7"
         />
-        <circle cx="12" cy="14" r="1.5" fill="#C9A96E" />
+        <circle cx="12" cy="14" r="1.5" fill="#D88C9C" />
         <line
           x1="12"
           y1="15.5"
           x2="12"
           y2="20"
-          stroke="#C9A96E"
+          stroke="#D88C9C"
           strokeWidth="0.8"
           strokeOpacity="0.5"
         />
@@ -81,7 +81,7 @@ function BotanicalDivider({ wide = false }: { wide?: boolean }) {
           y1="0.5"
           x2={wide ? 80 : 48}
           y2="0.5"
-          stroke="#C9A96E"
+          stroke="#D88C9C"
           strokeWidth="0.5"
           strokeDasharray="3 2"
         />
@@ -194,13 +194,13 @@ function PersonCard({
           style={{
             width: 18,
             height: "0.5px",
-            background: "#C9A96E",
+            background: "#D88C9C",
             opacity: 0.6,
           }}
         />
         <p
           className="text-[0.62rem] tracking-[0.32em] uppercase"
-          style={{ color: "#C9A96E" }}
+          style={{ color: "#D88C9C" }}
         >
           {person.role}
         </p>
@@ -208,7 +208,7 @@ function PersonCard({
           style={{
             width: 18,
             height: "0.5px",
-            background: "#C9A96E",
+            background: "#D88C9C",
             opacity: 0.6,
           }}
         />
@@ -237,7 +237,7 @@ function PersonCard({
             width: 28,
             height: "0.5px",
             background:
-              "linear-gradient(90deg, transparent, #C9A96E, transparent)",
+              "linear-gradient(90deg, transparent, #D88C9C, transparent)",
             margin: "0.6rem auto 0.8rem",
           }}
         />
@@ -277,7 +277,7 @@ function PersonCard({
               width: 32,
               height: 32,
               border: "0.5px solid rgba(201,169,110,0.4)",
-              color: "#C9A96E",
+              color: "#D88C9C",
             }}
           >
             <svg
@@ -310,7 +310,7 @@ function PersonCard({
 function Connector() {
   return (
     <div className="flex flex-col items-center justify-center flex-shrink-0 select-none md:px-12 py-6 md:py-0 md:-mt-8">
-      <div className="w-[1.5px] h-[60px] bg-gradient-to-b from-transparent to-[#C9A96E]/50" />
+      <div className="w-[1.5px] h-[60px] bg-gradient-to-b from-transparent to-[#D88C9C]/50" />
       <div className="my-3 flex flex-col items-center">
         <svg
           width="28"
@@ -351,8 +351,8 @@ function Connector() {
             fill="rgba(201,169,110,0.4)"
             transform="rotate(135 18 18)"
           />
-          <circle cx="18" cy="18" r="3" fill="#C9A96E" opacity="0.9" />
-          <circle cx="18" cy="18" r="1.5" fill="#F5F0E8" />
+          <circle cx="18" cy="18" r="3" fill="#D88C9C" opacity="0.9" />
+          <circle cx="18" cy="18" r="1.5" fill="#FBE7EB" />
         </svg>
         <span
           className="italic leading-none"
@@ -367,7 +367,7 @@ function Connector() {
           &amp;
         </span>
       </div>
-      <div className="w-[1.5px] h-[60px] bg-gradient-to-b from-[#C9A96E]/50 to-transparent" />
+      <div className="w-[1.5px] h-[60px] bg-gradient-to-b from-[#D88C9C]/50 to-transparent" />
     </div>
   );
 }
@@ -398,7 +398,7 @@ export function CoupleStory() {
           aspectRatio: "1",
           zIndex: 0,
           opacity: 0.025,
-          backgroundImage: `radial-gradient(ellipse at 50% 50%, #C9A96E 0%, transparent 70%)`,
+          backgroundImage: `radial-gradient(ellipse at 50% 50%, #D88C9C 0%, transparent 70%)`,
         }}
       />
       <div
@@ -406,7 +406,7 @@ export function CoupleStory() {
         style={{
           height: "0.5px",
           background:
-            "linear-gradient(90deg, transparent, #C9A96E 20%, #C9A96E 80%, transparent)",
+            "linear-gradient(90deg, transparent, #D88C9C 20%, #D88C9C 80%, transparent)",
           opacity: 0.3,
           zIndex: 1,
         }}
@@ -424,7 +424,7 @@ export function CoupleStory() {
               fontFamily: "var(--font-great-vibes)",
               // FIX: safe range for mobile
               fontSize: "clamp(1.2rem, 4vw, 2.1rem)",
-              color: "#C9A96E",
+              color: "#D88C9C",
               opacity: 0.9,
               marginBottom: "0.5rem",
               letterSpacing: "0.02em",
@@ -474,7 +474,7 @@ export function CoupleStory() {
         style={{
           height: "0.5px",
           background:
-            "linear-gradient(90deg, transparent, #C9A96E 20%, #C9A96E 80%, transparent)",
+            "linear-gradient(90deg, transparent, #D88C9C 20%, #D88C9C 80%, transparent)",
           opacity: 0.3,
           zIndex: 1,
         }}
@@ -596,12 +596,14 @@ export default function HeroScrollGallery({
           sideLeftTopRef.current,
           sideInProps(-90, -24, -4).from,
           sideInProps(-90, -24, -4).to,
+
           0.18,
         );
         tl.fromTo(
           sideLeftBotRef.current,
           sideInProps(-90, 24, 2.5).from,
           sideInProps(-90, 24, 2.5).to,
+
           0.27,
         );
         tl.fromTo(
@@ -636,235 +638,6 @@ export default function HeroScrollGallery({
     };
   }, [isMobile]);
 
-  // ── MOBILE: static hero layout (no scroll animation) ──────────────────────
-  // if (isMobile) {
-  //   return (
-  //     /*
-  //      * FIX SAFE AREA — Notch / Dynamic Island / Home Indicator
-  //      *
-  //      * WAJIB tambahkan di layout.tsx / _document.tsx:
-  //      *   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  //      *
-  //      * Tanpa viewport-fit=cover, env(safe-area-inset-*) tidak bekerja.
-  //      *
-  //      * Penjelasan masalah di screenshot:
-  //      *   1. Yellow strip kanan  → body/html punya default margin, atau scrollbar menambah lebar
-  //      *   2. Konten di balik navbar (notch/DI) → tidak ada padding-top safe area
-  //      *   3. Scroll hint terpotong → tidak ada padding-bottom safe area (home indicator)
-  //      */
-  //     <div
-  //       className="relative overflow-x-hidden"
-  //       style={{
-  //         background: "#F5F0E8",
-  //         // Gunakan 100% bukan 100vw untuk menghindari horizontal scrollbar
-  //         width: "100%",
-  //         // Safe area kiri-kanan untuk rounded corner device (misal iPhone landscape)
-  //         paddingLeft: "env(safe-area-inset-left, 0px)",
-  //         paddingRight: "env(safe-area-inset-right, 0px)",
-  //       }}
-  //     >
-  //       {/* Hero photo — 100dvh lebih akurat dari 100svh/100vh di mobile browser */}
-  //       <div
-  //         className="relative w-full overflow-hidden"
-  //         style={{ height: "100dvh" }}
-  //       >
-  //         <Image
-  //           src={galleryImages[0].src}
-  //           alt={galleryImages[0].alt}
-  //           fill
-  //           priority
-  //           className="object-cover"
-  //           sizes="100vw"
-  //           style={{ objectPosition: "center 15%" }}
-  //         />
-
-  //         {/* Gradient — lebih gelap di atas (area notch) supaya konten tetap terbaca */}
-  //         <div
-  //           className="absolute inset-0"
-  //           style={{
-  //             background: [
-  //               "linear-gradient(180deg, rgba(0,0,0,0.40) 0%, transparent 22%)",
-  //               "linear-gradient(0deg,   rgba(0,0,0,0.55) 0%, transparent 45%)",
-  //             ].join(", "),
-  //           }}
-  //         />
-
-  //         {/* Overlay teks — padding-top mengikuti safe-area-inset-top (tinggi notch/DI) */}
-  //         <div
-  //           className="absolute inset-0 flex flex-col items-center justify-center text-white pointer-events-none"
-  //           style={{
-  //             paddingTop: "env(safe-area-inset-top, 0px)",
-  //             paddingLeft: "clamp(20px, 6vw, 48px)",
-  //             paddingRight: "clamp(20px, 6vw, 48px)",
-  //           }}
-  //         >
-  //           {guestName ? (
-  //             <p
-  //               className="mb-2 text-[0.65rem] md:text-[0.7rem] tracking-[0.2em] uppercase text-white/90"
-  //               style={{ fontFamily: "var(--font-jost)" }}
-  //             >
-  //               Dear {guestName},
-  //             </p>
-  //           ) : (
-  //             <p
-  //               className="mb-2 text-[0.58rem] tracking-[0.32em] uppercase text-white/60"
-  //               style={{ fontFamily: "var(--font-jost)" }}
-  //             >
-  //               The Wedding of
-  //             </p>
-  //           )}
-
-  //           <p
-  //             className="leading-none text-center w-full"
-  //             style={{
-  //               fontFamily: "var(--font-great-vibes)",
-  //               fontSize: "clamp(36px, 10vw, 64px)",
-  //               textShadow: "0 2px 40px rgba(0,0,0,0.35)",
-  //               letterSpacing: "0.01em",
-  //               wordBreak: "break-word",
-  //               overflowWrap: "break-word",
-  //             }}
-  //           >
-  //             Denada &amp; Andrian
-  //           </p>
-
-  //           <p
-  //             className="mt-4 text-[0.58rem] tracking-[0.2em] uppercase text-white/70"
-  //             style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
-  //           >
-  //             Celebrating Our Love
-  //           </p>
-
-  //           <div className="mt-5 flex items-center gap-3">
-  //             <div
-  //               style={{
-  //                 width: 28,
-  //                 height: "0.5px",
-  //                 background: "rgba(255,255,255,0.35)",
-  //               }}
-  //             />
-  //             <svg width="7" height="7" viewBox="0 0 8 8" fill="none">
-  //               <path
-  //                 d="M4 0L4.8 3.2L8 4L4.8 4.8L4 8L3.2 4.8L0 4L3.2 3.2Z"
-  //                 fill="rgba(255,255,255,0.5)"
-  //               />
-  //             </svg>
-  //             <div
-  //               style={{
-  //                 width: 28,
-  //                 height: "0.5px",
-  //                 background: "rgba(255,255,255,0.35)",
-  //               }}
-  //             />
-  //           </div>
-  //         </div>
-
-  //         {/* Scroll hint — bottom mengikuti home indicator agar tidak terpotong */}
-  //         <div
-  //           className="absolute left-1/2 flex flex-col items-center gap-2"
-  //           style={{
-  //             transform: "translateX(-50%)",
-  //             bottom: "calc(env(safe-area-inset-bottom, 0px) + 20px)",
-  //           }}
-  //         >
-  //           <p
-  //             className="text-[9px] tracking-[0.3em] uppercase text-white/60"
-  //             style={{ fontFamily: "var(--font-jost)" }}
-  //           >
-  //             scroll
-  //           </p>
-  //           <svg
-  //             width="18"
-  //             height="26"
-  //             viewBox="0 0 18 26"
-  //             fill="none"
-  //             className="opacity-50"
-  //           >
-  //             <rect
-  //               x="1"
-  //               y="1"
-  //               width="16"
-  //               height="24"
-  //               rx="8"
-  //               stroke="white"
-  //               strokeWidth="1"
-  //             />
-  //             <rect
-  //               x="8"
-  //               y="5"
-  //               width="2"
-  //               height="5"
-  //               rx="1"
-  //               fill="white"
-  //               style={{ animation: "scrollWheel 1.8s ease-in-out infinite" }}
-  //             />
-  //           </svg>
-  //         </div>
-  //       </div>
-
-  //       {/* Mobile gallery grid */}
-  //       <div
-  //         className="grid grid-cols-2 gap-2"
-  //         style={{
-  //           background: "#F5F0E8",
-  //           padding: "16px",
-  //           paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 16px)",
-  //         }}
-  //       >
-  //         {/* Left Column */}
-  //         <div className="flex flex-col gap-2">
-  //           {[galleryImages[1], galleryImages[3]].map((img, i) => (
-  //             <div
-  //               key={`left-${i}`}
-  //               className="overflow-hidden rounded-2xl"
-  //               style={{ aspectRatio: i === 0 ? "3/4" : "1/1" }}
-  //             >
-  //               <Image
-  //                 src={img.src}
-  //                 alt={img.alt}
-  //                 width={img.width}
-  //                 height={img.height}
-  //                 className="w-full h-full object-cover"
-  //               />
-  //             </div>
-  //           ))}
-  //         </div>
-  //         {/* Right Column */}
-  //         <div className="flex flex-col gap-2">
-  //           {[galleryImages[2], galleryImages[4]].map((img, i) => (
-  //             <div
-  //               key={`right-${i}`}
-  //               className="overflow-hidden rounded-2xl"
-  //               style={{ aspectRatio: i === 0 ? "1/1" : "3/4" }}
-  //             >
-  //               <Image
-  //                 src={img.src}
-  //                 alt={img.alt}
-  //                 width={img.width}
-  //                 height={img.height}
-  //                 className="w-full h-full object-cover"
-  //               />
-  //             </div>
-  //           ))}
-  //         </div>
-  //       </div>
-
-  //       <style
-  //         dangerouslySetInnerHTML={{
-  //           __html: `
-  //         @keyframes scrollWheel {
-  //           0%   { opacity: 1; transform: translateY(0); }
-  //           70%  { opacity: 0; transform: translateY(6px); }
-  //           71%  { opacity: 0; transform: translateY(0); }
-  //           100% { opacity: 1; transform: translateY(0); }
-  //         }
-  //       `,
-  //         }}
-  //       />
-  //     </div>
-  //   );
-  // }
-
   if (isMobile) {
     return <MobileHero guestName={guestName} />;
   }
@@ -879,7 +652,7 @@ export default function HeroScrollGallery({
     >
       <div
         className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center"
-        style={{ background: "#F5F0E8" }}
+        style={{ background: "#FBE7EB" }}
       >
         <div
           className="absolute inset-0 pointer-events-none"

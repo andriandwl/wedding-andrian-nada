@@ -9,7 +9,7 @@ import Footer from "@/components/wedding/Footer";
 
 export default function WeddingPage() {
   return (
-    <div className="relative w-full min-h-screen bg-[#F5F0E8]">
+    <div className="relative w-full min-h-screen bg-[#FBE7EB]">
       {/* Sticky pill navbar */}
       <Navbar />
 

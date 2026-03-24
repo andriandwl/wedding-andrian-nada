@@ -224,7 +224,7 @@ export function MobileHero({ guestName }: { guestName?: string }) {
       ref={containerRef}
       className="relative overflow-x-hidden"
       style={{
-        background: "#F5F0E8",
+        background: "#FBE7EB",
         width: "100%",
         paddingLeft: "env(safe-area-inset-left, 0px)",
         paddingRight: "env(safe-area-inset-right, 0px)",
@@ -275,7 +275,7 @@ export function MobileHero({ guestName }: { guestName?: string }) {
               style={{
                 width: `${2 + (i % 3)}px`,
                 height: `${2 + (i % 3)}px`,
-                background: i % 4 === 0 ? "#C9A96E" : "rgba(201,169,110,0.4)",
+                background: i % 4 === 0 ? "#D88C9C" : "rgba(201,169,110,0.4)",
                 left: `${(i * 37 + 11) % 93}%`,
                 top: `${(i * 53 + 7) % 85}%`,
                 opacity: 0.25,
@@ -492,7 +492,7 @@ export function MobileHero({ guestName }: { guestName?: string }) {
       <div
         ref={gallerySec}
         style={{
-          background: "#F5F0E8",
+          background: "#FBE7EB",
           padding: "32px 16px",
           paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)",
         }}
@@ -501,7 +501,7 @@ export function MobileHero({ guestName }: { guestName?: string }) {
         <div className="gallery-header text-center mb-6" style={{ opacity: 0 }}>
           <p
             className="text-[0.6rem] tracking-[0.38em] uppercase mb-2"
-            style={{ color: "#C9A96E", fontFamily: "var(--font-jost)" }}
+            style={{ color: "#D88C9C", fontFamily: "var(--font-jost)" }}
           >
             Our Moments
           </p>
@@ -510,13 +510,13 @@ export function MobileHero({ guestName }: { guestName?: string }) {
               style={{
                 width: 28,
                 height: "0.5px",
-                background: "linear-gradient(90deg, transparent, #C9A96E)",
+                background: "linear-gradient(90deg, transparent, #D88C9C)",
               }}
             />
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path
                 d="M5 0L6 4H10L7 6.5L8 10L5 7.5L2 10L3 6.5L0 4H4Z"
-                fill="#C9A96E"
+                fill="#D88C9C"
                 fillOpacity="0.7"
               />
             </svg>
@@ -524,7 +524,7 @@ export function MobileHero({ guestName }: { guestName?: string }) {
               style={{
                 width: 28,
                 height: "0.5px",
-                background: "linear-gradient(90deg, #C9A96E, transparent)",
+                background: "linear-gradient(90deg, #D88C9C, transparent)",
               }}
             />
           </div>

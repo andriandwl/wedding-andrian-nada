@@ -25,7 +25,7 @@ const EWALLET = {
 };
 
 const GIFT_ADDRESS = {
-  names: "Denada & Andrian",
+  names: "Nada & Andrian",
   address:
     "Jl. Melati Indah No. 12, Perumahan Harmoni\nKelurahan Sukamaju, Kec. Cimanggis\nDepok, Jawa Barat 16451",
 };
@@ -130,7 +130,7 @@ function GoldDivider() {
           d="M14 2 L16 12 L26 14 L16 16 L14 26 L12 16 L2 14 L12 12 Z"
           fill="rgba(201,169,110,0.5)"
         />
-        <circle cx="14" cy="14" r="2.5" fill="#C9A96E" />
+        <circle cx="14" cy="14" r="2.5" fill="#D88C9C" />
       </svg>
       <div
         style={{
@@ -197,7 +197,7 @@ function BankCard({
               fontSize: "0.65rem",
               fontWeight: 600,
               letterSpacing: "0.06em",
-              color: "#C9A96E",
+              color: "#D88C9C",
             }}
           >
             {logo}
@@ -229,7 +229,7 @@ function BankCard({
           style={{
             fontFamily: "var(--font-cormorant)",
             fontSize: "1.15rem",
-            color: "#F5F0E8",
+            color: "#FBE7EB",
             fontWeight: 400,
             lineHeight: 1.2,
           }}
@@ -260,7 +260,7 @@ function BankCard({
             style={{
               fontFamily: "var(--font-jost)",
               fontSize: "1rem",
-              color: "#F5F0E8",
+              color: "#FBE7EB",
               letterSpacing: "0.1em",
               fontWeight: 300,
             }}
@@ -275,8 +275,8 @@ function BankCard({
             background: copied
               ? "rgba(201,169,110,0.2)"
               : "rgba(201,169,110,0.1)",
-            border: `0.5px solid ${copied ? "#C9A96E" : "rgba(201,169,110,0.3)"}`,
-            color: "#C9A96E",
+            border: `0.5px solid ${copied ? "#D88C9C" : "rgba(201,169,110,0.3)"}`,
+            color: "#D88C9C",
             fontFamily: "var(--font-jost)",
             fontSize: "0.6rem",
             letterSpacing: "0.12em",
@@ -379,7 +379,7 @@ export default function GiftSection() {
             style={{
               fontFamily: "var(--font-great-vibes)",
               fontSize: "clamp(1.4rem, 4vw, 1.9rem)",
-              color: "#C9A96E",
+              color: "#D88C9C",
               opacity: 0.85,
               marginBottom: "0.4rem",
             }}
@@ -399,7 +399,7 @@ export default function GiftSection() {
             style={{
               fontFamily: "var(--font-cormorant)",
               fontSize: "clamp(2.2rem, 6vw, 3.4rem)",
-              color: "#F5F0E8",
+              color: "#FBE7EB",
               fontWeight: 300,
               lineHeight: 0.95,
               letterSpacing: "0.02em",
@@ -425,7 +425,7 @@ export default function GiftSection() {
         {/* ── Bank Transfer Cards ── */}
         <div className="w-full mt-12">
           <div className="flex items-center gap-3 mb-5">
-            <span style={{ color: "#C9A96E" }}>
+            <span style={{ color: "#D88C9C" }}>
               <IconGift />
             </span>
             <span
@@ -453,7 +453,7 @@ export default function GiftSection() {
               height="20"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#C9A96E"
+              stroke="#D88C9C"
               strokeWidth="1.4"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -481,7 +481,7 @@ export default function GiftSection() {
         {/* ── Shipping Address ── */}
         <div className="w-full">
           <div className="flex items-center gap-3 mb-5">
-            <span style={{ color: "#C9A96E" }}>
+            <span style={{ color: "#D88C9C" }}>
               <IconHome />
             </span>
             <span
@@ -516,7 +516,7 @@ export default function GiftSection() {
                 style={{
                   fontFamily: "var(--font-great-vibes)",
                   fontSize: "1.5rem",
-                  color: "#C9A96E",
+                  color: "#D88C9C",
                   opacity: 0.9,
                   marginBottom: "0.6rem",
                 }}
@@ -601,7 +601,7 @@ function EWalletCard({ data }: { data: typeof EWALLET }) {
           style={{
             fontFamily: "var(--font-jost)",
             fontSize: "1rem",
-            color: "#F5F0E8",
+            color: "#FBE7EB",
             letterSpacing: "0.1em",
             fontWeight: 300,
           }}
@@ -626,8 +626,8 @@ function EWalletCard({ data }: { data: typeof EWALLET }) {
           background: copied
             ? "rgba(201,169,110,0.2)"
             : "rgba(201,169,110,0.1)",
-          border: `0.5px solid ${copied ? "#C9A96E" : "rgba(201,169,110,0.3)"}`,
-          color: "#C9A96E",
+          border: `0.5px solid ${copied ? "#D88C9C" : "rgba(201,169,110,0.3)"}`,
+          color: "#D88C9C",
           fontFamily: "var(--font-jost)",
           fontSize: "0.62rem",
           letterSpacing: "0.14em",
