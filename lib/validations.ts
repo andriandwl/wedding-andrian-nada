@@ -6,11 +6,10 @@ import { z } from "zod";
 
 export const GuestCategoryEnum = z.enum(["Akad", "Resepsi", "Both"]);
 export const GuestStatusEnum = z.enum([
-  "Invited",
-  "Accepted",
-  "Declined",
-  "Not Invited",
-  "Maybe",
+  "NOT INVITED",
+  "INVITED",
+  "CONFIRMED",
+  "DECLINED",
 ]);
 
 // ── Create / Update guest ──────────────────────────────────────────────────
@@ -27,7 +26,7 @@ export const updateGuestSchema = createGuestSchema.partial();
 export const rsvpSchema = z.object({
   attending: z.boolean({ required_error: "Pilih status kehadiran" }),
   pax: z.coerce.number().int().min(1).optional(),
-  status: GuestStatusEnum.optional().nullable(),
+  // status: GuestStatusEnum.default("Not Invited"),
   category: GuestCategoryEnum.optional().nullable(),
   note: z.string().max(500).optional().default(""),
 });

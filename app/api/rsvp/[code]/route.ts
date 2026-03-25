@@ -80,7 +80,6 @@ export async function POST(
       guest.rsvp = {
         attending: true,
         pax: finalPax,
-        status: "Accepted",
         note: note?.trim() || null,
         respondedAt: new Date(),
       };
@@ -90,7 +89,6 @@ export async function POST(
       guest.rsvp = {
         attending: false,
         pax: null,
-        status: "Declined",
         note: note?.trim() || null,
         respondedAt: new Date(),
       };

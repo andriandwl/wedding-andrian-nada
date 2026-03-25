@@ -7,8 +7,17 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseId = process.env.NOTION_DATABASE_ID;
 const datasourceId = process.env.NOTION_DATASOURCE_ID;
 
+const RSVP_STATUS_MAP: Record<string, string> = {
+  // guest.status values (top-level — single source of truth)
+  "NOT INVITED": "Not Invited",
+  INVITED: "Invited",
+  CONFIRMED: "Accepted",
+  DECLINED: "Declined",
+};
+
 function buildNotionProperties(guest: Partial<IGuest>) {
   const properties: Record<string, any> = {};
+  console.log("guesst", guest);
 
   // ── Guest Name (title) ──────────────────────────────────────────
   if (guest.name !== undefined) {
@@ -39,16 +48,20 @@ function buildNotionProperties(guest: Partial<IGuest>) {
     properties["Kategori Undangan"] = {
       select: { name: guest.category },
     };
+    properties["Jenis Undangan"] = {
+      select: { name: "Digital" },
+    };
   }
 
   // ── RSVP Status (status) ────────────────────────────────────────
   // Prioritas: rsvp.status > guest.status
   // Notion Status property hanya menerima name string yang valid di database,
   // tidak bisa di-set null — skip kalau tidak ada nilai.
-  const rsvpStatusName = guest.rsvp?.status ?? guest.status ?? null;
-  if (rsvpStatusName) {
+  const rawStatus = guest.status ?? null;
+  const mappedStatus = rawStatus ? (RSVP_STATUS_MAP[rawStatus] ?? null) : null;
+  if (mappedStatus) {
     properties["RSVP Status"] = {
-      status: { name: rsvpStatusName },
+      status: { name: mappedStatus },
     };
   }
 
@@ -107,7 +120,7 @@ export async function createNotionGuest(guest: IGuest): Promise<string | null> {
       properties: buildNotionProperties(guest),
     });
 
-    console.log("[Notion] Guest created:", response);
+    console.log("[Notion] Guest created:", guest);
     return response.id;
   } catch (error) {
     console.error("[Notion] Error creating guest:", error);
@@ -180,7 +193,8 @@ export async function syncNotionToMongo() {
         props["RSVP Status"]?.status?.name ||
         props["RSVP Status"]?.select?.name ||
         "";
-      let status: "INVITED" | "CONFIRMED" | "DECLINED" = "INVITED";
+      let status: "INVITED" | "CONFIRMED" | "DECLINED" | "NOT INVITED" =
+        "NOT INVITED";
       if (
         notionStatus === "Confirmed" ||
         notionStatus === "CONFIRMED" ||
@@ -189,6 +203,8 @@ export async function syncNotionToMongo() {
         status = "CONFIRMED";
       } else if (notionStatus === "Declined" || notionStatus === "DECLINED") {
         status = "DECLINED";
+      } else if (notionStatus === "Invited" || notionStatus === "INVITED") {
+        status = "INVITED";
       }
 
       const hadirTidak = props["Hadir / Tidak"]?.select?.name;
@@ -235,7 +251,6 @@ export async function syncNotionToMongo() {
 
       if (attending !== null) {
         guest.rsvp.attending = attending;
-        guest.rsvp.status = rsvpStatus;
         guest.rsvp.pax = paxHadir;
       }
 

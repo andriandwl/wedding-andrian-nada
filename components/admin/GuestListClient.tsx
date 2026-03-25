@@ -19,7 +19,7 @@ interface Guest {
   invitationCode: string;
   category: "Akad" | "Resepsi" | "Both";
   maxPax: number;
-  status: "INVITED" | "CONFIRMED" | "DECLINED";
+  status: "INVITED" | "CONFIRMED" | "DECLINED" | "NOT INVITED";
   rsvp: Rsvp;
   createdAt: string;
 }
@@ -40,15 +40,17 @@ interface Pagination {
 
 // ── Constants ──────────────────────────────────────────────────────────────
 const STATUS_STYLES: Record<string, string> = {
-  INVITED: "bg-yellow-100 text-yellow-800 border border-yellow-200",
-  CONFIRMED: "bg-green-100  text-green-800  border border-green-200",
-  DECLINED: "bg-red-100    text-red-800    border border-red-200",
+  "NOT INVITED": "bg-gray-100  text-gray-500   border border-gray-200",
+  INVITED:       "bg-yellow-100 text-yellow-800 border border-yellow-200",
+  CONFIRMED:     "bg-green-100  text-green-800  border border-green-200",
+  DECLINED:      "bg-red-100    text-red-800    border border-red-200",
 };
 
 const STATUS_LABELS: Record<string, string> = {
-  INVITED: "Menunggu",
-  CONFIRMED: "Hadir",
-  DECLINED: "Tidak Hadir",
+  "NOT INVITED": "Belum Diundang",
+  INVITED:       "Menunggu",
+  CONFIRMED:     "Hadir",
+  DECLINED:      "Tidak Hadir",
 };
 
 const CATEGORY_STYLES: Record<string, string> = {
@@ -281,6 +283,7 @@ export default function GuestListClient() {
             className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 transition bg-white"
           >
             <option value="">Semua Status</option>
+            <option value="NOT INVITED">Belum Diundang</option>
             <option value="INVITED">Menunggu</option>
             <option value="CONFIRMED">Hadir</option>
             <option value="DECLINED">Tidak Hadir</option>
