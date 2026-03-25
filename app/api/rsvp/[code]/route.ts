@@ -80,6 +80,7 @@ export async function POST(
       guest.rsvp = {
         attending: true,
         pax: finalPax,
+        status: "Accepted",
         note: note?.trim() || null,
         respondedAt: new Date(),
       };
@@ -89,6 +90,7 @@ export async function POST(
       guest.rsvp = {
         attending: false,
         pax: null,
+        status: "Declined",
         note: note?.trim() || null,
         respondedAt: new Date(),
       };
@@ -98,7 +100,11 @@ export async function POST(
 
     await guest.save();
 
-    console.log(guest);
+    // Sync to Notion
+    if (guest.notionPageId) {
+      const { updateNotionGuest } = await import("@/lib/notion");
+      updateNotionGuest(guest.notionPageId, guest as any).catch(console.error);
+    }
 
     return ok({
       message: "RSVP berhasil disimpan",

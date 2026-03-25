@@ -7,12 +7,12 @@
  *
  * All routes require valid admin session.
  */
-import { NextRequest } from 'next/server';
-import mongoose from 'mongoose';
-import { connectDB } from '@/lib/db';
-import { requireAdmin } from '@/lib/auth';
-import Guest from '@/models/Guest';
-import { updateGuestSchema } from '@/lib/validations';
+import { NextRequest } from "next/server";
+import mongoose from "mongoose";
+import { connectDB } from "@/lib/db";
+import { requireAdmin } from "@/lib/auth";
+import Guest from "@/models/Guest";
+import { updateGuestSchema } from "@/lib/validations";
 import {
   ok,
   zodErr,
@@ -20,7 +20,8 @@ import {
   notFound,
   serverError,
   err,
-} from '@/lib/api-response';
+} from "@/lib/api-response";
+import { updateNotionGuest, deleteNotionGuest } from "@/lib/notion";
 
 // ── Validate ObjectId helper ───────────────────────────────────────────────
 function isValidId(id: string) {
@@ -35,15 +36,15 @@ export async function GET(
   const admin = await requireAdmin();
   if (!admin) return unauthorized();
 
-  if (!isValidId(params.id)) return notFound('Tamu tidak ditemukan');
+  if (!isValidId(params.id)) return notFound("Tamu tidak ditemukan");
 
   try {
     await connectDB();
     const guest = await Guest.findById(params.id).lean();
-    if (!guest) return notFound('Tamu tidak ditemukan');
+    if (!guest) return notFound("Tamu tidak ditemukan");
     return ok(guest);
   } catch (e) {
-    console.error('[GET /api/admin/guests/:id]', e);
+    console.error("[GET /api/admin/guests/:id]", e);
     return serverError();
   }
 }
@@ -56,13 +57,13 @@ export async function PUT(
   const admin = await requireAdmin();
   if (!admin) return unauthorized();
 
-  if (!isValidId(params.id)) return notFound('Tamu tidak ditemukan');
+  if (!isValidId(params.id)) return notFound("Tamu tidak ditemukan");
 
   let body: unknown;
   try {
     body = await req.json();
   } catch {
-    return err('BAD_REQUEST', 'Request body harus berupa JSON', 400);
+    return err("BAD_REQUEST", "Request body harus berupa JSON", 400);
   }
 
   const parsed = updateGuestSchema.safeParse(body);
@@ -76,10 +77,16 @@ export async function PUT(
       { new: true, runValidators: true },
     ).lean();
 
-    if (!guest) return notFound('Tamu tidak ditemukan');
+    if (!guest) return notFound("Tamu tidak ditemukan");
+
+    // Sync to Notion
+    if (guest.notionPageId) {
+      updateNotionGuest(guest.notionPageId, guest as any).catch(console.error);
+    }
+
     return ok(guest);
   } catch (e) {
-    console.error('[PUT /api/admin/guests/:id]', e);
+    console.error("[PUT /api/admin/guests/:id]", e);
     return serverError();
   }
 }
@@ -92,15 +99,21 @@ export async function DELETE(
   const admin = await requireAdmin();
   if (!admin) return unauthorized();
 
-  if (!isValidId(params.id)) return notFound('Tamu tidak ditemukan');
+  if (!isValidId(params.id)) return notFound("Tamu tidak ditemukan");
 
   try {
     await connectDB();
     const guest = await Guest.findByIdAndDelete(params.id).lean();
-    if (!guest) return notFound('Tamu tidak ditemukan');
+    if (!guest) return notFound("Tamu tidak ditemukan");
+
+    // Sync to Notion
+    if (guest.notionPageId) {
+      deleteNotionGuest(guest.notionPageId).catch(console.error);
+    }
+
     return ok({ deleted: true, id: params.id });
   } catch (e) {
-    console.error('[DELETE /api/admin/guests/:id]', e);
+    console.error("[DELETE /api/admin/guests/:id]", e);
     return serverError();
   }
 }

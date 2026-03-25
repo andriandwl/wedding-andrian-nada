@@ -8,6 +8,7 @@ export interface IRsvp {
   pax: number | null;
   note: string | null;
   respondedAt: Date | null;
+  status: "Invited" | "Not Invited" | "Accepted" | "Declined";
 }
 
 export interface IGuest extends Document {
@@ -18,6 +19,7 @@ export interface IGuest extends Document {
   maxPax: number;
   status: "INVITED" | "CONFIRMED" | "DECLINED";
   rsvp: IRsvp;
+  notionPageId?: string; // Menyimpan ID halaman di Notion
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +30,7 @@ const RsvpSchema = new Schema<IRsvp>(
     pax: { type: Number, default: null },
     note: { type: String, default: null },
     respondedAt: { type: Date, default: null },
+    status: { type: String, default: "Not Invited" },
   },
   { _id: false },
 );
@@ -66,8 +69,11 @@ const GuestSchema = new Schema<IGuest>(
         category: null,
         note: null,
         respondedAt: null,
+        status: "Invited",
       }),
     },
+
+    notionPageId: { type: String, default: null },
   },
   { timestamps: true },
 );
