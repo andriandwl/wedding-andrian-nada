@@ -166,6 +166,21 @@ export default function GuestListClient() {
     });
   }
 
+  // ── Send WhatsApp ──────────────────────────────────────────────────────
+  function sendWhatsApp(guest: Guest) {
+    const phone = guest.phone.replace(/[^0-9]/g, "").replace(/^0/, "62");
+    const inviteUrl = `${window.location.origin}/invitation/${guest.invitationCode}`;
+    const message =
+      `Halo ${guest.name}! 👋\n\n` +
+      `Kami dengan penuh kebahagiaan mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami. 💍\n\n` +
+      `Silakan buka link undangan digital Anda di bawah ini:\n` +
+      `${inviteUrl}\n\n` +
+      `Kode undangan: *${guest.invitationCode}*\n\n` +
+      `Mohon konfirmasi kehadiran Anda melalui link tersebut. Terima kasih! 🙏`;
+    const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, "_blank");
+  }
+
   // ── Toast helper ───────────────────────────────────────────────────────
   function showToast(msg: string, type: "success" | "error") {
     setToast({ msg, type });
@@ -490,6 +505,17 @@ export default function GuestListClient() {
                           {copied === g.invitationCode ? "✅" : "🔗"}
                         </button>
 
+                        {/* WhatsApp */}
+                        {g.phone && (
+                          <button
+                            onClick={() => sendWhatsApp(g)}
+                            title="Kirim undangan via WhatsApp"
+                            className="p-1.5 rounded-lg hover:bg-green-50 text-green-600 hover:text-green-800 transition text-xs"
+                          >
+                            WA
+                          </button>
+                        )}
+
                         {/* Edit */}
                         <Link
                           href={`/admin/guests/${g._id}/edit`}
@@ -510,6 +536,17 @@ export default function GuestListClient() {
 
                       {/* Always visible on mobile */}
                       <div className="flex items-center justify-end gap-1 sm:hidden">
+                        {g.phone && (
+                          <>
+                            <button
+                              onClick={() => sendWhatsApp(g)}
+                              className="text-xs text-green-600 underline"
+                            >
+                              WA
+                            </button>
+                            <span className="text-gray-300">·</span>
+                          </>
+                        )}
                         <Link
                           href={`/admin/guests/${g._id}/edit`}
                           className="text-xs text-blue-600 underline"

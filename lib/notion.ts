@@ -17,7 +17,7 @@ const RSVP_STATUS_MAP: Record<string, string> = {
 
 function buildNotionProperties(guest: Partial<IGuest>) {
   const properties: Record<string, any> = {};
-  console.log("guesst", guest);
+
 
   // ── Guest Name (title) ──────────────────────────────────────────
   if (guest.name !== undefined) {
@@ -103,10 +103,7 @@ function buildNotionProperties(guest: Partial<IGuest>) {
   // ── Tamu Siapa (select) ─────────────────────────────────────────
   // Sama seperti Jenis Undangan — tambahkan kalau model sudah ada field-nya.
 
-  console.log(
-    "[Notion] Built properties:",
-    JSON.stringify(properties, null, 2),
-  );
+
 
   return properties;
 }
@@ -120,7 +117,7 @@ export async function createNotionGuest(guest: IGuest): Promise<string | null> {
       properties: buildNotionProperties(guest),
     });
 
-    console.log("[Notion] Guest created:", guest);
+
     return response.id;
   } catch (error) {
     console.error("[Notion] Error creating guest:", error);
@@ -134,7 +131,6 @@ export async function updateNotionGuest(
 ): Promise<void> {
   if (!databaseId || !process.env.NOTION_API_KEY) return;
 
-  console.log("[Notion] Updating guest:", guestUpdates);
 
   try {
     await notion.pages.update({

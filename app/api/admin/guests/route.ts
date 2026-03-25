@@ -117,7 +117,6 @@ export async function POST(req: NextRequest) {
     const payload = { ...parsed.data, invitationCode };
 
     const guest = await Guest.create(payload);
-    console.log(guest);
 
     // Sync to Notion
     try {
