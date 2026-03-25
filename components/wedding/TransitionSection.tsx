@@ -125,12 +125,14 @@ function CountCell({ value, label }: { value: number; label: string }) {
   );
 }
 
-export default function TransitionSection() {
+export default function TransitionSection({ settings }: { settings?: any }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const quoteRef = useRef<HTMLQuoteElement>(null);
   const dateRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
-  const { d, h, m, s } = useCountdown(WEDDING_DATE);
+  
+  const targetDate = settings?.weddingDate ? new Date(`${settings.weddingDate}T${settings.resepsiTime || "16:00"}:00+08:00`) : WEDDING_DATE;
+  const { d, h, m, s } = useCountdown(targetDate);
 
   useEffect(() => {
     let ctx: { revert(): void } | null = null;
@@ -201,10 +203,9 @@ export default function TransitionSection() {
       >
         <p
           className="text-[clamp(28px,5vw,52px)] leading-tight text-[#52363E] italic"
-          style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300 }}
+          style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, whiteSpace: "pre-wrap" }}
         >
-          &ldquo;Two souls, one heart — and a lifetime of adventures
-          ahead.&rdquo;
+          {settings?.openingQuote || "“Two souls, one heart — and a lifetime of adventures ahead.”"}
         </p>
       </blockquote>
 
@@ -243,7 +244,7 @@ export default function TransitionSection() {
                   lineHeight: 1.1,
                 }}
               >
-                14 September
+                {targetDate.getDate()} {targetDate.toLocaleDateString("id-ID", { month: "long" })}
               </p>
               <p
                 className="text-sm mt-0.5"
@@ -253,7 +254,7 @@ export default function TransitionSection() {
                   fontWeight: 300,
                 }}
               >
-                2026
+                {targetDate.getFullYear()}
               </p>
             </div>
             <p
@@ -263,7 +264,7 @@ export default function TransitionSection() {
                 fontFamily: "var(--font-jost)",
               }}
             >
-              Sunday · Akad &amp; Resepsi
+              {targetDate.toLocaleDateString("id-ID", { weekday: "long" })} · Akad &amp; Resepsi
             </p>
           </div>
 
@@ -294,7 +295,7 @@ export default function TransitionSection() {
                   lineHeight: 1.1,
                 }}
               >
-                16:00
+                {settings?.resepsiTime || "16:00"}
               </p>
               <p
                 className="text-sm mt-0.5"
@@ -314,8 +315,8 @@ export default function TransitionSection() {
                 fontFamily: "var(--font-jost)",
               }}
             >
-              <p>Akad Nikah · 10:00 WIB</p>
-              <p>Resepsi · 16:00 WITA</p>
+              <p>Akad Nikah · {settings?.akadTime || "10:00"} WIB</p>
+              <p>Resepsi · {settings?.resepsiTime || "16:00"} WITA</p>
             </div>
           </div>
 
@@ -346,7 +347,7 @@ export default function TransitionSection() {
                   lineHeight: 1.1,
                 }}
               >
-                Tanah Lot
+                {settings?.venueName || "Tanah Lot"}
               </p>
               <p
                 className="text-sm mt-0.5"
@@ -356,21 +357,17 @@ export default function TransitionSection() {
                   fontWeight: 300,
                 }}
               >
-                Bali, Indonesia
+                {settings?.venueCity || "Bali, Indonesia"}
               </p>
             </div>
             <p
-              className="text-[0.68rem] leading-relaxed mt-1"
+              className="text-[0.68rem] leading-relaxed mt-1 whitespace-pre-line"
               style={{
                 color: "var(--warm-gray)",
                 fontFamily: "var(--font-jost)",
               }}
             >
-              Jl. Raya Tanah Lot,
-              <br />
-              Beraban, Kec. Kediri,
-              <br />
-              Tabanan, Bali 82121
+              {settings?.venueAddress || "Jl. Raya Tanah Lot,\nBeraban, Kec. Kediri,\nTabanan, Bali 82121"}
             </p>
           </div>
         </div>
@@ -378,7 +375,7 @@ export default function TransitionSection() {
         {/* ── Open Maps button ── */}
         <div className="flex justify-center mt-6">
           <a
-            href={MAPS_URL}
+            href={settings?.mapsLink || MAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-7 py-3 rounded-full transition-all duration-300 group"

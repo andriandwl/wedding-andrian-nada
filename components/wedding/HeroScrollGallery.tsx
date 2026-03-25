@@ -12,24 +12,26 @@ import { MobileHero } from "./MobileHero";
 const GROOM_PHOTO = groomPhoto;
 const BRIDE_PHOTO = bridePhoto;
 
-const people = [
-  {
-    name: "Denada Putri",
-    role: "Bride",
-    parents: ["Bapak Hendra Wijaya", "Ibu Sari Dewi"],
-    photo: BRIDE_PHOTO,
-    instagram: "https://instagram.com",
-    side: "bride",
-  },
-  {
-    name: "Andrian Dwi Haryanto",
-    role: "Groom",
-    parents: ["Bapak Dal Haryanto", "Ibu Sukimah"],
-    photo: GROOM_PHOTO,
-    instagram: "https://instagram.com",
-    side: "groom",
-  },
-];
+function getPeople(settings?: any) {
+  return [
+    {
+      name: settings?.brideFullName || settings?.brideName || "Denada Putri",
+      role: "Bride",
+      parents: settings?.brideParents?.split("&").map((p:string)=>p.trim()) || ["Bapak Hendra Wijaya", "Ibu Sari Dewi"],
+      photo: BRIDE_PHOTO,
+      instagram: settings?.brideInstagram || "https://instagram.com",
+      side: "bride",
+    },
+    {
+      name: settings?.groomFullName || settings?.groomName || "Andrian Dwi Haryanto",
+      role: "Groom",
+      parents: settings?.groomParents?.split("&").map((p:string)=>p.trim()) || ["Bapak Dal Haryanto", "Ibu Sukimah"],
+      photo: GROOM_PHOTO,
+      instagram: settings?.groomInstagram || "https://instagram.com",
+      side: "groom",
+    },
+  ];
+}
 
 // ── Reusable primitives ────────────────────────────────────────────────────────
 
@@ -171,7 +173,7 @@ function PersonCard({
   person,
   index,
 }: {
-  person: (typeof people)[0];
+  person: ReturnType<typeof getPeople>[0];
   index: number;
 }) {
   return (
@@ -248,7 +250,7 @@ function PersonCard({
         >
           Putri/Putra dari
         </p>
-        {person.parents.map((p, i) => (
+        {person.parents.map((p: string, i: number) => (
           <p
             key={i}
             className="text-[0.78rem]"
@@ -373,7 +375,8 @@ function Connector() {
 }
 
 // ── CoupleStory ────────────────────────────────────────────────────────────────
-export function CoupleStory() {
+export function CoupleStory({ settings }: { settings?: any }) {
+  const people = getPeople(settings);
   return (
     <section
       id="story"
@@ -509,7 +512,8 @@ export function CoupleStory() {
 // ── HeroScrollGallery ──────────────────────────────────────────────────────────
 export default function HeroScrollGallery({
   guestName,
-}: { guestName?: string } = {}) {
+  settings,
+}: { guestName?: string; settings?: any } = {}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const heroImgRef = useRef<HTMLDivElement>(null);
   const overlayTextRef = useRef<HTMLDivElement>(null);
@@ -639,7 +643,7 @@ export default function HeroScrollGallery({
   }, [isMobile]);
 
   if (isMobile) {
-    return <MobileHero guestName={guestName} />;
+    return <MobileHero guestName={guestName} settings={settings} />;
   }
 
   // ── TABLET & DESKTOP: scroll animation layout ──────────────────────────────

@@ -12,6 +12,7 @@ import Footer from "@/components/wedding/Footer";
 
 import { connectDB } from "@/lib/db";
 import Guest from "@/models/Guest";
+import Setting from "@/models/Setting";
 
 type Props = {
   params: { code: string };
@@ -43,6 +44,13 @@ export default async function InvitationPage({ params }: Props) {
     return notFound();
   }
 
+  let setting: any = await Setting.findOne().lean();
+  if (!setting) {
+    const newSetting = new Setting();
+    await newSetting.save();
+    setting = JSON.parse(JSON.stringify(newSetting));
+  }
+
   // Convert MongoDB ObjectIds to string for client components
   const sanitizedGuest = {
     ...guest,
@@ -55,13 +63,13 @@ export default async function InvitationPage({ params }: Props) {
       <Navbar />
 
       {/* Section 1: Full-screen hero → scroll-morphing collage */}
-      <HeroScrollGallery guestName={guest.name} />
+      <HeroScrollGallery guestName={guest.name} settings={setting} />
 
       {/* Section 2: Couple profiles + love story timeline */}
-      <CoupleStory />
+      <CoupleStory settings={setting} />
 
       {/* Section 3: Quote + event details + countdown */}
-      <TransitionSection />
+      <TransitionSection settings={setting} />
 
       {/* Section 4: Love story with polaroid stack animation */}
       <LoveStoryScrollStack />
@@ -70,7 +78,7 @@ export default async function InvitationPage({ params }: Props) {
       <RSVPSectionDynamic code={params.code} guestInfo={sanitizedGuest} />
 
       {/* Section 6: Gift / digital transfer */}
-      <GiftSection />
+      <GiftSection settings={setting} />
 
       {/* Footer */}
       <Footer />

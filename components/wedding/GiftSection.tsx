@@ -2,33 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// ── Gift data — update names / numbers as needed ──────────────────────────────
-const BANK_ACCOUNTS = [
-  {
-    bank: "BCA",
-    accountName: "Denada Putri",
-    accountNumber: "1234567890",
-    logo: "BCA",
-  },
-  {
-    bank: "Mandiri",
-    accountName: "Andrian Dwi Haryanto",
-    accountNumber: "1370024475667",
-    logo: "MDR",
-  },
-];
-
-const EWALLET = {
-  label: "GoPay / OVO / Dana",
-  number: "0812-3456-7890",
-  name: "Denada Putri",
-};
-
-const GIFT_ADDRESS = {
-  names: "Nada & Andrian",
-  address:
-    "Jl. Melati Indah No. 12, Perumahan Harmoni\nKelurahan Sukamaju, Kec. Cimanggis\nDepok, Jawa Barat 16451",
-};
+// ── Gift data — dynamically generated inside the component ────
 
 // ── Copy-to-clipboard hook ───────────────────────────────────────────────────
 function useCopy() {
@@ -292,8 +266,36 @@ function BankCard({
 }
 
 // ── GiftSection ───────────────────────────────────────────────────────────────
-export default function GiftSection() {
+export default function GiftSection({ settings }: { settings?: any }) {
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  const bankAccounts = [
+    {
+      bank: settings?.bank1Name || "BCA",
+      accountName: settings?.bank1AccountName || "Denada Putri",
+      accountNumber: settings?.bank1AccountNumber || "1234567890",
+      logo: (settings?.bank1Name || "BCA").slice(0, 3).toUpperCase(),
+    },
+    {
+      bank: settings?.bank2Name || "Mandiri",
+      accountName: settings?.bank2AccountName || "Andrian Dwi Haryanto",
+      accountNumber: settings?.bank2AccountNumber || "1370024475667",
+      logo: (settings?.bank2Name || "MDR").slice(0, 3).toUpperCase(),
+    },
+  ];
+
+  const ewallet = {
+    label: settings?.ewalletName || "GoPay / OVO / Dana",
+    number: settings?.ewalletAccountNumber || "0812-3456-7890",
+    name: settings?.ewalletAccountName || "Denada Putri",
+  };
+
+  const giftAddress = {
+    names: settings?.giftAddressNames || "Nada & Andrian",
+    address:
+      settings?.giftAddressFull ||
+      "Jl. Melati Indah No. 12, Perumahan Harmoni\nKelurahan Sukamaju, Kec. Cimanggis\nDepok, Jawa Barat 16451",
+  };
 
   useEffect(() => {
     let ctx: { revert(): void } | null = null;
@@ -439,7 +441,7 @@ export default function GiftSection() {
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {BANK_ACCOUNTS.map((acc, i) => (
+            {bankAccounts.map((acc, i) => (
               <BankCard key={acc.accountNumber} {...acc} delay={i * 120} />
             ))}
           </div>
@@ -472,7 +474,7 @@ export default function GiftSection() {
             </span>
           </div>
 
-          <EWalletCard data={EWALLET} />
+          <EWalletCard data={ewallet} />
         </div>
 
         {/* ── Divider ── */}
@@ -521,7 +523,7 @@ export default function GiftSection() {
                   marginBottom: "0.6rem",
                 }}
               >
-                {GIFT_ADDRESS.names}
+                {giftAddress.names}
               </p>
               <div
                 style={{
@@ -540,7 +542,7 @@ export default function GiftSection() {
                   letterSpacing: "0.06em",
                 }}
               >
-                {GIFT_ADDRESS.address}
+                {giftAddress.address}
               </p>
             </div>
           </div>
@@ -575,7 +577,7 @@ export default function GiftSection() {
 }
 
 // ── EWalletCard (local sub-component) ────────────────────────────────────────
-function EWalletCard({ data }: { data: typeof EWALLET }) {
+function EWalletCard({ data }: { data: any }) {
   const { copiedKey, copy } = useCopy();
   const copied = copiedKey === "ewallet";
 

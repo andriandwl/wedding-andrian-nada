@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { galleryImages } from "@/lib/data";
 
-export function MobileHero({ guestName }: { guestName?: string }) {
+export function MobileHero({ guestName, settings }: { guestName?: string, settings?: any }) {
   // Refs untuk elemen yang dianimasi
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -322,7 +322,7 @@ export function MobileHero({ guestName }: { guestName?: string }) {
               lineHeight: 0.92,
             }}
           >
-            Nada{" "}
+            {settings?.brideName || "Nada"}{" "}
             <span
               style={{
                 fontFamily: "var(--font-cormorant)",
@@ -345,7 +345,7 @@ export function MobileHero({ guestName }: { guestName?: string }) {
               lineHeight: 0.92,
             }}
           >
-            Andrian
+            {settings?.groomName || "Andrian"}
           </p>
 
           {/* Subtitle */}

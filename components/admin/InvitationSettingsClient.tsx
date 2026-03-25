@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-interface InvitationSettings {
+export interface InvitationSettings {
   // Pengantin
   groomName: string;
   brideName: string;
@@ -10,60 +10,86 @@ interface InvitationSettings {
   brideFullName: string;
   groomParents: string;
   brideParents: string;
+  groomInstagram: string;
+  brideInstagram: string;
 
-  // Akad Nikah
-  akadDate: string;
+  // Acara (Event)
+  weddingDate: string;
   akadTime: string;
-  akadVenue: string;
-  akadAddress: string;
-
-  // Resepsi
-  resepsiDate: string;
   resepsiTime: string;
-  resepsiVenue: string;
-  resepsiAddress: string;
+  venueName: string;
+  venueCity: string;
+  venueAddress: string;
+  mapsLink: string;
 
   // Pesan & Quote
   openingQuote: string;
   closingMessage: string;
 
-  // Link Maps
-  mapsLink: string;
+  // Hadiah & Rekening
+  bank1Name: string;
+  bank1AccountName: string;
+  bank1AccountNumber: string;
+  
+  bank2Name: string;
+  bank2AccountName: string;
+  bank2AccountNumber: string;
+
+  ewalletName: string;
+  ewalletAccountName: string;
+  ewalletAccountNumber: string;
+
+  giftAddressNames: string;
+  giftAddressFull: string;
 }
 
 const defaultSettings: InvitationSettings = {
-  groomName: "Rizky",
-  brideName: "Amira",
-  groomFullName: "Muhammad Rizky Pratama, S.Kom",
-  brideFullName: "Amira Zahra Putri, S.E.",
-  groomParents: "Bapak Ahmad & Ibu Sari",
-  brideParents: "Bapak Hasan & Ibu Dewi",
+  groomName: "Andrian",
+  brideName: "Nada",
+  groomFullName: "Andrian Dwi Haryanto",
+  brideFullName: "Denada Putri",
+  groomParents: "Bapak Dal Haryanto & Ibu Sukimah",
+  brideParents: "Bapak Hendra Wijaya & Ibu Sari Dewi",
+  groomInstagram: "https://instagram.com",
+  brideInstagram: "https://instagram.com",
 
-  akadDate: "2025-03-15",
-  akadTime: "08:00",
-  akadVenue: "Masjid Al-Ikhlas",
-  akadAddress: "Jl. Raya Kebayoran No. 12, Jakarta Selatan",
+  weddingDate: "2026-09-14",
+  akadTime: "10:00",
+  resepsiTime: "16:00",
+  venueName: "Tanah Lot",
+  venueCity: "Bali, Indonesia",
+  venueAddress: "Jl. Raya Tanah Lot, Beraban, Kec. Kediri, Tabanan, Bali 82121",
+  mapsLink:
+    "https://www.google.com/maps/search/?api=1&query=Tanah+Lot+Temple+Bali+Indonesia",
 
-  resepsiDate: "2025-03-15",
-  resepsiTime: "11:00",
-  resepsiVenue: "Gedung Graha Santika",
-  resepsiAddress: "Jl. Gatot Subroto Kav. 25, Jakarta Selatan",
-
-  openingQuote:
-    '"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri." (QS. Ar-Rum: 21)',
+  openingQuote: '"Two souls, one heart — and a lifetime of adventures ahead."',
   closingMessage:
     "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.",
 
-  mapsLink: "https://maps.google.com",
+  bank1Name: "BCA",
+  bank1AccountName: "Denada Putri",
+  bank1AccountNumber: "1234567890",
+
+  bank2Name: "Mandiri",
+  bank2AccountName: "Andrian Dwi Haryanto",
+  bank2AccountNumber: "1370024475667",
+
+  ewalletName: "GoPay / OVO / Dana",
+  ewalletAccountName: "Denada Putri",
+  ewalletAccountNumber: "0812-3456-7890",
+
+  giftAddressNames: "Nada & Andrian",
+  giftAddressFull:
+    "Jl. Melati Indah No. 12, Perumahan Harmoni\nKelurahan Sukamaju, Kec. Cimanggis\nDepok, Jawa Barat 16451",
 };
 
-type Tab = "pengantin" | "akad" | "resepsi" | "pesan";
+type Tab = "pengantin" | "acara" | "pesan" | "hadiah";
 
 const tabItems: { id: Tab; label: string; icon: string }[] = [
   { id: "pengantin", label: "Pengantin", icon: "💑" },
-  { id: "akad", label: "Akad Nikah", icon: "🕌" },
-  { id: "resepsi", label: "Resepsi", icon: "🎊" },
+  { id: "acara", label: "Pelaksanaan", icon: "🕌" },
   { id: "pesan", label: "Pesan & Info", icon: "💬" },
+  { id: "hadiah", label: "Kado & Rekening", icon: "🎁" },
 ];
 
 export default function InvitationSettingsClient() {
@@ -71,6 +97,24 @@ export default function InvitationSettingsClient() {
   const [activeTab, setActiveTab] = useState<Tab>("pengantin");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const res = await fetch("/api/admin/settings");
+        const json = await res.json();
+        if (json.ok && json.data) {
+          setSettings(json.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch settings:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchSettings();
+  }, []);
 
   function update(key: keyof InvitationSettings, value: string) {
     setSettings((prev) => ({ ...prev, [key]: value }));
@@ -79,11 +123,29 @@ export default function InvitationSettingsClient() {
 
   async function handleSave() {
     setSaving(true);
-    // Simulate save — connect to your API here
-    await new Promise((res) => setTimeout(res, 900));
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    try {
+      const res = await fetch("/api/admin/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(settings),
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-20">
+        <span className="w-8 h-8 border-4 border-rose-500/30 border-t-rose-500 rounded-full animate-spin" />
+      </div>
+    );
   }
 
   return (
@@ -166,18 +228,18 @@ export default function InvitationSettingsClient() {
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-rose-800">
-            {settings.groomName} & {settings.brideName}
+            {settings.brideName} & {settings.groomName}
           </p>
           <p className="text-xs text-rose-500 mt-0.5 truncate">
-            {settings.resepsiDate
-              ? new Date(settings.resepsiDate).toLocaleDateString("id-ID", {
+            {settings.weddingDate
+              ? new Date(settings.weddingDate).toLocaleDateString("id-ID", {
                   weekday: "long",
                   day: "numeric",
                   month: "long",
                   year: "numeric",
                 })
               : "Tanggal belum diatur"}{" "}
-            · {settings.resepsiVenue || "Venue belum diatur"}
+            · {settings.venueName || "Venue belum diatur"}
           </p>
         </div>
         <span className="text-xs text-rose-400 hidden sm:block shrink-0">
@@ -208,27 +270,32 @@ export default function InvitationSettingsClient() {
         {/* Tab content */}
         <div className="p-6">
           {activeTab === "pengantin" && (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-in fade-in duration-300">
               <SectionTitle title="Data Mempelai Pria" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormField
                   label="Nama Panggilan"
                   value={settings.groomName}
                   onChange={(v) => update("groomName", v)}
-                  placeholder="contoh: Rizky"
+                  placeholder="contoh: Andrian"
                 />
                 <FormField
-                  label="Nama Lengkap & Gelar"
+                  label="Nama Lengkap & Gelar (jika ada)"
                   value={settings.groomFullName}
                   onChange={(v) => update("groomFullName", v)}
-                  placeholder="contoh: Muhammad Rizky Pratama, S.Kom"
+                  placeholder="contoh: Andrian Dwi Haryanto"
                 />
                 <FormField
                   label="Nama Orang Tua"
                   value={settings.groomParents}
                   onChange={(v) => update("groomParents", v)}
-                  placeholder="contoh: Bapak Ahmad & Ibu Sari"
-                  className="sm:col-span-2"
+                  placeholder="contoh: Bapak Dal Haryanto & Ibu Sukimah"
+                />
+                <FormField
+                  label="Link Instagram (opsional)"
+                  value={settings.groomInstagram}
+                  onChange={(v) => update("groomInstagram", v)}
+                  placeholder="contoh: https://instagram.com/andrian"
                 />
               </div>
 
@@ -239,35 +306,40 @@ export default function InvitationSettingsClient() {
                     label="Nama Panggilan"
                     value={settings.brideName}
                     onChange={(v) => update("brideName", v)}
-                    placeholder="contoh: Amira"
+                    placeholder="contoh: Nada"
                   />
                   <FormField
-                    label="Nama Lengkap & Gelar"
+                    label="Nama Lengkap & Gelar (jika ada)"
                     value={settings.brideFullName}
                     onChange={(v) => update("brideFullName", v)}
-                    placeholder="contoh: Amira Zahra Putri, S.E."
+                    placeholder="contoh: Denada Putri"
                   />
                   <FormField
                     label="Nama Orang Tua"
                     value={settings.brideParents}
                     onChange={(v) => update("brideParents", v)}
-                    placeholder="contoh: Bapak Hasan & Ibu Dewi"
-                    className="sm:col-span-2"
+                    placeholder="contoh: Bapak Hendra Wijaya & Ibu Sari Dewi"
+                  />
+                  <FormField
+                    label="Link Instagram (opsional)"
+                    value={settings.brideInstagram}
+                    onChange={(v) => update("brideInstagram", v)}
+                    placeholder="contoh: https://instagram.com/denada"
                   />
                 </div>
               </div>
             </div>
           )}
 
-          {activeTab === "akad" && (
-            <div className="space-y-6">
-              <SectionTitle title="Detail Akad Nikah" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {activeTab === "acara" && (
+            <div className="space-y-6 animate-in fade-in duration-300">
+              <SectionTitle title="Jadwal Pelaksanaan" />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <FormField
-                  label="Tanggal Akad"
+                  label="Tanggal Acara"
                   type="date"
-                  value={settings.akadDate}
-                  onChange={(v) => update("akadDate", v)}
+                  value={settings.weddingDate}
+                  onChange={(v) => update("weddingDate", v)}
                 />
                 <FormField
                   label="Waktu Akad"
@@ -276,91 +348,74 @@ export default function InvitationSettingsClient() {
                   onChange={(v) => update("akadTime", v)}
                 />
                 <FormField
-                  label="Nama Venue"
-                  value={settings.akadVenue}
-                  onChange={(v) => update("akadVenue", v)}
-                  placeholder="contoh: Masjid Al-Ikhlas"
-                />
-                <FormField
-                  label="Alamat Lengkap"
-                  value={settings.akadAddress}
-                  onChange={(v) => update("akadAddress", v)}
-                  placeholder="Masukkan alamat lengkap"
-                />
-              </div>
-              <DatePreview
-                label="Akad Nikah"
-                date={settings.akadDate}
-                time={settings.akadTime}
-                venue={settings.akadVenue}
-                icon="🕌"
-              />
-            </div>
-          )}
-
-          {activeTab === "resepsi" && (
-            <div className="space-y-6">
-              <SectionTitle title="Detail Resepsi Pernikahan" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <FormField
-                  label="Tanggal Resepsi"
-                  type="date"
-                  value={settings.resepsiDate}
-                  onChange={(v) => update("resepsiDate", v)}
-                />
-                <FormField
                   label="Waktu Resepsi"
                   type="time"
                   value={settings.resepsiTime}
                   onChange={(v) => update("resepsiTime", v)}
                 />
-                <FormField
-                  label="Nama Venue"
-                  value={settings.resepsiVenue}
-                  onChange={(v) => update("resepsiVenue", v)}
-                  placeholder="contoh: Gedung Graha Santika"
-                />
-                <FormField
-                  label="Alamat Lengkap"
-                  value={settings.resepsiAddress}
-                  onChange={(v) => update("resepsiAddress", v)}
-                  placeholder="Masukkan alamat lengkap"
-                />
-                <FormField
-                  label="Link Google Maps"
-                  value={settings.mapsLink}
-                  onChange={(v) => update("mapsLink", v)}
-                  placeholder="https://maps.google.com/..."
-                  className="sm:col-span-2"
-                />
               </div>
+
+              <div className="border-t border-gray-100 pt-6">
+                <SectionTitle title="Lokasi (Venue)" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                  <FormField
+                    label="Nama Venue"
+                    value={settings.venueName}
+                    onChange={(v) => update("venueName", v)}
+                    placeholder="contoh: Tanah Lot"
+                  />
+                  <FormField
+                    label="Nama Kota / Wilayah"
+                    value={settings.venueCity}
+                    onChange={(v) => update("venueCity", v)}
+                    placeholder="contoh: Bali, Indonesia"
+                  />
+                  <FormField
+                    label="Alamat Lengkap"
+                    value={settings.venueAddress}
+                    onChange={(v) => update("venueAddress", v)}
+                    placeholder="Masukkan alamat lengkap..."
+                    multiline
+                    rows={2}
+                    className="sm:col-span-2"
+                  />
+                  <FormField
+                    label="Link Google Maps"
+                    value={settings.mapsLink}
+                    onChange={(v) => update("mapsLink", v)}
+                    placeholder="https://maps.google.com/..."
+                    className="sm:col-span-2"
+                  />
+                </div>
+              </div>
+
               <DatePreview
-                label="Resepsi Pernikahan"
-                date={settings.resepsiDate}
-                time={settings.resepsiTime}
-                venue={settings.resepsiVenue}
-                icon="🎊"
+                label="Preview Jadwal & Venue"
+                date={settings.weddingDate}
+                time={`Akad: ${settings.akadTime} | Resepsi: ${settings.resepsiTime}`}
+                venue={`${settings.venueName} — ${settings.venueCity}`}
+                icon="🗺️"
               />
             </div>
           )}
 
           {activeTab === "pesan" && (
-            <div className="space-y-6">
-              <SectionTitle title="Quote Pembuka" />
+            <div className="space-y-6 animate-in fade-in duration-300">
+              <SectionTitle title="Pesan Pembuka (Opening Quote)" />
               <FormField
-                label="Ayat / Quote"
+                label="Ayat / Quote Pembuka"
                 value={settings.openingQuote}
                 onChange={(v) => update("openingQuote", v)}
                 multiline
                 rows={3}
-                placeholder="Masukkan ayat Al-Quran atau quote pembuka undangan"
+                placeholder="Two souls, one heart — and a lifetime of adventures ahead."
               />
 
               <div className="border-t border-gray-100 pt-6">
-                <SectionTitle title="Pesan Penutup" />
+                <SectionTitle title="Pesan Penutup (Closing Message)" />
                 <div className="mt-4">
                   <FormField
-                    label="Pesan untuk Tamu"
+                    label="Pesan Terima Kasih / Permohonan Doa"
                     value={settings.closingMessage}
                     onChange={(v) => update("closingMessage", v)}
                     multiline
@@ -373,14 +428,14 @@ export default function InvitationSettingsClient() {
               {/* Preview */}
               <div className="bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-100 rounded-2xl p-5">
                 <p className="text-xs font-semibold text-rose-400 uppercase tracking-wider mb-3">
-                  Preview Quote
+                  Preview Pembuka
                 </p>
                 <p className="text-sm text-rose-800 italic leading-relaxed">
                   {settings.openingQuote || "—"}
                 </p>
                 <div className="border-t border-rose-100 mt-4 pt-4">
                   <p className="text-xs font-semibold text-rose-400 uppercase tracking-wider mb-2">
-                    Preview Pesan Penutup
+                    Preview Penutup
                   </p>
                   <p className="text-sm text-rose-700 leading-relaxed">
                     {settings.closingMessage || "—"}
@@ -389,6 +444,51 @@ export default function InvitationSettingsClient() {
               </div>
             </div>
           )}
+
+          {activeTab === "hadiah" && (
+            <div className="space-y-6 animate-in fade-in duration-300">
+              <SectionTitle title="Kirim Hadiah (Bank Transfer)" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
+                <div className="space-y-3">
+                  <p className="text-xs font-semibold text-gray-500 uppercase">Bank 1</p>
+                  <FormField label="Nama Bank (Cth: BCA)" value={settings.bank1Name} onChange={v => update("bank1Name", v)} />
+                  <FormField label="Nama Pemilik Rekening" value={settings.bank1AccountName} onChange={v => update("bank1AccountName", v)} />
+                  <FormField label="Nomor Rekening" value={settings.bank1AccountNumber} onChange={v => update("bank1AccountNumber", v)} />
+                </div>
+                <div className="space-y-3">
+                  <p className="text-xs font-semibold text-gray-500 uppercase">Bank 2</p>
+                  <FormField label="Nama Bank (Cth: Mandiri)" value={settings.bank2Name} onChange={v => update("bank2Name", v)} />
+                  <FormField label="Nama Pemilik Rekening" value={settings.bank2AccountName} onChange={v => update("bank2AccountName", v)} />
+                  <FormField label="Nomor Rekening" value={settings.bank2AccountNumber} onChange={v => update("bank2AccountNumber", v)} />
+                </div>
+              </div>
+
+              <div className="border-t border-gray-100 pt-6">
+                <SectionTitle title="E-Wallet (GoPay/OVO/Dana)" />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
+                  <FormField label="Label (Cth: GoPay / OVO)" value={settings.ewalletName} onChange={v => update("ewalletName", v)} />
+                  <FormField label="Atas Nama" value={settings.ewalletAccountName} onChange={v => update("ewalletAccountName", v)} />
+                  <FormField label="Nomor Telepon/Akun" value={settings.ewalletAccountNumber} onChange={v => update("ewalletAccountNumber", v)} />
+                </div>
+              </div>
+
+              <div className="border-t border-gray-100 pt-6">
+                <SectionTitle title="Alamat Pengiriman Kado Fisik" />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
+                  <FormField label="Penerima" value={settings.giftAddressNames} onChange={v => update("giftAddressNames", v)} />
+                  <FormField 
+                    label="Alamat Pengiriman Lengkap" 
+                    value={settings.giftAddressFull} 
+                    onChange={v => update("giftAddressFull", v)} 
+                    multiline 
+                    rows={4} 
+                    className="sm:col-span-2" 
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </div>
@@ -486,9 +586,7 @@ function DatePreview({
           {label}
         </p>
         <p className="text-sm font-semibold text-gray-800">{formatted}</p>
-        {time && (
-          <p className="text-xs text-gray-500 mt-0.5">Pukul {time} WIB</p>
-        )}
+        {time && <p className="text-xs text-gray-500 mt-0.5">{time}</p>}
         {venue && <p className="text-xs text-gray-400 mt-0.5">{venue}</p>}
       </div>
     </div>
