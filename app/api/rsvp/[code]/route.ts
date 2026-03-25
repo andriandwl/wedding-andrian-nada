@@ -100,10 +100,14 @@ export async function POST(
 
     await guest.save();
 
-    // Sync to Notion
+    // Sync to Notion - only update fields that RSVP changes!
     if (guest.notionPageId) {
       const { updateNotionGuest } = await import("@/lib/notion");
-      updateNotionGuest(guest.notionPageId, guest as any).catch(console.error);
+      updateNotionGuest(guest.notionPageId, {
+        rsvp: guest.rsvp,
+        category: guest.category,
+        status: guest.status,
+      }).catch(console.error);
     }
 
     return ok({

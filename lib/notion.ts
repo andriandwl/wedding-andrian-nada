@@ -7,63 +7,93 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseId = process.env.NOTION_DATABASE_ID;
 const datasourceId = process.env.NOTION_DATASOURCE_ID;
 
-// Helper to map Guest to Notion properties
 function buildNotionProperties(guest: Partial<IGuest>) {
-  const properties: any = {};
+  const properties: Record<string, any> = {};
 
+  // ── Guest Name (title) ──────────────────────────────────────────
   if (guest.name !== undefined) {
     properties["Guest Name"] = {
-      title: [{ text: { content: guest.name } }],
+      title: [{ text: { content: guest.name ?? "" } }],
     };
   }
 
-  if (guest.phone) {
+  // ── Phone (phone_number) ────────────────────────────────────────
+  if (guest.phone !== undefined) {
     properties["Phone"] = {
-      phone_number: guest.phone,
+      // Notion menerima null untuk clear field phone
+      phone_number: guest.phone || null,
     };
   }
 
+  // ── Jumlah Pax (number) ─────────────────────────────────────────
   if (guest.maxPax !== undefined) {
     properties["Jumlah Pax"] = {
-      number: guest.maxPax,
+      number: guest.maxPax ?? null,
     };
   }
 
-  if (guest.category !== undefined) {
-    properties["Jenis Undangan"] = {
+  // ── Kategori Undangan (select) ──────────────────────────────────
+  // Notion select tidak bisa di-set null, harus dihapus dari payload
+  // atau gunakan {} untuk clear. Kita skip saja kalau null.
+  if (guest.category !== undefined && guest.category !== null) {
+    properties["Kategori Undangan"] = {
       select: { name: guest.category },
     };
   }
 
-  if (guest.rsvp && guest.rsvp.status !== undefined) {
+  // ── RSVP Status (status) ────────────────────────────────────────
+  // Prioritas: rsvp.status > guest.status
+  // Notion Status property hanya menerima name string yang valid di database,
+  // tidak bisa di-set null — skip kalau tidak ada nilai.
+  const rsvpStatusName = guest.rsvp?.status ?? guest.status ?? null;
+  if (rsvpStatusName) {
     properties["RSVP Status"] = {
-      status: { name: guest.rsvp.status },
-    };
-  } else if (guest.status !== undefined) {
-    properties["RSVP Status"] = {
-      status: { name: guest.status },
+      status: { name: rsvpStatusName },
     };
   }
 
-  // RSVP Sub-properties
-  if (guest.rsvp) {
-    if (guest.rsvp.attending !== null && guest.rsvp.attending !== undefined) {
-      properties["Hadir / Tidak"] = {
-        select: { name: guest.rsvp.attending ? "Hadir" : "Tidak" },
-      };
-    }
+  // ── Hadir / Tidak (select) ──────────────────────────────────────
+  // Satu sumber kebenaran: rsvp.attending lebih spesifik dari guest.status.
+  // Jangan pakai dua blok if yang bisa saling override.
+  let hadirTidakName: string | null = null;
 
-    if (guest.rsvp.pax !== undefined) {
-      properties["Pax Hadir"] = {
-        number: guest.rsvp.pax || 0,
-      };
-    }
-  } else if (guest.status === "CONFIRMED" || guest.status === "DECLINED") {
-    // Fallback if rsvp object is missing but status is known
+  if (guest.rsvp?.attending !== undefined && guest.rsvp?.attending !== null) {
+    // rsvp sudah diisi — pakai nilai attending
+    hadirTidakName = guest.rsvp.attending ? "Hadir" : "Tidak Hadir";
+  } else if (guest.status === "CONFIRMED") {
+    // Fallback: status CONFIRMED tapi rsvp belum ada
+    hadirTidakName = "Hadir";
+  } else if (guest.status === "DECLINED") {
+    // Fallback: status DECLINED tapi rsvp belum ada
+    hadirTidakName = "Tidak Hadir";
+  }
+  // INVITED / undefined → tidak di-set agar kolom tetap kosong di Notion
+
+  if (hadirTidakName !== null) {
     properties["Hadir / Tidak"] = {
-      select: { name: guest.status === "CONFIRMED" ? "Hadir" : "Tidak" },
+      select: { name: hadirTidakName },
     };
   }
+
+  // ── Pax Hadir (number) ──────────────────────────────────────────
+  // Set selama rsvp ada, meski attending null (bisa saja pax diisi manual)
+  if (guest.rsvp?.pax !== undefined) {
+    properties["Pax Hadir"] = {
+      number: guest.rsvp.pax ?? null,
+    };
+  }
+
+  // ── Jenis Undangan (select) ─────────────────────────────────────
+  // Belum ada field ini di model, tambahkan kalau nanti diperlukan.
+  // Contoh: if (guest.jenisUndangan) { properties["Jenis Undangan"] = { select: { name: guest.jenisUndangan } }; }
+
+  // ── Tamu Siapa (select) ─────────────────────────────────────────
+  // Sama seperti Jenis Undangan — tambahkan kalau model sudah ada field-nya.
+
+  console.log(
+    "[Notion] Built properties:",
+    JSON.stringify(properties, null, 2),
+  );
 
   return properties;
 }
@@ -146,7 +176,10 @@ export async function syncNotionToMongo() {
       const maxPax = props["Jumlah Pax"]?.number || 1;
       const category = props["Jenis Undangan"]?.select?.name || "Both";
       // Map Notion RSVP Status → Guest model status enum
-      const notionStatus = props["RSVP Status"]?.status?.name || "";
+      const notionStatus =
+        props["RSVP Status"]?.status?.name ||
+        props["RSVP Status"]?.select?.name ||
+        "";
       let status: "INVITED" | "CONFIRMED" | "DECLINED" = "INVITED";
       if (
         notionStatus === "Confirmed" ||
