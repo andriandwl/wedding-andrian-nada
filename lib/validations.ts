@@ -20,7 +20,13 @@ export const createGuestSchema = z.object({
   maxPax: z.coerce.number().int().min(1).max(20).default(1),
 });
 
-export const updateGuestSchema = createGuestSchema.partial();
+export const updateGuestSchema = z.object({
+  name: z.string().min(1, "Nama wajib diisi").max(100).optional(),
+  phone: z.string().max(20).optional(),
+  category: GuestCategoryEnum.optional(),
+  maxPax: z.coerce.number().int().min(1).max(20).optional(),
+  status: GuestStatusEnum.optional(),
+});
 
 // ── RSVP ──────────────────────────────────────────────────────────────────
 export const rsvpSchema = z.object({

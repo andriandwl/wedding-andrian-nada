@@ -66,16 +66,21 @@ export async function PUT(
     return err("BAD_REQUEST", "Request body harus berupa JSON", 400);
   }
 
+  console.log(body);
+
   const parsed = updateGuestSchema.safeParse(body);
   if (!parsed.success) return zodErr(parsed.error);
 
   try {
     await connectDB();
+    console.log(parsed.data);
     const guest = await Guest.findByIdAndUpdate(
       params.id,
       { $set: parsed.data },
       { new: true, runValidators: true },
     ).lean();
+
+    console.log(guest);
 
     if (!guest) return notFound("Tamu tidak ditemukan");
 

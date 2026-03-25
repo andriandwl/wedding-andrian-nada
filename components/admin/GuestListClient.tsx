@@ -48,7 +48,7 @@ const STATUS_STYLES: Record<string, string> = {
 
 const STATUS_LABELS: Record<string, string> = {
   "NOT INVITED": "Belum Diundang",
-  INVITED:       "Menunggu",
+  INVITED:       "Sudah Diundang",
   CONFIRMED:     "Hadir",
   DECLINED:      "Tidak Hadir",
 };
@@ -167,7 +167,7 @@ export default function GuestListClient() {
   }
 
   // ── Send WhatsApp ──────────────────────────────────────────────────────
-  function sendWhatsApp(guest: Guest) {
+  async function sendWhatsApp(guest: Guest) {
     const phone = guest.phone.replace(/[^0-9]/g, "").replace(/^0/, "62");
     const inviteUrl = `${window.location.origin}/invitation/${guest.invitationCode}`;
     const message =
@@ -179,6 +179,26 @@ export default function GuestListClient() {
       `Mohon konfirmasi kehadiran Anda melalui link tersebut. Terima kasih! 🙏`;
     const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(waUrl, "_blank");
+
+    // Auto-update status ke INVITED jika masih NOT INVITED
+    if (guest.status === "NOT INVITED") {
+      try {
+        const res = await fetch(`/api/admin/guests/${guest._id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "INVITED" }),
+        });
+        const json = await res.json();
+        if (json.ok) {
+          showToast(`Status ${guest.name} diubah ke "Menunggu"`, "success");
+          fetchGuests();
+        } else {
+          showToast("Gagal mengubah status tamu", "error");
+        }
+      } catch {
+        showToast("Koneksi gagal saat mengubah status", "error");
+      }
+    }
   }
 
   // ── Toast helper ───────────────────────────────────────────────────────
