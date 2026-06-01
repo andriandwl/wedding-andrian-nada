@@ -203,6 +203,15 @@ export async function syncNotionToMongo() {
         status = "INVITED";
       }
 
+      // Skip guests that are "Not Invited" — jangan sinkronkan atau update
+      if (
+        notionStatus === "Not Invited" ||
+        notionStatus === "NOT INVITED" ||
+        notionStatus === ""
+      ) {
+        continue;
+      }
+
       const hadirTidak = props["Hadir / Tidak"]?.select?.name;
       const paxHadir = props["Pax Hadir"]?.number || null;
 
