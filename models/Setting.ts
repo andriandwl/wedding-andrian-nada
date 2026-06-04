@@ -39,6 +39,9 @@ export interface ISetting extends Document {
 
   giftAddressNames: string;
   giftAddressFull: string;
+
+  // Photobooth
+  photoboothFrameStyle: "classic" | "dark" | "minimal";
 }
 
 const SettingSchema = new Schema<ISetting>({
@@ -76,6 +79,12 @@ const SettingSchema = new Schema<ISetting>({
 
   giftAddressNames: { type: String, default: "Nada & Andrian" },
   giftAddressFull: { type: String, default: "Jl. Melati Indah No. 12, Perumahan Harmoni\nKelurahan Sukamaju, Kec. Cimanggis\nDepok, Jawa Barat 16451" },
+
+  photoboothFrameStyle: {
+    type: String,
+    enum: ["classic", "dark", "minimal"],
+    default: "classic",
+  },
 }, { timestamps: true });
 
 const Setting: Model<ISetting> = mongoose.models.Setting || mongoose.model<ISetting>("Setting", SettingSchema);

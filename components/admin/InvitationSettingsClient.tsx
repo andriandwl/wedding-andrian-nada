@@ -41,6 +41,9 @@ export interface InvitationSettings {
 
   giftAddressNames: string;
   giftAddressFull: string;
+
+  // Photobooth
+  photoboothFrameStyle: "classic" | "dark" | "minimal";
 }
 
 const defaultSettings: InvitationSettings = {
@@ -81,15 +84,18 @@ const defaultSettings: InvitationSettings = {
   giftAddressNames: "Nada & Andrian",
   giftAddressFull:
     "Jl. Melati Indah No. 12, Perumahan Harmoni\nKelurahan Sukamaju, Kec. Cimanggis\nDepok, Jawa Barat 16451",
+
+  photoboothFrameStyle: "classic" as const,
 };
 
-type Tab = "pengantin" | "acara" | "pesan" | "hadiah";
+type Tab = "pengantin" | "acara" | "pesan" | "hadiah" | "photobooth";
 
 const tabItems: { id: Tab; label: string; icon: string }[] = [
   { id: "pengantin", label: "Pengantin", icon: "💑" },
   { id: "acara", label: "Pelaksanaan", icon: "🕌" },
   { id: "pesan", label: "Pesan & Info", icon: "💬" },
   { id: "hadiah", label: "Kado & Rekening", icon: "🎁" },
+  { id: "photobooth", label: "Photobooth", icon: "📷" },
 ];
 
 export default function InvitationSettingsClient() {
@@ -484,6 +490,175 @@ export default function InvitationSettingsClient() {
                     rows={4} 
                     className="sm:col-span-2" 
                   />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "photobooth" && (
+            <div className="space-y-6 animate-in fade-in duration-300">
+              <SectionTitle title="Gaya Bingkai Polaroid" />
+              <p className="text-sm text-gray-500 -mt-3">
+                Pilih tampilan bingkai foto yang akan digunakan tamu di Virtual Photobooth.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {(
+                  [
+                    {
+                      id: "classic" as const,
+                      label: "Classic",
+                      desc: "Latar krem hangat, teks cokelat rose",
+                      preview: { bg: "#FFFEF9", text: "#52363E", accent: "#D88C9C" },
+                    },
+                    {
+                      id: "dark" as const,
+                      label: "Dark Elegant",
+                      desc: "Latar gelap, teks krem & rose",
+                      preview: { bg: "#1a0a0e", text: "#FBE7EB", accent: "#D88C9C" },
+                    },
+                    {
+                      id: "minimal" as const,
+                      label: "Minimal",
+                      desc: "Latar putih bersih, teks hitam",
+                      preview: { bg: "#FFFFFF", text: "#111111", accent: "#888888" },
+                    },
+                  ] satisfies {
+                    id: "classic" | "dark" | "minimal";
+                    label: string;
+                    desc: string;
+                    preview: { bg: string; text: string; accent: string };
+                  }[]
+                ).map((style) => {
+                  const isSelected =
+                    settings.photoboothFrameStyle === style.id;
+                  return (
+                    <button
+                      key={style.id}
+                      type="button"
+                      onClick={() =>
+                        update("photoboothFrameStyle", style.id)
+                      }
+                      className={`rounded-2xl border-2 p-4 text-left transition-all duration-150 ${
+                        isSelected
+                          ? "border-rose-400 shadow-md shadow-rose-100"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                    >
+                      {/* Mini polaroid preview */}
+                      <div
+                        className="w-full rounded-xl overflow-hidden mb-3 shadow-sm"
+                        style={{
+                          background: style.preview.bg,
+                          border: `1px solid ${style.preview.accent}30`,
+                          aspectRatio: "4/5",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        {/* Photo placeholder */}
+                        <div
+                          className="flex-1 m-2 rounded-lg"
+                          style={{
+                            background: `${style.preview.accent}20`,
+                          }}
+                        />
+                        {/* Text area */}
+                        <div className="px-2 pb-2 text-center">
+                          <div
+                            className="text-[7px] font-medium truncate"
+                            style={{ color: style.preview.accent }}
+                          >
+                            ✦
+                          </div>
+                          <div
+                            className="text-[7px] font-medium truncate"
+                            style={{ color: style.preview.text }}
+                          >
+                            Nada & Andrian
+                          </div>
+                          <div
+                            className="text-[6px] opacity-60 mt-0.5"
+                            style={{ color: style.preview.text }}
+                          >
+                            14 September 2026
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <p className="text-sm font-semibold text-gray-800">
+                            {style.label}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            {style.desc}
+                          </p>
+                        </div>
+                        {isSelected && (
+                          <span className="shrink-0 w-5 h-5 rounded-full bg-rose-500 flex items-center justify-center">
+                            <svg
+                              className="w-3 h-3 text-white"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={3}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                          </span>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="bg-rose-50 border border-rose-100 rounded-2xl p-4 flex gap-3">
+                <span className="text-rose-400 shrink-0 mt-0.5">ℹ️</span>
+                <div>
+                  <p className="text-sm font-medium text-rose-800">
+                    Perubahan langsung berlaku
+                  </p>
+                  <p className="text-xs text-rose-600 mt-0.5">
+                    Foto yang sudah diupload tamu tidak berubah. Style baru hanya berlaku untuk foto yang diambil setelah perubahan disimpan.
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-100 pt-6">
+                <SectionTitle title="Link & QR Code" />
+                <div className="mt-4 space-y-3">
+                  {[
+                    { label: "Halaman Photobooth", path: "/photobooth", icon: "📷" },
+                    { label: "Galeri Tamu", path: "/gallery", icon: "🖼️" },
+                    { label: "Slideshow Proyektor", path: "/slideshow", icon: "📺" },
+                  ].map((link) => (
+                    <div
+                      key={link.path}
+                      className="flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3 bg-gray-50"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span>{link.icon}</span>
+                        <div>
+                          <p className="text-sm font-medium text-gray-800">{link.label}</p>
+                          <p className="text-xs text-gray-400 font-mono">{link.path}</p>
+                        </div>
+                      </div>
+                      <a
+                        href={link.path}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-rose-500 hover:text-rose-700 border border-rose-200 px-3 py-1.5 rounded-lg hover:bg-rose-50 transition"
+                      >
+                        Buka →
+                      </a>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

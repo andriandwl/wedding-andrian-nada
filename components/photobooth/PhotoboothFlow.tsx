@@ -12,6 +12,7 @@ type Step =
   | "capture"
   | "frame"
   | "signature"
+  | "frame-with-sig"
   | "voice"
   | "submitting"
   | "done";
@@ -411,7 +412,7 @@ export default function PhotoboothFlow({
   }
 
   // ── Hidden re-render step with signature ──────────────────────────────────
-  if (step === ("frame-with-sig" as Step)) {
+  if (step === "frame-with-sig") {
     return (
       <div className="min-h-screen flex flex-col" style={{ background: pageBg }}>
         <div className="w-full max-w-md px-4 py-6 flex flex-col items-center gap-6">
