@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata, ResolvingMetadata } from "next";
+import Link from "next/link";
 
 import Navbar from "@/components/wedding/Navbar";
 import HeroScrollGallery from "@/components/wedding/HeroScrollGallery";
@@ -82,6 +83,18 @@ export default async function InvitationPage({ params }: Props) {
 
       {/* Footer */}
       <Footer />
+
+      {/* Floating Photobooth button */}
+      <Link
+        href={`/photobooth?name=${encodeURIComponent(guest.name)}&code=${params.code}`}
+        className="fixed bottom-6 right-5 z-50 flex items-center gap-2 px-4 py-3 rounded-full shadow-lg
+          bg-[#52363E] text-white text-sm font-medium
+          hover:bg-[#3d2830] active:scale-95 transition-all"
+        style={{ boxShadow: "0 4px 24px rgba(82,54,62,0.35)" }}
+      >
+        <span className="text-base">📷</span>
+        <span>Photobooth</span>
+      </Link>
     </main>
   );
 }
