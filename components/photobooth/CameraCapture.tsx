@@ -21,6 +21,7 @@ export default function CameraCapture({ onCapture }: Props) {
   const [permError, setPermError] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
+  const [retakeKey, setRetakeKey] = useState(0);
 
   // ── Start / stop camera ────────────────────────────────────────────────────
   useEffect(() => {
@@ -36,7 +37,11 @@ export default function CameraCapture({ onCapture }: Props) {
     async function startCamera() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode, width: { ideal: 1280 }, height: { ideal: 1280 } },
+          video: {
+            facingMode,
+            width: { ideal: 1280 },
+            height: { ideal: 1280 },
+          },
           audio: false,
         });
         if (!active) {
@@ -60,7 +65,7 @@ export default function CameraCapture({ onCapture }: Props) {
       active = false;
       streamRef.current?.getTracks().forEach((t) => t.stop());
     };
-  }, [mode, facingMode]);
+  }, [mode, facingMode, retakeKey]);
 
   // ── Capture current frame from video ──────────────────────────────────────
   function handleCapture() {
@@ -114,6 +119,8 @@ export default function CameraCapture({ onCapture }: Props) {
   function handleRetake() {
     setPreviewUrl(null);
     setCapturedBlob(null);
+    setCameraReady(false);
+    setRetakeKey((k) => k + 1);
   }
 
   // ── Preview state ──────────────────────────────────────────────────────────
@@ -139,7 +146,7 @@ export default function CameraCapture({ onCapture }: Props) {
             onClick={handleRetake}
             className="flex-1 py-3 rounded-2xl border border-[#D88C9C]/40 text-[#A6808B] text-sm font-medium hover:border-[#D88C9C] transition"
           >
-            Ambil Ulang
+            Ambil Ulange
           </button>
           <button
             onClick={handleConfirm}
@@ -260,9 +267,7 @@ export default function CameraCapture({ onCapture }: Props) {
           <div className="w-full h-full flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#D88C9C]/40 bg-white/60 hover:border-[#D88C9C] hover:bg-[#FBE7EB]/60 transition-all">
             <div className="text-5xl mb-3">🖼️</div>
             <p className="text-[#52363E] font-medium">Pilih foto dari HP</p>
-            <p className="text-sm text-[#A6808B] mt-1">
-              JPG, PNG, atau HEIC
-            </p>
+            <p className="text-sm text-[#A6808B] mt-1">JPG, PNG, atau HEIC</p>
           </div>
           <input
             type="file"

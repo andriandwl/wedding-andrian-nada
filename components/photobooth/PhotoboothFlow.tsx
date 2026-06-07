@@ -73,9 +73,7 @@ function StepCard({
         >
           {title}
         </h2>
-        {subtitle && (
-          <p className="text-sm text-[#A6808B] mt-1">{subtitle}</p>
-        )}
+        {subtitle && <p className="text-sm text-[#A6808B] mt-1">{subtitle}</p>}
       </div>
       {children}
     </div>
@@ -109,10 +107,12 @@ export default function PhotoboothFlow({
   const groomName = settings?.groomName || "Andrian";
 
   // ── Submit ───────────────────────────────────────────────────────────────────
-  async function handleSubmit(overrideAudio?: {
-    blob: Blob;
-    duration: number;
-  } | null) {
+  async function handleSubmit(
+    overrideAudio?: {
+      blob: Blob;
+      duration: number;
+    } | null,
+  ) {
     if (!framedBlob || !guestName.trim()) return;
     setStep("submitting");
     setSubmitError("");
@@ -261,9 +261,7 @@ export default function PhotoboothFlow({
                   }
                 }}
               />
-              {nameError && (
-                <p className="text-xs text-red-500">{nameError}</p>
-              )}
+              {nameError && <p className="text-xs text-red-500">{nameError}</p>}
             </div>
             <button
               onClick={() => {
@@ -292,7 +290,10 @@ export default function PhotoboothFlow({
   // ────────────────────────────────────────────────────────────────────────────
   if (step === "capture") {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: pageBg }}>
+      <div
+        className="min-h-screen flex flex-col"
+        style={{ background: pageBg }}
+      >
         <div className="w-full max-w-md px-4 py-6">
           <button
             onClick={() => setStep("welcome")}
@@ -325,7 +326,10 @@ export default function PhotoboothFlow({
   // ────────────────────────────────────────────────────────────────────────────
   if (step === "frame") {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: pageBg }}>
+      <div
+        className="min-h-screen flex flex-col"
+        style={{ background: pageBg }}
+      >
         <div className="w-full max-w-md px-4 py-6">
           <button
             onClick={() => setStep("capture")}
@@ -368,7 +372,10 @@ export default function PhotoboothFlow({
   // ────────────────────────────────────────────────────────────────────────────
   if (step === "signature") {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: pageBg }}>
+      <div
+        className="min-h-screen flex flex-col"
+        style={{ background: pageBg }}
+      >
         <div className="w-full max-w-md px-4 py-6">
           <button
             onClick={() => setStep("frame")}
@@ -414,7 +421,10 @@ export default function PhotoboothFlow({
   // ── Hidden re-render step with signature ──────────────────────────────────
   if (step === "frame-with-sig") {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: pageBg }}>
+      <div
+        className="min-h-screen flex flex-col"
+        style={{ background: pageBg }}
+      >
         <div className="w-full max-w-md px-4 py-6 flex flex-col items-center gap-6">
           <div className="flex flex-col items-center gap-3 py-16">
             <div className="w-8 h-8 border-2 border-[#D88C9C]/40 border-t-[#D88C9C] rounded-full animate-spin" />
@@ -444,7 +454,10 @@ export default function PhotoboothFlow({
   // ────────────────────────────────────────────────────────────────────────────
   if (step === "voice") {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: pageBg }}>
+      <div
+        className="min-h-screen flex flex-col"
+        style={{ background: pageBg }}
+      >
         <div className="w-full max-w-md px-4 py-6">
           <button
             onClick={() => setStep("signature")}
@@ -530,7 +543,11 @@ export default function PhotoboothFlow({
           {framedDataUrl && (
             <div className="shadow-xl rounded-sm overflow-hidden w-56">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={framedDataUrl} alt="Foto polaroid Anda" className="w-full" />
+              <img
+                src={framedDataUrl}
+                alt="Foto polaroid Anda"
+                className="w-full"
+              />
             </div>
           )}
 
