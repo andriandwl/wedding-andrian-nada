@@ -4,15 +4,12 @@ import { useState } from "react";
 import CameraCapture from "./CameraCapture";
 import FrameCanvas from "./FrameCanvas";
 import VoiceRecorder from "./VoiceRecorder";
-import SignaturePad from "./SignaturePad";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 type Step =
   | "welcome"
   | "capture"
   | "frame"
-  | "signature"
-  | "frame-with-sig"
   | "voice"
   | "submitting"
   | "done";
@@ -25,7 +22,7 @@ interface Props {
 
 // ── Step indicator ─────────────────────────────────────────────────────────────
 function StepDots({ current }: { current: Step }) {
-  const visible: Step[] = ["capture", "frame", "signature", "voice", "done"];
+  const visible: Step[] = ["capture", "frame", "voice", "done"];
   const idx = visible.indexOf(current);
   return (
     <div className="flex items-center gap-2">
@@ -93,11 +90,6 @@ export default function PhotoboothFlow({
   const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
   const [framedBlob, setFramedBlob] = useState<Blob | null>(null);
   const [framedDataUrl, setFramedDataUrl] = useState("");
-
-  // Signature (Phase 4)
-  const [signatureDataUrl, setSignatureDataUrl] = useState<string | undefined>(
-    undefined,
-  );
 
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioDuration, setAudioDuration] = useState(0);
@@ -311,7 +303,6 @@ export default function PhotoboothFlow({
                 setCapturedBlob(blob);
                 setFramedBlob(null);
                 setFramedDataUrl("");
-                setSignatureDataUrl(undefined);
                 setStep("frame");
               }}
             />
@@ -354,96 +345,14 @@ export default function PhotoboothFlow({
             )}
             {framedBlob && (
               <button
-                onClick={() => setStep("signature")}
+                onClick={() => setStep("voice")}
                 className="w-full max-w-sm py-3.5 rounded-2xl bg-[#52363E] text-white font-semibold text-sm
                   hover:bg-[#3d2830] transition-all shadow-md shadow-[#52363E]/20"
               >
-                Lanjut: Tanda Tangan ✍️ →
+                Lanjut: Pesan Suara 🎙️ →
               </button>
             )}
           </StepCard>
-        </div>
-      </div>
-    );
-  }
-
-  // ────────────────────────────────────────────────────────────────────────────
-  // SIGNATURE (Phase 4)
-  // ────────────────────────────────────────────────────────────────────────────
-  if (step === "signature") {
-    return (
-      <div
-        className="min-h-screen flex flex-col"
-        style={{ background: pageBg }}
-      >
-        <div className="w-full max-w-md px-4 py-6">
-          <button
-            onClick={() => setStep("frame")}
-            className="mb-4 flex items-center gap-1.5 text-sm text-[#A6808B] hover:text-[#52363E] transition"
-          >
-            ← Kembali
-          </button>
-          <StepCard
-            title="Tanda Tangan Digital"
-            subtitle="Opsional — bubuhkan tanda tangan Anda"
-            step="signature"
-          >
-            {/* Show current framed photo preview */}
-            {framedDataUrl && (
-              <div
-                className="shadow-lg rounded-sm overflow-hidden mb-2"
-                style={{ width: "min(70vw, 240px)" }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={framedDataUrl} alt="Preview" className="w-full" />
-              </div>
-            )}
-
-            <SignaturePad
-              onComplete={(sigDataUrl) => {
-                setSignatureDataUrl(sigDataUrl);
-                // Re-render frame with signature, then go to voice
-                setFramedBlob(null);
-                setFramedDataUrl("");
-                setStep("frame-with-sig");
-              }}
-              onSkip={() => {
-                setSignatureDataUrl(undefined);
-                setStep("voice");
-              }}
-            />
-          </StepCard>
-        </div>
-      </div>
-    );
-  }
-
-  // ── Hidden re-render step with signature ──────────────────────────────────
-  if (step === "frame-with-sig") {
-    return (
-      <div
-        className="min-h-screen flex flex-col"
-        style={{ background: pageBg }}
-      >
-        <div className="w-full max-w-md px-4 py-6 flex flex-col items-center gap-6">
-          <div className="flex flex-col items-center gap-3 py-16">
-            <div className="w-8 h-8 border-2 border-[#D88C9C]/40 border-t-[#D88C9C] rounded-full animate-spin" />
-            <p className="text-sm text-[#A6808B]">Menerapkan tanda tangan…</p>
-          </div>
-          {capturedBlob && (
-            <div className="hidden">
-              <FrameCanvas
-                photoBlob={capturedBlob}
-                settings={settings}
-                signatureDataUrl={signatureDataUrl}
-                onFrameReady={(blob, dataUrl) => {
-                  setFramedBlob(blob);
-                  setFramedDataUrl(dataUrl);
-                  setStep("voice");
-                }}
-              />
-            </div>
-          )}
         </div>
       </div>
     );
@@ -460,7 +369,7 @@ export default function PhotoboothFlow({
       >
         <div className="w-full max-w-md px-4 py-6">
           <button
-            onClick={() => setStep("signature")}
+            onClick={() => setStep("frame")}
             className="mb-4 flex items-center gap-1.5 text-sm text-[#A6808B] hover:text-[#52363E] transition"
           >
             ← Kembali
@@ -586,7 +495,6 @@ export default function PhotoboothFlow({
               setCapturedBlob(null);
               setFramedBlob(null);
               setFramedDataUrl("");
-              setSignatureDataUrl(undefined);
               setAudioBlob(null);
               setAudioDuration(0);
               setSubmitError("");
