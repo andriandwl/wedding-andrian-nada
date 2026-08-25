@@ -1,20 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function OpeningScreen({ guestName }: { guestName?: string }) {
   const [open, setOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // ponytail: iOS/Android kadang skip autoplay attr sebelum hydration; force play manual
+    videoRef.current?.play().catch(() => {});
+  }, []);
 
   if (open) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black">
       <video
+        ref={videoRef}
         src="/gallery3.mp4"
         autoPlay
         muted
         loop
         playsInline
+        preload="auto"
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-black/40" />

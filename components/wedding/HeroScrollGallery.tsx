@@ -804,7 +804,7 @@ export default function HeroScrollGallery({
             className="absolute inset-0 w-full h-full object-cover"
             style={{ opacity: 0.88 }}
           >
-            <source src="/gallery2.mp4" type="video/mp4" />
+            <source src="/gallery4.mp4" type="video/mp4" />
           </video>
 
           {/* Multi-layer gradient overlay for text legibility */}
