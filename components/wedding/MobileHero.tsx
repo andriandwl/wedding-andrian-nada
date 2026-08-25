@@ -4,7 +4,13 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { galleryImages } from "@/lib/data";
 
-export function MobileHero({ guestName, settings }: { guestName?: string, settings?: any }) {
+export function MobileHero({
+  guestName,
+  settings,
+}: {
+  guestName?: string;
+  settings?: any;
+}) {
   // Refs untuk elemen yang dianimasi
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -247,7 +253,7 @@ export function MobileHero({ guestName, settings }: { guestName?: string, settin
           className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: 0.55, objectPosition: "center 20%" }}
         >
-          <source src="/hero-video.mp4" type="video/mp4" />
+          <source src="/gallery2.mp4" type="video/mp4" />
         </video>
         {/* Multi-layer gradient */}
         <div
