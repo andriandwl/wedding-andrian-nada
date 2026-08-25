@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import Navbar from "@/components/wedding/Navbar";
+import OpeningScreen from "@/components/wedding/OpeningScreen";
 import HeroScrollGallery from "@/components/wedding/HeroScrollGallery";
 import { CoupleStory } from "@/components/wedding/HeroScrollGallery";
 import TransitionSection from "@/components/wedding/TransitionSection";
@@ -44,6 +45,9 @@ export default async function PreviewPage() {
 
   return (
     <main className="relative w-full min-h-screen bg-[#FBE7EB]">
+      {/* Video cover + "Buka Undangan" button */}
+      <OpeningScreen guestName={sanitizedGuest.name} />
+
       {/* Sticky pill navbar */}
       <Navbar />
 

@@ -327,7 +327,7 @@ export default function TransitionSection({ settings }: { settings?: any }) {
               }}
             >
               <p>Akad Nikah · {settings?.akadTime || "10:00"} WIB</p>
-              <p>Resepsi · {settings?.resepsiTime || "16:00"} WITA</p>
+              <p>Resepsi · {settings?.resepsiTime || "16:00"} WIB</p>
             </div>
           </div>
 
