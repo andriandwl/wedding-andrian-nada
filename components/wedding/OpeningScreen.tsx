@@ -14,7 +14,7 @@ export default function OpeningScreen({ guestName }: { guestName?: string }) {
   if (open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black">
+    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black">
       <video
         ref={videoRef}
         src="/gallery3.mp4"
@@ -27,7 +27,7 @@ export default function OpeningScreen({ guestName }: { guestName?: string }) {
       />
       <div className="absolute inset-0 bg-black/40" />
 
-      <div className="relative z-10 flex flex-col items-center gap-4 px-6 text-center text-white">
+      <div className="relative z-10 flex flex-col items-center gap-4 px-6 pb-16 text-center text-white">
         <p className="text-sm uppercase tracking-[0.3em]">The Wedding of</p>
         <h1 className="font-serif text-4xl">Nada & Andrian</h1>
         {guestName && (
