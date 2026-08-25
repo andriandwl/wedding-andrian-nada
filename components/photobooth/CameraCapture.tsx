@@ -146,7 +146,7 @@ export default function CameraCapture({ onCapture }: Props) {
             onClick={handleRetake}
             className="flex-1 py-3 rounded-2xl border border-[#D88C9C]/40 text-[#A6808B] text-sm font-medium hover:border-[#D88C9C] transition"
           >
-            Ambil Ulange
+            Ambil Ulang
           </button>
           <button
             onClick={handleConfirm}
