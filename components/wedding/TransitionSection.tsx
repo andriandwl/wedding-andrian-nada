@@ -130,8 +130,12 @@ export default function TransitionSection({ settings }: { settings?: any }) {
   const quoteRef = useRef<HTMLQuoteElement>(null);
   const dateRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
-  
-  const targetDate = settings?.weddingDate ? new Date(`${settings.weddingDate}T${settings.resepsiTime || "16:00"}:00+08:00`) : WEDDING_DATE;
+
+  const targetDate = settings?.weddingDate
+    ? new Date(
+        `${settings.weddingDate}T${settings.resepsiTime || "16:00"}:00+08:00`,
+      )
+    : WEDDING_DATE;
   const { d, h, m, s } = useCountdown(targetDate);
 
   useEffect(() => {
@@ -203,9 +207,14 @@ export default function TransitionSection({ settings }: { settings?: any }) {
       >
         <p
           className="text-[clamp(28px,5vw,52px)] leading-tight text-[#52363E] italic"
-          style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, whiteSpace: "pre-wrap" }}
+          style={{
+            fontFamily: "var(--font-cormorant)",
+            fontWeight: 300,
+            whiteSpace: "pre-wrap",
+          }}
         >
-          {settings?.openingQuote || "“Two souls, one heart — and a lifetime of adventures ahead.”"}
+          {settings?.openingQuote ||
+            "“Two souls, one heart — and a lifetime of adventures ahead.”"}
         </p>
       </blockquote>
 
@@ -244,7 +253,8 @@ export default function TransitionSection({ settings }: { settings?: any }) {
                   lineHeight: 1.1,
                 }}
               >
-                {targetDate.getDate()} {targetDate.toLocaleDateString("id-ID", { month: "long" })}
+                {targetDate.getDate()}{" "}
+                {targetDate.toLocaleDateString("id-ID", { month: "long" })}
               </p>
               <p
                 className="text-sm mt-0.5"
@@ -264,7 +274,8 @@ export default function TransitionSection({ settings }: { settings?: any }) {
                 fontFamily: "var(--font-jost)",
               }}
             >
-              {targetDate.toLocaleDateString("id-ID", { weekday: "long" })} · Akad &amp; Resepsi
+              {targetDate.toLocaleDateString("id-ID", { weekday: "long" })} ·
+              Akad &amp; Resepsi
             </p>
           </div>
 
@@ -367,7 +378,8 @@ export default function TransitionSection({ settings }: { settings?: any }) {
                 fontFamily: "var(--font-jost)",
               }}
             >
-              {settings?.venueAddress || "Jl. Raya Tanah Lot,\nBeraban, Kec. Kediri,\nTabanan, Bali 82121"}
+              {settings?.venueAddress ||
+                "Jl. Raya Tanah Lot,\nBeraban, Kec. Kediri,\nTabanan, Bali 82121"}
             </p>
           </div>
         </div>

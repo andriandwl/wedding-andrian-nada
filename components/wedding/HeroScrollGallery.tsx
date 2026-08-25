@@ -17,15 +17,25 @@ function getPeople(settings?: any) {
     {
       name: settings?.brideFullName || settings?.brideName || "Denada Putri",
       role: "Bride",
-      parents: settings?.brideParents?.split("&").map((p:string)=>p.trim()) || ["Bapak Hendra Wijaya", "Ibu Sari Dewi"],
+      parents: settings?.brideParents
+        ?.split("&")
+        .map((p: string) => p.trim()) || [
+        "Bapak Hendra Wijaya",
+        "Ibu Sari Dewi",
+      ],
       photo: BRIDE_PHOTO,
       instagram: settings?.brideInstagram || "https://instagram.com",
       side: "bride",
     },
     {
-      name: settings?.groomFullName || settings?.groomName || "Andrian Dwi Haryanto",
+      name:
+        settings?.groomFullName ||
+        settings?.groomName ||
+        "Andrian Dwi Haryanto",
       role: "Groom",
-      parents: settings?.groomParents?.split("&").map((p:string)=>p.trim()) || ["Bapak Dal Haryanto", "Ibu Sukimah"],
+      parents: settings?.groomParents
+        ?.split("&")
+        .map((p: string) => p.trim()) || ["Bapak Dal Haryanto", "Ibu Sukimah"],
       photo: GROOM_PHOTO,
       instagram: settings?.groomInstagram || "https://instagram.com",
       side: "groom",
@@ -794,7 +804,7 @@ export default function HeroScrollGallery({
             className="absolute inset-0 w-full h-full object-cover"
             style={{ opacity: 0.88 }}
           >
-            <source src="/hero-video.mp4" type="video/mp4" />
+            <source src="/gallery2.mp4" type="video/mp4" />
           </video>
 
           {/* Multi-layer gradient overlay for text legibility */}

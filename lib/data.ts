@@ -1,9 +1,18 @@
 // ── lib/data.ts ──────────────────────────────────────────────────────────────
 // Central data store for all wedding content
+import type { StaticImageData } from "next/image";
+import gambar1 from "@/assets/gambar1.jpeg";
+import gambar2 from "@/assets/gambar2.jpeg";
+import gambar3 from "@/assets/gambar3.jpeg";
+import gambar4 from "@/assets/gambar4.jpeg";
+import gambar5 from "@/assets/gambar5.jpeg";
+import gambar6 from "@/assets/gambar6.jpeg";
+import gambar8 from "@/assets/gambar8.jpeg";
+import gambar11 from "@/assets/gambar11.jpeg";
 
 export interface GalleryImage {
   id: number;
-  src: string;
+  src: string | StaticImageData;
   alt: string;
   width: number;
   height: number;
@@ -22,42 +31,42 @@ export interface StoryStage {
 export const galleryImages: GalleryImage[] = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=1200&q=80",
+    src: gambar1,
     alt: "Couple on the beach at golden hour",
     width: 1200,
     height: 800,
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80",
+    src: gambar2,
     alt: "Wedding bouquet",
     width: 800,
     height: 1000,
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=80",
+    src: gambar3,
     alt: "Couple embracing at sunset",
     width: 800,
     height: 1000,
   },
   {
     id: 4,
-    src: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&q=80",
+    src: gambar4,
     alt: "Romantic beach walk",
     width: 800,
     height: 1000,
   },
   {
     id: 5,
-    src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80",
+    src: gambar5,
     alt: "First dance together",
     width: 800,
     height: 1000,
   },
   {
     id: 6,
-    src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80",
+    src: gambar6,
     alt: "Couple in the garden",
     width: 800,
     height: 1000,
@@ -75,7 +84,7 @@ export const storyStages: StoryStage[] = [
     photos: [
       {
         id: 101,
-        src: "https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?w=600&q=80",
+        src: gambar6,
         alt: "Coffee shop first meeting",
         width: 600,
         height: 750,
@@ -105,7 +114,7 @@ export const storyStages: StoryStage[] = [
     photos: [
       {
         id: 201,
-        src: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80",
+        src: gambar11,
         alt: "Road trip adventure",
         width: 600,
         height: 750,
@@ -135,7 +144,7 @@ export const storyStages: StoryStage[] = [
     photos: [
       {
         id: 301,
-        src: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600&q=80",
+        src: gambar8,
         alt: "The proposal moment",
         width: 600,
         height: 750,
