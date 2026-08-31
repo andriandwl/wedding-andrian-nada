@@ -8,6 +8,7 @@ import gambar4 from "@/assets/gambar4.jpeg";
 import gambar5 from "@/assets/gambar5.jpeg";
 import gambar6 from "@/assets/gambar6.jpeg";
 import gambar8 from "@/assets/gambar8.jpeg";
+import gambar12 from "@/assets/gambar12.png";
 import gambarhero1 from "@/assets/gambar-hero1.jpeg";
 import gambarhero2 from "@/assets/gambar-hero2.jpeg";
 import gambarhero3 from "@/assets/gambar-hero3.jpeg";
@@ -255,7 +256,7 @@ export const storyStages: StoryStage[] = [
     photos: [
       {
         id: 301,
-        src: gambar8,
+        src: gambar12,
         alt: "The proposal moment",
         width: 600,
         height: 750,
