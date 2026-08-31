@@ -29,7 +29,7 @@ function PersonList({
   parentLabel?: string;
 }) {
   const rows = [
-    { label: "Nama Lengkap", value: person.name },
+    // { label: "Nama Lengkap", value: person.name },
     {
       label: parentLabel,
       value: person.parents
@@ -346,8 +346,16 @@ export function CoupleStory({ settings }: { settings?: any }) {
 
         {/* Bride (pink) + Groom (blue) lists */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <PersonList person={bride} theme={BRIDE_THEME} parentLabel="Putri dari" />
-          <PersonList person={groom} theme={GROOM_THEME} parentLabel="Putra dari" />
+          <PersonList
+            person={bride}
+            theme={BRIDE_THEME}
+            parentLabel="Putri dari"
+          />
+          <PersonList
+            person={groom}
+            theme={GROOM_THEME}
+            parentLabel="Putra dari"
+          />
         </div>
       </div>
 

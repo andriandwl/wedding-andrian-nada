@@ -7,7 +7,7 @@ export default function MusicPlayer({ src = "/akad.mp3" }: { src?: string }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
 
-  // Browser blokir autoplay audio; mulai di gesture pertama (termasuk tap "Buka Undangan").
+  // Browser blokir autoplay audio; mulai di gesture pertama (tap mana pun atau tombol Play).
   useEffect(() => {
     const start = () => {
       audioRef.current
@@ -15,9 +15,14 @@ export default function MusicPlayer({ src = "/akad.mp3" }: { src?: string }) {
         .then(() => setPlaying(true))
         .catch(() => {});
       window.removeEventListener("pointerdown", start);
+      window.removeEventListener("wedding:play", start);
     };
     window.addEventListener("pointerdown", start);
-    return () => window.removeEventListener("pointerdown", start);
+    window.addEventListener("wedding:play", start);
+    return () => {
+      window.removeEventListener("pointerdown", start);
+      window.removeEventListener("wedding:play", start);
+    };
   }, []);
 
   function toggle() {
@@ -39,7 +44,7 @@ export default function MusicPlayer({ src = "/akad.mp3" }: { src?: string }) {
       <button
         onClick={toggle}
         aria-label={playing ? "Jeda musik" : "Putar musik"}
-        className="fixed bottom-6 left-5 z-50 flex h-11 w-11 items-center justify-center gap-[3px] rounded-full
+        className="fixed bottom-6 right-5 z-50 flex h-11 w-11 items-center justify-center gap-[3px] rounded-full
           bg-[#52363E] shadow-lg transition-all hover:bg-[#3d2830] active:scale-95"
         style={{ boxShadow: "0 4px 24px rgba(82,54,62,0.35)" }}
       >

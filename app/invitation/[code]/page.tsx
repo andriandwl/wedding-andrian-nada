@@ -90,20 +90,21 @@ export default async function InvitationPage({ params }: Props) {
       {/* Footer */}
       <Footer />
 
-      {/* Background music */}
-      <MusicPlayer />
-
       {/* Floating Photobooth button */}
       <Link
         href={`/photobooth?name=${encodeURIComponent(guest.name)}&code=${params.code}`}
-        className="fixed bottom-6 right-5 z-50 flex items-center gap-2 px-4 py-3 rounded-full shadow-lg
-          bg-[#52363E] text-white text-sm font-medium
-          hover:bg-[#3d2830] active:scale-95 transition-all"
+        aria-label="Photobooth"
+        className="fixed bottom-20 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full
+          bg-[#52363E] text-white shadow-lg transition-all hover:bg-[#3d2830] active:scale-95"
         style={{ boxShadow: "0 4px 24px rgba(82,54,62,0.35)" }}
       >
-        <span className="text-base">📷</span>
-        <span>Photobooth</span>
+        <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
+          <path d="M9 3 7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" />
+        </svg>
       </Link>
+
+      {/* Background music */}
+      <MusicPlayer />
     </main>
   );
 }
