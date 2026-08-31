@@ -7,8 +7,12 @@ export default function OpeningScreen({ guestName }: { guestName?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // ponytail: iOS/Android kadang skip autoplay attr sebelum hydration; force play manual
-    videoRef.current?.play().catch(() => {});
+    // ponytail: React kadang tidak render atribut `muted` → browser blokir autoplay.
+    // Paksa muted di property sebelum play.
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.play().catch(() => {});
   }, []);
 
   // Browser blokir autoplay bersuara → mulai muted, nyalakan suara di tap pertama.
