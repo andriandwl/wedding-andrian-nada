@@ -3,6 +3,7 @@ import HeroScrollGallery from "@/components/wedding/HeroScrollGallery";
 import { CoupleStory } from "@/components/wedding/HeroScrollGallery";
 import TransitionSection from "@/components/wedding/TransitionSection";
 import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
+import LivePhotoSection from "@/components/wedding/LivePhotoSection";
 import RSVPSection from "@/components/wedding/RSVPSection";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
@@ -28,6 +29,9 @@ export default function WeddingPage() {
 
       {/* Section 5: Love story with polaroid stack animation */}
       <LoveStoryScrollStack />
+
+      {/* Section 5b: Live Photos gallery */}
+      <LivePhotoSection />
 
       {/* Section 6: RSVP form */}
       <RSVPSection />

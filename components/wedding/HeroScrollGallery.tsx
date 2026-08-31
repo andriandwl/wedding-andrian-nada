@@ -568,10 +568,10 @@ export default function HeroScrollGallery({
               }}
             >
               <Image
-                src={galleryImages[1].src}
-                alt={galleryImages[1].alt}
-                width={galleryImages[1].width}
-                height={galleryImages[1].height}
+                src={galleryImages[3].src}
+                alt={galleryImages[3].alt}
+                width={galleryImages[3].width}
+                height={galleryImages[3].height}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -586,10 +586,10 @@ export default function HeroScrollGallery({
               }}
             >
               <Image
-                src={galleryImages[2].src}
-                alt={galleryImages[2].alt}
-                width={galleryImages[2].width}
-                height={galleryImages[2].height}
+                src={galleryImages[1].src}
+                alt={galleryImages[1].alt}
+                width={galleryImages[1].width}
+                height={galleryImages[1].height}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -611,10 +611,10 @@ export default function HeroScrollGallery({
               }}
             >
               <Image
-                src={galleryImages[3].src}
-                alt={galleryImages[3].alt}
-                width={galleryImages[3].width}
-                height={galleryImages[3].height}
+                src={galleryImages[2].src}
+                alt={galleryImages[2].alt}
+                width={galleryImages[2].width}
+                height={galleryImages[2].height}
                 className="w-full h-full object-cover"
               />
             </div>

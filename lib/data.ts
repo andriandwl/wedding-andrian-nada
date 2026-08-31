@@ -27,6 +27,7 @@ export interface GalleryImage {
   alt: string;
   width: number;
   height: number;
+  live?: string; // path .mp4 pendek (muted) → tampil ala Apple Live Photo saat hover/tekan
 }
 
 export interface StoryStage {
@@ -79,6 +80,60 @@ export const galleryImages: GalleryImage[] = [
     id: 6,
     src: gambar6,
     alt: "Couple in the garden",
+    width: 800,
+    height: 1000,
+  },
+];
+
+// ── Live Photos ─────────────────────────────────────────────────────────────
+// Taruh klip pendek muted di public/livephoto/*.mp4 (±2–4 dtk).
+// Hapus baris `live` mana pun yang belum ada klipnya → jatuh balik ke foto diam.
+export const livePhotos: GalleryImage[] = [
+  {
+    id: 1,
+    src: gambar1,
+    live: "/live-photo1.mp4",
+    alt: "Momen pantai",
+    width: 1200,
+    height: 800,
+  },
+  {
+    id: 2,
+    src: gambar2,
+    live: "/live-photo9.mp4",
+    alt: "Buket",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 3,
+    src: gambar3,
+    live: "/live-photo6.mp4",
+    alt: "Senja",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 4,
+    src: gambar4,
+    live: "/live-photo2.mp4",
+    alt: "Jalan berdua",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 5,
+    src: gambar4,
+    live: "/live-photo7.mp4",
+    alt: "Jalan berdua",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 6,
+    src: gambar4,
+    live: "/live-photo3.mp4",
+    alt: "Jalan berdua",
     width: 800,
     height: 1000,
   },
@@ -200,48 +255,6 @@ export const storyStages: StoryStage[] = [
         id: 203,
         src: gambarhero3,
         alt: "Exploring together",
-        width: 600,
-        height: 750,
-      },
-      {
-        id: 204,
-        src: gambarhero4,
-        alt: "Open road through the mountains",
-        width: 600,
-        height: 750,
-      },
-      {
-        id: 205,
-        src: gambarhero5,
-        alt: "Hiking the coastal trail",
-        width: 600,
-        height: 750,
-      },
-      {
-        id: 206,
-        src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80",
-        alt: "Lake and mountains at dawn",
-        width: 600,
-        height: 750,
-      },
-      {
-        id: 207,
-        src: "https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=600&q=80",
-        alt: "Road trip pit stop",
-        width: 600,
-        height: 750,
-      },
-      {
-        id: 208,
-        src: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=600&q=80",
-        alt: "Watching the sunrise from the car",
-        width: 600,
-        height: 750,
-      },
-      {
-        id: 209,
-        src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80",
-        alt: "Camping under the stars",
         width: 600,
         height: 750,
       },

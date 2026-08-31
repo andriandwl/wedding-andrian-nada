@@ -9,6 +9,7 @@ import HeroScrollGallery, {
 } from "@/components/wedding/HeroScrollGallery";
 import TransitionSection from "@/components/wedding/TransitionSection";
 import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
+import LivePhotoSection from "@/components/wedding/LivePhotoSection";
 import RSVPSectionDynamic from "@/components/wedding/RSVPSectionDynamic";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
@@ -81,7 +82,10 @@ export default async function InvitationPage({ params }: Props) {
       {/* Section 4: Love story with polaroid stack animation */}
       <LoveStoryScrollStack />
 
-      {/* Section 5: RSVP form */}
+      {/* Section 5: Live Photos gallery */}
+      <LivePhotoSection />
+
+      {/* Section 6: RSVP form */}
       <RSVPSectionDynamic code={params.code} guestInfo={sanitizedGuest} />
 
       {/* Section 6: Gift / digital transfer */}
