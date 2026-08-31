@@ -19,16 +19,19 @@ export default function WeddingPage() {
       {/* Section 2: Couple profiles + love story timeline */}
       <CoupleStory />
 
-      {/* Section 3: Quote + event details + countdown */}
+      {/* Section 3: Couple profiles + love story timeline */}
+      <CoupleStory />
+
+      {/* Section 4: Quote + event details + countdown */}
       <TransitionSection />
 
-      {/* Section 4: Love story with polaroid stack animation */}
+      {/* Section 5: Love story with polaroid stack animation */}
       <LoveStoryScrollStack />
 
-      {/* Section 5: RSVP form */}
+      {/* Section 6: RSVP form */}
       <RSVPSection />
 
-      {/* Section 6: Gift / digital transfer */}
+      {/* Section 7: Gift / digital transfer */}
       <GiftSection />
 
       {/* Footer */}

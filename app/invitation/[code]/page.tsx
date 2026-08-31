@@ -4,8 +4,9 @@ import Link from "next/link";
 
 import Navbar from "@/components/wedding/Navbar";
 import OpeningScreen from "@/components/wedding/OpeningScreen";
-import HeroScrollGallery from "@/components/wedding/HeroScrollGallery";
-import { CoupleStory } from "@/components/wedding/HeroScrollGallery";
+import HeroScrollGallery, {
+  CoupleStory,
+} from "@/components/wedding/HeroScrollGallery";
 import TransitionSection from "@/components/wedding/TransitionSection";
 import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
 import RSVPSectionDynamic from "@/components/wedding/RSVPSectionDynamic";

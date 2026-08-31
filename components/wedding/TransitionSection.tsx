@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // ── Google Maps link to Tanah Lot, Bali ───────────────────────────────────────
 const MAPS_URL =
@@ -131,11 +131,17 @@ export default function TransitionSection({ settings }: { settings?: any }) {
   const dateRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
 
-  const targetDate = settings?.weddingDate
-    ? new Date(
-        `${settings.weddingDate}T${settings.resepsiTime || "16:00"}:00+08:00`,
-      )
-    : WEDDING_DATE;
+  // ponytail: memoised so useCountdown's effect doesn't re-fire every render
+  // (a fresh Date ref each render = infinite setState loop).
+  const targetDate = useMemo(
+    () =>
+      settings?.weddingDate
+        ? new Date(
+            `${settings.weddingDate}T${settings.resepsiTime || "16:00"}:00+08:00`,
+          )
+        : WEDDING_DATE,
+    [settings?.weddingDate, settings?.resepsiTime],
+  );
   const { d, h, m, s } = useCountdown(targetDate);
 
   useEffect(() => {

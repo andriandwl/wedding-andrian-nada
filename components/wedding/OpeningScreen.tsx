@@ -17,7 +17,7 @@ export default function OpeningScreen({ guestName }: { guestName?: string }) {
     <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black">
       <video
         ref={videoRef}
-        src="/gallery3.mp4"
+        src="/first.mp4"
         autoPlay
         muted
         loop

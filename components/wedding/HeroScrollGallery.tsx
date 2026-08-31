@@ -4,43 +4,136 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { galleryImages } from "@/lib/data";
 
-import groomPhoto from "@/assets/groom.png";
-import bridePhoto from "@/assets/bride.png";
+import coupleImg from "@/assets/brideandgroom.jpeg";
 import { MobileHero } from "./MobileHero";
 
-// ── Constants ──────────────────────────────────────────────────────────────────
-const GROOM_PHOTO = groomPhoto;
-const BRIDE_PHOTO = bridePhoto;
+// ── Bride / Groom themes ──────────────────────────────────────────────────────
+const BRIDE_THEME = {
+  main: "#D88C9C",
+  border: "rgba(216,140,156,0.4)",
+  tint: "rgba(216,140,156,0.07)",
+};
+const GROOM_THEME = {
+  main: "#6E86B5",
+  border: "rgba(110,134,181,0.4)",
+  tint: "rgba(110,134,181,0.07)",
+};
 
-function getPeople(settings?: any) {
-  return [
+function PersonList({
+  person,
+  theme,
+}: {
+  person: { role: string; name: string; parents: string; instagram: string };
+  theme: { main: string; border: string; tint: string };
+}) {
+  const rows = [
+    { label: "Nama Lengkap", value: person.name },
     {
-      name: settings?.brideFullName || settings?.brideName || "Denada Putri",
-      role: "Bride",
-      parents: settings?.brideParents
-        ?.split("&")
-        .map((p: string) => p.trim()) || [
-        "Bapak Hendra Wijaya",
-        "Ibu Sari Dewi",
-      ],
-      photo: BRIDE_PHOTO,
-      instagram: settings?.brideInstagram || "https://instagram.com",
-      side: "bride",
-    },
-    {
-      name:
-        settings?.groomFullName ||
-        settings?.groomName ||
-        "Andrian Dwi Haryanto",
-      role: "Groom",
-      parents: settings?.groomParents
-        ?.split("&")
-        .map((p: string) => p.trim()) || ["Bapak Dal Haryanto", "Ibu Sukimah"],
-      photo: GROOM_PHOTO,
-      instagram: settings?.groomInstagram || "https://instagram.com",
-      side: "groom",
+      label: "Putra / Putri dari",
+      value: person.parents
+        .split("&")
+        .map((s) => s.trim())
+        .join(" & "),
     },
   ];
+  return (
+    <div
+      className="w-full rounded-2xl p-6 md:p-8"
+      style={{
+        background: theme.tint,
+        border: `1px solid ${theme.border}`,
+        animation: "fadeSlideUp 0.9s ease both",
+      }}
+    >
+      <div className="mb-4 inline-flex items-center gap-2">
+        <span style={{ width: 22, height: 1, background: theme.main, opacity: 0.6 }} />
+        <p
+          className="text-[0.62rem] tracking-[0.32em] uppercase"
+          style={{ color: theme.main, fontFamily: "var(--font-jost)" }}
+        >
+          {person.role}
+        </p>
+      </div>
+      <h3
+        style={{
+          fontFamily: "var(--font-cormorant)",
+          fontSize: "clamp(1.5rem, 4.5vw, 2.1rem)",
+          color: "var(--dark-warm)",
+          fontWeight: 400,
+          lineHeight: 1.1,
+          marginBottom: "1rem",
+        }}
+      >
+        {person.name}
+      </h3>
+      <ul className="space-y-3">
+        {rows.map((r) => (
+          <li key={r.label} className="flex gap-3">
+            <span
+              className="mt-[7px] shrink-0 rounded-full"
+              style={{ width: 7, height: 7, background: theme.main }}
+            />
+            <div>
+              <p
+                className="text-[0.58rem] tracking-[0.22em] uppercase"
+                style={{ color: "var(--warm-gray)", fontFamily: "var(--font-jost)" }}
+              >
+                {r.label}
+              </p>
+              <p
+                className="text-[0.9rem]"
+                style={{
+                  color: "var(--dark-warm)",
+                  fontFamily: "var(--font-jost)",
+                  lineHeight: 1.5,
+                }}
+              >
+                {r.value}
+              </p>
+            </div>
+          </li>
+        ))}
+        <li className="flex gap-3">
+          <span
+            className="mt-[7px] shrink-0 rounded-full"
+            style={{ width: 7, height: 7, background: theme.main }}
+          />
+          <a
+            href={person.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 group"
+          >
+            <span
+              className="flex items-center justify-center rounded-full transition-transform group-hover:scale-110"
+              style={{ width: 30, height: 30, border: `1px solid ${theme.border}`, color: theme.main }}
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </span>
+            <span
+              className="text-[0.72rem] tracking-[0.16em] uppercase"
+              style={{ color: theme.main, fontFamily: "var(--font-jost)" }}
+            >
+              Instagram
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
 }
 
 // ── Reusable primitives ────────────────────────────────────────────────────────
@@ -102,291 +195,22 @@ function BotanicalDivider({ wide = false }: { wide?: boolean }) {
   );
 }
 
-function ArchPhoto({
-  src,
-  alt,
-  delay = 0,
-}: {
-  src: string | typeof groomPhoto;
-  alt: string;
-  delay?: number;
-}) {
-  return (
-    <div
-      className="relative mx-auto"
-      style={{
-        // FIX: clamp now covers mobile (160px) → tablet (38vw) → desktop (260px)
-        width: "clamp(160px, 38vw, 260px)",
-        animation: `floatArch 7s ease-in-out infinite`,
-        animationDelay: `${delay}s`,
-      }}
-    >
-      <div
-        className="absolute"
-        style={{
-          inset: "-14px -10px -6px",
-          border: "1px solid rgba(201,169,110,0.2)",
-          borderRadius: "52% 52% 8px 8px / 42% 42% 8px 8px",
-          zIndex: 0,
-        }}
-      />
-      <div
-        className="absolute"
-        style={{
-          inset: "-6px -4px 0px",
-          border: "0.5px solid rgba(201,169,110,0.35)",
-          borderRadius: "52% 52% 6px 6px / 38% 38% 6px 6px",
-          zIndex: 0,
-        }}
-      />
-      <div
-        className="absolute"
-        style={{
-          inset: 0,
-          borderRadius: "52% 52% 4px 4px / 32% 32% 4px 4px",
-          background:
-            "radial-gradient(ellipse at 50% 20%, rgba(201,169,110,0.18) 0%, transparent 70%)",
-          filter: "blur(18px)",
-          zIndex: 0,
-          transform: "scaleX(1.1) translateY(-10%)",
-        }}
-      />
-      <div
-        className="relative overflow-hidden"
-        style={{
-          borderRadius: "52% 52% 4px 4px / 32% 32% 4px 4px",
-          aspectRatio: "3 / 4",
-          zIndex: 1,
-        }}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover object-top"
-          sizes="(max-width: 480px) 160px, (max-width: 640px) 38vw, 260px"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, transparent 60%, rgba(44,40,37,0.25) 100%)",
-            zIndex: 2,
-          }}
-        />
-      </div>
-    </div>
-  );
-}
-
-function PersonCard({
-  person,
-  index,
-}: {
-  person: ReturnType<typeof getPeople>[0];
-  index: number;
-}) {
-  return (
-    <div
-      className="flex flex-col items-center text-center"
-      style={{
-        // FIX: on mobile full width, on tablet/desktop bounded width
-        width: "100%",
-        maxWidth: "clamp(200px, 80vw, 300px)",
-        animation: `fadeSlideUp 0.9s ease both`,
-        animationDelay: `${0.2 + index * 0.18}s`,
-      }}
-    >
-      {/* Role badge */}
-      <div
-        className="mb-4 inline-flex items-center gap-2"
-        style={{ fontFamily: "var(--font-jost)" }}
-      >
-        <div
-          style={{
-            width: 18,
-            height: "0.5px",
-            background: "#D88C9C",
-            opacity: 0.6,
-          }}
-        />
-        <p
-          className="text-[0.62rem] tracking-[0.32em] uppercase"
-          style={{ color: "#D88C9C" }}
-        >
-          {person.role}
-        </p>
-        <div
-          style={{
-            width: 18,
-            height: "0.5px",
-            background: "#D88C9C",
-            opacity: 0.6,
-          }}
-        />
-      </div>
-
-      <ArchPhoto src={person.photo} alt={person.name} delay={index * 1.5} />
-
-      <div className="mt-8 px-2 w-full">
-        <h3
-          style={{
-            fontFamily: "var(--font-cormorant)",
-            color: "var(--dark-warm)",
-            // FIX: safe font size range for all screens
-            fontSize: "clamp(1.35rem, 4vw, 1.75rem)",
-            fontWeight: 400,
-            letterSpacing: "0.02em",
-            lineHeight: 1.1,
-            marginBottom: "0.5rem",
-          }}
-        >
-          {person.name}
-        </h3>
-
-        <div
-          style={{
-            width: 28,
-            height: "0.5px",
-            background:
-              "linear-gradient(90deg, transparent, #D88C9C, transparent)",
-            margin: "0.6rem auto 0.8rem",
-          }}
-        />
-
-        <p
-          className="text-[0.7rem] leading-loose"
-          style={{ color: "var(--warm-gray)", fontFamily: "var(--font-jost)" }}
-        >
-          Putri/Putra dari
-        </p>
-        {person.parents.map((p: string, i: number) => (
-          <p
-            key={i}
-            className="text-[0.78rem]"
-            style={{
-              color: "var(--dark-warm)",
-              fontFamily: "var(--font-jost)",
-              fontWeight: 400,
-              lineHeight: 1.7,
-              opacity: 0.8,
-            }}
-          >
-            {p}
-          </p>
-        ))}
-
-        <a
-          href={person.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 mt-6 transition-all duration-300 group"
-          style={{ fontFamily: "var(--font-jost)" }}
-        >
-          <span
-            className="flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110"
-            style={{
-              width: 32,
-              height: 32,
-              border: "0.5px solid rgba(201,169,110,0.4)",
-              color: "#D88C9C",
-            }}
-          >
-            <svg
-              width="13"
-              height="13"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-            </svg>
-          </span>
-          <span
-            className="text-[0.65rem] tracking-[0.18em] uppercase transition-colors duration-300"
-            style={{ color: "rgba(138,129,120,0.8)" }}
-          >
-            Instagram
-          </span>
-        </a>
-      </div>
-    </div>
-  );
-}
-
-function Connector() {
-  return (
-    <div className="flex flex-col items-center justify-center flex-shrink-0 select-none md:px-12 py-6 md:py-0 md:-mt-8">
-      <div className="w-[1.5px] h-[60px] bg-gradient-to-b from-transparent to-[#D88C9C]/50" />
-      <div className="my-3 flex flex-col items-center">
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 36 36"
-          fill="none"
-          className="mb-2 opacity-80"
-        >
-          <ellipse
-            cx="18"
-            cy="9"
-            rx="2"
-            ry="7"
-            fill="rgba(201,169,110,0.4)"
-            transform="rotate(0 18 18)"
-          />
-          <ellipse
-            cx="18"
-            cy="9"
-            rx="2"
-            ry="7"
-            fill="rgba(201,169,110,0.4)"
-            transform="rotate(45 18 18)"
-          />
-          <ellipse
-            cx="18"
-            cy="9"
-            rx="2"
-            ry="7"
-            fill="rgba(201,169,110,0.4)"
-            transform="rotate(90 18 18)"
-          />
-          <ellipse
-            cx="18"
-            cy="9"
-            rx="2"
-            ry="7"
-            fill="rgba(201,169,110,0.4)"
-            transform="rotate(135 18 18)"
-          />
-          <circle cx="18" cy="18" r="3" fill="#D88C9C" opacity="0.9" />
-          <circle cx="18" cy="18" r="1.5" fill="#FBE7EB" />
-        </svg>
-        <span
-          className="italic leading-none"
-          style={{
-            fontFamily: "var(--font-cormorant)",
-            fontSize: "clamp(2.8rem, 6vw, 4.2rem)",
-            color: "var(--dark-warm)",
-            opacity: 0.6,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          &amp;
-        </span>
-      </div>
-      <div className="w-[1.5px] h-[60px] bg-gradient-to-b from-[#D88C9C]/50 to-transparent" />
-    </div>
-  );
-}
-
-// ── CoupleStory ────────────────────────────────────────────────────────────────
+// ── Section 2: Bride & Groom introduction ────────────────────────────────────
 export function CoupleStory({ settings }: { settings?: any }) {
-  const people = getPeople(settings);
+  const bride = {
+    role: "The Bride",
+    name: settings?.brideFullName || settings?.brideName || "Denada Putri",
+    parents: settings?.brideParents || "Bapak Hendra Wijaya & Ibu Sari Dewi",
+    instagram: settings?.brideInstagram || "https://instagram.com",
+  };
+  const groom = {
+    role: "The Groom",
+    name:
+      settings?.groomFullName || settings?.groomName || "Andrian Dwi Haryanto",
+    parents: settings?.groomParents || "Bapak Dal Haryanto & Ibu Sukimah",
+    instagram: settings?.groomInstagram || "https://instagram.com",
+  };
+
   return (
     <section
       id="story"
@@ -402,19 +226,6 @@ export function CoupleStory({ settings }: { settings?: any }) {
         }}
       />
       <div
-        className="absolute pointer-events-none"
-        style={{
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "min(600px, 90vw)",
-          aspectRatio: "1",
-          zIndex: 0,
-          opacity: 0.025,
-          backgroundImage: `radial-gradient(ellipse at 50% 50%, #D88C9C 0%, transparent 70%)`,
-        }}
-      />
-      <div
         className="absolute top-0 left-0 right-0"
         style={{
           height: "0.5px",
@@ -425,17 +236,15 @@ export function CoupleStory({ settings }: { settings?: any }) {
         }}
       />
 
-      {/* FIX: tighter vertical padding on mobile */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-16 md:py-24 lg:py-32">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 py-16 md:py-24 lg:py-28">
         {/* Section header */}
         <header
-          className="text-center mb-12 md:mb-20"
+          className="text-center mb-10 md:mb-14"
           style={{ animation: "fadeSlideUp 0.8s ease both" }}
         >
           <p
             style={{
               fontFamily: "var(--font-great-vibes)",
-              // FIX: safe range for mobile
               fontSize: "clamp(1.2rem, 4vw, 2.1rem)",
               color: "#D88C9C",
               opacity: 0.9,
@@ -447,17 +256,13 @@ export function CoupleStory({ settings }: { settings?: any }) {
           </p>
           <p
             className="text-[0.64rem] tracking-[0.38em] uppercase mb-4"
-            style={{
-              color: "var(--warm-gray)",
-              fontFamily: "var(--font-jost)",
-            }}
+            style={{ color: "var(--warm-gray)", fontFamily: "var(--font-jost)" }}
           >
             The Couple
           </p>
           <h2
             style={{
               fontFamily: "var(--font-cormorant)",
-              // FIX: safe mobile floor
               fontSize: "clamp(2rem, 6.5vw, 3.8rem)",
               color: "var(--dark-warm)",
               fontWeight: 300,
@@ -465,20 +270,63 @@ export function CoupleStory({ settings }: { settings?: any }) {
               lineHeight: 0.95,
             }}
           >
-            Bride and Groom
+            Bride &amp; Groom
           </h2>
           <BotanicalDivider wide />
         </header>
 
-        {/* ═══ Couple cards ═══ */}
-        <div className="flex flex-col md:flex-row items-center md:items-start justify-center w-full mt-4">
-          <div className="w-full md:w-auto flex justify-center">
-            <PersonCard person={people[0]} index={0} />
+        {/* Shared photo */}
+        <div
+          className="relative mx-auto"
+          style={{ maxWidth: 520, animation: "fadeSlideUp 0.9s ease both" }}
+        >
+          <div
+            className="absolute pointer-events-none"
+            style={{
+              inset: "-12% -8%",
+              background:
+                "radial-gradient(ellipse at 28% 60%, rgba(216,140,156,0.28) 0%, transparent 60%), radial-gradient(ellipse at 74% 60%, rgba(110,134,181,0.28) 0%, transparent 60%)",
+              filter: "blur(28px)",
+              zIndex: 0,
+            }}
+          />
+          <div
+            className="relative overflow-hidden"
+            style={{
+              borderRadius: 24,
+              boxShadow: "0 30px 70px rgba(82,54,62,0.25)",
+              zIndex: 1,
+            }}
+          >
+            <Image
+              src={coupleImg}
+              alt={`${bride.name} & ${groom.name}`}
+              placeholder="blur"
+              className="w-full h-auto object-cover"
+              sizes="(max-width: 560px) 100vw, 520px"
+            />
           </div>
-          <Connector />
-          <div className="w-full md:w-auto flex justify-center">
-            <PersonCard person={people[1]} index={1} />
+          {/* Name tags matching each side of the photo */}
+          <div className="mt-4 flex justify-between px-2">
+            <span
+              className="text-[0.7rem] tracking-[0.22em] uppercase"
+              style={{ color: BRIDE_THEME.main, fontFamily: "var(--font-jost)" }}
+            >
+              {settings?.brideName || "Nada"}
+            </span>
+            <span
+              className="text-[0.7rem] tracking-[0.22em] uppercase"
+              style={{ color: GROOM_THEME.main, fontFamily: "var(--font-jost)" }}
+            >
+              {settings?.groomName || "Andrian"}
+            </span>
           </div>
+        </div>
+
+        {/* Bride (pink) + Groom (blue) lists */}
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <PersonList person={bride} theme={BRIDE_THEME} />
+          <PersonList person={groom} theme={GROOM_THEME} />
         </div>
       </div>
 
@@ -496,21 +344,9 @@ export function CoupleStory({ settings }: { settings?: any }) {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-        @keyframes floatArch {
-          0%, 100% { transform: translateY(0px); }
-          50%       { transform: translateY(-9px); }
-        }
         @keyframes fadeSlideUp {
           from { opacity: 0; transform: translateY(28px); }
           to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeSlideLeft {
-          from { opacity: 0; transform: translateX(20px); }
-          to   { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeSlideRight {
-          from { opacity: 0; transform: translateX(-20px); }
-          to   { opacity: 1; transform: translateX(0); }
         }
       `,
         }}
@@ -804,7 +640,7 @@ export default function HeroScrollGallery({
             className="absolute inset-0 w-full h-full object-cover"
             style={{ opacity: 0.88 }}
           >
-            <source src="/gallery4.mp4" type="video/mp4" />
+            <source src="/desktop-hero2.mp4" type="video/mp4" />
           </video>
 
           {/* Multi-layer gradient overlay for text legibility */}

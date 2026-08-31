@@ -253,7 +253,7 @@ export function MobileHero({
           className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: 0.55, objectPosition: "center 20%" }}
         >
-          <source src="/gallery4.mp4" type="video/mp4" />
+          <source src="/mobile-hero.mp4" type="video/mp4" />
         </video>
         {/* Multi-layer gradient */}
         <div

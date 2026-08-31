@@ -8,6 +8,16 @@ import gambar4 from "@/assets/gambar4.jpeg";
 import gambar5 from "@/assets/gambar5.jpeg";
 import gambar6 from "@/assets/gambar6.jpeg";
 import gambar8 from "@/assets/gambar8.jpeg";
+import gambarhero1 from "@/assets/gambar-hero1.jpeg";
+import gambarhero2 from "@/assets/gambar-hero2.jpeg";
+import gambarhero3 from "@/assets/gambar-hero3.jpeg";
+import gambarhero4 from "@/assets/gambar-hero4.jpeg";
+import gambarhero5 from "@/assets/gambar-hero5.jpeg";
+import gambarhero6 from "@/assets/gambar-hero6.jpeg";
+import gambarhero7 from "@/assets/gambar-hero7.jpeg";
+import gambarhero8 from "@/assets/gambar-hero8.jpeg";
+import gambarhero9 from "@/assets/gambar-hero9.jpeg";
+
 import gambar11 from "@/assets/gambar11.jpeg";
 
 export interface GalleryImage {
@@ -73,6 +83,65 @@ export const galleryImages: GalleryImage[] = [
   },
 ];
 
+export const galleryHeroImages: GalleryImage[] = [
+  {
+    id: 1,
+    src: gambarhero1,
+    alt: "Couple on the beach at golden hour",
+    width: 1200,
+    height: 800,
+  },
+  {
+    id: 2,
+    src: gambarhero2,
+    alt: "Wedding bouquet",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 3,
+    src: gambarhero3,
+    alt: "Couple embracing at sunset",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 4,
+    src: gambarhero4,
+    alt: "Romantic beach walk",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 5,
+    src: gambarhero5,
+    alt: "First dance together",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 6,
+    src: gambarhero6,
+    alt: "Couple in the garden",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 7,
+    src: gambarhero7,
+    alt: "Romantic beach walk",
+    width: 800,
+    height: 1000,
+  },
+  {
+    id: 8,
+    src: gambarhero8,
+    alt: "First dance together",
+    width: 800,
+    height: 1000,
+  },
+];
+
 // ── Love Story stages ─────────────────────────────────────────────────────────
 export const storyStages: StoryStage[] = [
   {
@@ -114,22 +183,64 @@ export const storyStages: StoryStage[] = [
     photos: [
       {
         id: 201,
-        src: gambar11,
+        src: gambarhero1,
         alt: "Road trip adventure",
         width: 600,
         height: 750,
       },
       {
         id: 202,
-        src: "https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=600&q=80",
+        src: gambarhero2,
         alt: "Sunset at the coast",
         width: 600,
         height: 750,
       },
       {
         id: 203,
-        src: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80",
+        src: gambarhero3,
         alt: "Exploring together",
+        width: 600,
+        height: 750,
+      },
+      {
+        id: 204,
+        src: gambarhero4,
+        alt: "Open road through the mountains",
+        width: 600,
+        height: 750,
+      },
+      {
+        id: 205,
+        src: gambarhero5,
+        alt: "Hiking the coastal trail",
+        width: 600,
+        height: 750,
+      },
+      {
+        id: 206,
+        src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80",
+        alt: "Lake and mountains at dawn",
+        width: 600,
+        height: 750,
+      },
+      {
+        id: 207,
+        src: "https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=600&q=80",
+        alt: "Road trip pit stop",
+        width: 600,
+        height: 750,
+      },
+      {
+        id: 208,
+        src: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=600&q=80",
+        alt: "Watching the sunrise from the car",
+        width: 600,
+        height: 750,
+      },
+      {
+        id: 209,
+        src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80",
+        alt: "Camping under the stars",
         width: 600,
         height: 750,
       },

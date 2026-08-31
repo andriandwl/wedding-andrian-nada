@@ -120,7 +120,17 @@ async function renderPolaroid(
   ctx.shadowColor = style.shadowColor;
   ctx.shadowBlur = 18;
   ctx.shadowOffsetY = 3;
-  ctx.drawImage(img, srcX, srcY, srcSize, srcSize, PAD, PAD, PHOTO_SIZE, PHOTO_SIZE);
+  ctx.drawImage(
+    img,
+    srcX,
+    srcY,
+    srcSize,
+    srcSize,
+    PAD,
+    PAD,
+    PHOTO_SIZE,
+    PHOTO_SIZE,
+  );
   ctx.restore();
 
   URL.revokeObjectURL(photoUrl);
@@ -188,10 +198,13 @@ async function renderPolaroid(
 
   // Date
   if (settings.weddingDate) {
-    const dateStr = new Date(settings.weddingDate + "T00:00:00").toLocaleDateString(
-      "id-ID",
-      { day: "numeric", month: "long", year: "numeric" },
-    );
+    const dateStr = new Date(
+      settings.weddingDate + "T00:00:00",
+    ).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
     ctx.fillStyle = style.dateColor;
     ctx.font = '300 13px "Jost","Helvetica Neue","Segoe UI",Arial,sans-serif';
     ctx.textAlign = "center";
@@ -203,7 +216,7 @@ async function renderPolaroid(
     ctx.fillStyle = style.venueColor;
     ctx.font = '300 11px "Jost","Helvetica Neue","Segoe UI",Arial,sans-serif';
     ctx.textAlign = "center";
-    ctx.fillText(`— ${settings.venueName} —`, W / 2, TEXT_TOP + 148);
+    ctx.fillText(`— Pekanbaru, Riau —`, W / 2, TEXT_TOP + 148);
   }
 
   // Export
@@ -260,8 +273,12 @@ export default function FrameCanvas({
     return (
       <div className="text-center py-8 px-6">
         <div className="text-3xl mb-3">😕</div>
-        <p className="text-[#52363E] text-sm font-medium">Gagal membuat frame</p>
-        <p className="text-xs text-[#A6808B] mt-1">Coba kembali atau gunakan foto lain.</p>
+        <p className="text-[#52363E] text-sm font-medium">
+          Gagal membuat frame
+        </p>
+        <p className="text-xs text-[#A6808B] mt-1">
+          Coba kembali atau gunakan foto lain.
+        </p>
       </div>
     );
   }
