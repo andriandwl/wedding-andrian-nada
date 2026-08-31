@@ -11,10 +11,23 @@ export default function OpeningScreen({ guestName }: { guestName?: string }) {
     videoRef.current?.play().catch(() => {});
   }, []);
 
+  // Browser blokir autoplay bersuara → mulai muted, nyalakan suara di tap pertama.
+  function unmute() {
+    const v = videoRef.current;
+    if (v && v.muted) {
+      v.muted = false;
+      v.volume = 1;
+      v.play().catch(() => {});
+    }
+  }
+
   if (open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black">
+    <div
+      onPointerDown={unmute}
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-black"
+    >
       <video
         ref={videoRef}
         src="/first.mp4"

@@ -12,6 +12,7 @@ import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
 import RSVPSectionDynamic from "@/components/wedding/RSVPSectionDynamic";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
+import MusicPlayer from "@/components/wedding/MusicPlayer";
 
 import { connectDB } from "@/lib/db";
 import Guest from "@/models/Guest";
@@ -88,6 +89,9 @@ export default async function InvitationPage({ params }: Props) {
 
       {/* Footer */}
       <Footer />
+
+      {/* Background music */}
+      <MusicPlayer />
 
       {/* Floating Photobooth button */}
       <Link

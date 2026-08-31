@@ -22,14 +22,16 @@ const GROOM_THEME = {
 function PersonList({
   person,
   theme,
+  parentLabel = "Putra / Putri dari",
 }: {
   person: { role: string; name: string; parents: string; instagram: string };
   theme: { main: string; border: string; tint: string };
+  parentLabel?: string;
 }) {
   const rows = [
     { label: "Nama Lengkap", value: person.name },
     {
-      label: "Putra / Putri dari",
+      label: parentLabel,
       value: person.parents
         .split("&")
         .map((s) => s.trim())
@@ -46,7 +48,9 @@ function PersonList({
       }}
     >
       <div className="mb-4 inline-flex items-center gap-2">
-        <span style={{ width: 22, height: 1, background: theme.main, opacity: 0.6 }} />
+        <span
+          style={{ width: 22, height: 1, background: theme.main, opacity: 0.6 }}
+        />
         <p
           className="text-[0.62rem] tracking-[0.32em] uppercase"
           style={{ color: theme.main, fontFamily: "var(--font-jost)" }}
@@ -57,7 +61,7 @@ function PersonList({
       <h3
         style={{
           fontFamily: "var(--font-cormorant)",
-          fontSize: "clamp(1.5rem, 4.5vw, 2.1rem)",
+          fontSize: "clamp(1.5rem, 4.5vw, 1.5rem)",
           color: "var(--dark-warm)",
           fontWeight: 400,
           lineHeight: 1.1,
@@ -76,7 +80,10 @@ function PersonList({
             <div>
               <p
                 className="text-[0.58rem] tracking-[0.22em] uppercase"
-                style={{ color: "var(--warm-gray)", fontFamily: "var(--font-jost)" }}
+                style={{
+                  color: "var(--warm-gray)",
+                  fontFamily: "var(--font-jost)",
+                }}
               >
                 {r.label}
               </p>
@@ -106,7 +113,12 @@ function PersonList({
           >
             <span
               className="flex items-center justify-center rounded-full transition-transform group-hover:scale-110"
-              style={{ width: 30, height: 30, border: `1px solid ${theme.border}`, color: theme.main }}
+              style={{
+                width: 30,
+                height: 30,
+                border: `1px solid ${theme.border}`,
+                color: theme.main,
+              }}
             >
               <svg
                 width="13"
@@ -256,7 +268,10 @@ export function CoupleStory({ settings }: { settings?: any }) {
           </p>
           <p
             className="text-[0.64rem] tracking-[0.38em] uppercase mb-4"
-            style={{ color: "var(--warm-gray)", fontFamily: "var(--font-jost)" }}
+            style={{
+              color: "var(--warm-gray)",
+              fontFamily: "var(--font-jost)",
+            }}
           >
             The Couple
           </p>
@@ -310,13 +325,19 @@ export function CoupleStory({ settings }: { settings?: any }) {
           <div className="mt-4 flex justify-between px-2">
             <span
               className="text-[0.7rem] tracking-[0.22em] uppercase"
-              style={{ color: BRIDE_THEME.main, fontFamily: "var(--font-jost)" }}
+              style={{
+                color: BRIDE_THEME.main,
+                fontFamily: "var(--font-jost)",
+              }}
             >
               {settings?.brideName || "Nada"}
             </span>
             <span
               className="text-[0.7rem] tracking-[0.22em] uppercase"
-              style={{ color: GROOM_THEME.main, fontFamily: "var(--font-jost)" }}
+              style={{
+                color: GROOM_THEME.main,
+                fontFamily: "var(--font-jost)",
+              }}
             >
               {settings?.groomName || "Andrian"}
             </span>
@@ -325,8 +346,8 @@ export function CoupleStory({ settings }: { settings?: any }) {
 
         {/* Bride (pink) + Groom (blue) lists */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <PersonList person={bride} theme={BRIDE_THEME} />
-          <PersonList person={groom} theme={GROOM_THEME} />
+          <PersonList person={bride} theme={BRIDE_THEME} parentLabel="Putri dari" />
+          <PersonList person={groom} theme={GROOM_THEME} parentLabel="Putra dari" />
         </div>
       </div>
 

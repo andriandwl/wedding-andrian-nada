@@ -9,6 +9,7 @@ import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
 import RSVPSectionDynamic from "@/components/wedding/RSVPSectionDynamic";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
+import MusicPlayer from "@/components/wedding/MusicPlayer";
 
 import { connectDB } from "@/lib/db";
 import Setting from "@/models/Setting";
@@ -71,6 +72,9 @@ export default async function PreviewPage() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Background music */}
+      <MusicPlayer />
     </main>
   );
 }

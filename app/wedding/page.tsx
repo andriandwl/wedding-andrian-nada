@@ -6,6 +6,7 @@ import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
 import RSVPSection from "@/components/wedding/RSVPSection";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
+import MusicPlayer from "@/components/wedding/MusicPlayer";
 
 export default function WeddingPage() {
   return (
@@ -36,6 +37,9 @@ export default function WeddingPage() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Background music */}
+      <MusicPlayer />
     </div>
   );
 }

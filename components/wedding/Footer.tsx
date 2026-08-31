@@ -12,7 +12,7 @@ export default function Footer() {
           className="text-[#A6808B] text-xs tracking-[0.18em] uppercase"
           style={{ fontFamily: "var(--font-jost)" }}
         >
-          14 September 2025 · Bali, Indonesia
+          10 Oktober 2026 · Riau, Indonesia
         </p>
         <div className="w-10 h-px bg-[#D88C9C]/30 mt-2" />
         <p
