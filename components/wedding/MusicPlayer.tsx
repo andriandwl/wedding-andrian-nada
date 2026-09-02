@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // ponytail: single background track from /public/music.mp3. Ganti file itu untuk ganti lagu.
-export default function MusicPlayer({ src = "/akad.mp3" }: { src?: string }) {
+export default function MusicPlayer({ src = "/1000x.mp3" }: { src?: string }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
 
@@ -55,7 +55,9 @@ export default function MusicPlayer({ src = "/akad.mp3" }: { src?: string }) {
             style={{
               height: 16,
               transformOrigin: "center",
-              animation: playing ? `music-bar 0.9s ease-in-out ${i * 0.15}s infinite` : "none",
+              animation: playing
+                ? `music-bar 0.9s ease-in-out ${i * 0.15}s infinite`
+                : "none",
               transform: playing ? undefined : "scaleY(0.35)",
             }}
           />
