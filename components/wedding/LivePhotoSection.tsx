@@ -9,10 +9,13 @@ export default function LivePhotoSection() {
     <section className="relative w-full px-6 py-24 text-[#52363E]">
       <div className="mx-auto max-w-4xl">
         <div className="mb-10 text-center">
-          <p className="text-[0.64rem] uppercase tracking-[0.32em]">Live Moments</p>
-          <h2 className="mt-2 font-serif text-3xl">Foto yang Bergerak</h2>
+          <p className="text-[0.64rem] uppercase tracking-[0.32em]">
+            Live Moments
+          </p>
+          <h2 className="mt-2 font-serif text-3xl">Photo Gallery</h2>
           <p className="mx-auto mt-2 max-w-sm text-[0.72rem] leading-loose opacity-70">
-            Arahkan kursor atau tekan &amp; tahan tiap foto untuk menghidupkannya.
+            Arahkan kursor atau tekan &amp; tahan tiap foto untuk
+            menghidupkannya.
           </p>
         </div>
 
