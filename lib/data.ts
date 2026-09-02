@@ -265,7 +265,7 @@ export const storyStages: StoryStage[] = [
     label: "stage 03",
     title: "The Proposal",
     description:
-      "Under a thousand paper stars that Andrian spent weeks folding, he asked the question Nada had been quietly hoping for. She said yes before he finished the sentence.",
+      "Under a thousand paper stars that Andrian spent weeks folding, he asked the question Nada had been quietly hoping for. And she said yes.💍",
     photos: [
       {
         id: 301,
