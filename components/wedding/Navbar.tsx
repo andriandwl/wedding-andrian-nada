@@ -33,7 +33,7 @@ export default function Navbar() {
       >
         {/* Logo */}
         <Link
-          href="/"
+          href="#"
           className="font-serif text-xl font-medium tracking-wider text-[#52363E] shrink-0"
           style={{ fontFamily: "var(--font-cormorant)" }}
         >
@@ -42,7 +42,7 @@ export default function Navbar() {
 
         {/* Nav links — hidden on small mobile */}
         <ul className="hidden sm:flex items-center gap-6">
-          {["Travel", "Registry", "FAQ"].map((item) => (
+          {["Photos", "Story", "FAQ"].map((item) => (
             <li key={item}>
               <Link
                 href={`#${item.toLowerCase()}`}

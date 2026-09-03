@@ -6,7 +6,7 @@ export default function LivePhotoSection() {
   if (!livePhotos.length) return null;
 
   return (
-    <section className="relative w-full px-6 py-24 text-[#52363E]">
+    <section id="photos" className="relative w-full px-6 py-24 text-[#52363E]">
       <div className="mx-auto max-w-4xl">
         <div className="mb-10 text-center">
           <p className="text-[0.64rem] uppercase tracking-[0.32em]">

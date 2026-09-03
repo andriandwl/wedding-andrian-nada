@@ -131,6 +131,7 @@ export default function LoveStoryScrollStack() {
   return (
     <section
       ref={sectionRef}
+      id="story"
       className="relative w-full bg-[#FBE7EB] py-24 overflow-hidden"
     >
       {/* ── Section title ── */}

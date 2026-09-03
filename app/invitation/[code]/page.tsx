@@ -76,14 +76,14 @@ export default async function InvitationPage({ params }: Props) {
       {/* Section 2: Couple profiles + love story timeline */}
       <CoupleStory settings={setting} />
 
+      {/* Section 3: Live Photos gallery */}
+      <LivePhotoSection />
+
       {/* Section 3: Quote + event details + countdown */}
       <TransitionSection settings={setting} />
 
       {/* Section 4: Love story with polaroid stack animation */}
       <LoveStoryScrollStack />
-
-      {/* Section 5: Live Photos gallery */}
-      <LivePhotoSection />
 
       {/* Section 6: RSVP form */}
       <RSVPSectionDynamic code={params.code} guestInfo={sanitizedGuest} />
