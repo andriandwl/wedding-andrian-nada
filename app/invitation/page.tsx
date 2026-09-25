@@ -33,7 +33,7 @@ export default async function PublicInvitationPage() {
   return (
     <main className="relative w-full min-h-screen bg-[#FBE7EB]">
       <OpeningScreen />
-      <Navbar />
+      <Navbar hideRsvp />
       <HeroScrollGallery settings={setting} />
       <CoupleStory settings={setting} />
       <TransitionSection settings={setting} />

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-export default function Navbar() {
+export default function Navbar({ hideRsvp = false }: { hideRsvp?: boolean }) {
   const navRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -56,6 +56,7 @@ export default function Navbar() {
         </ul>
 
         {/* RSVP button */}
+        {!hideRsvp && (
         <Link
           href="#rsvp"
           className="
@@ -69,6 +70,7 @@ export default function Navbar() {
         >
           RSVP
         </Link>
+        )}
       </nav>
     </header>
   );
