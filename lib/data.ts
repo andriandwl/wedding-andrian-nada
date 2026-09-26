@@ -203,9 +203,9 @@ export const storyStages: StoryStage[] = [
   {
     id: 1,
     label: "stage 01",
-    title: "How We Met",
+    title: "Where It All Began",
     description:
-      "It was a rainy afternoon in Jakarta when Andrian bumped into Nada at a small bookstore. They spent three hours talking about everything — and forgot it was still raining.",
+      "In the quiet bustle of a Jakarta office, two strangers arrived on the same page of a brand-new chapter, both newcomers, both still finding their way.\n\nWe were only colleagues then. A passing greeting, a shared laugh over coffee, small conversations that seemed to mean nothing at all. Neither of us knew that the most ordinary of days was quietly writing the first line of our forever.",
     photos: [
       {
         id: 101,
@@ -233,9 +233,9 @@ export const storyStages: StoryStage[] = [
   {
     id: 2,
     label: "stage 02",
-    title: "First Adventure",
+    title: "When Our Story Began",
     description:
-      "Six months later they drove to the coast with no map and no plan. That trip taught them they were better together than apart.",
+      "A few months later, he chose a different path and said goodbye to the office where it all started.\n\nAnd yet, as if the universe had its own plans, distance did not pull us apart. It drew us closer. The days without seeing each other taught us how much those small moments had mattered. Conversations became care, care became comfort, and comfort slowly bloomed into love. Until one day, we decided to walk the road ahead hand in hand.",
     photos: [
       {
         id: 201,
@@ -263,9 +263,9 @@ export const storyStages: StoryStage[] = [
   {
     id: 3,
     label: "stage 03",
-    title: "The Proposal",
+    title: "Toward the Same Destination",
     description:
-      "Under a thousand paper stars that Andrian spent weeks folding, he asked the question Nada had been quietly hoping for. And she said yes.💍",
+      "Love, we learned, is not a path paved only with flowers.\n\nThere were differences to embrace, laughter that filled our days, tears that tested our hearts, and storms that taught us to hold on a little tighter. Each season shaped us, teaching us to listen more deeply and to love more patiently.\n\nThen came the day he stood before her parents, heart full and hands steady, asking for their blessing to turn two lives into one home. 💍",
     photos: [
       {
         id: 301,
@@ -293,9 +293,9 @@ export const storyStages: StoryStage[] = [
   {
     id: 4,
     label: "stage 04",
-    title: "Forever Begins",
+    title: "Where Forever Begins",
     description:
-      "Now we invite you to witness the next chapter — our wedding in Bali, surrounded by family, friends, and the ocean we both love.",
+      "On October 10, just two days after her birthday, we will stand in the town where she first opened her eyes to the world, and promise ourselves to each other for a lifetime.\n\nWhat began as a chance meeting between two newcomers in Jakarta has become a love we choose, again and again. Now, with grateful hearts, we are ready to begin our most beautiful chapter: as husband and wife.",
     photos: [
       {
         id: 401,

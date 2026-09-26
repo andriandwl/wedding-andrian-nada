@@ -188,7 +188,7 @@ export default function LoveStoryScrollStack() {
               </h3>
 
               <p
-                className="text-[#A6808B] text-base leading-relaxed max-w-sm"
+                className="text-[#A6808B] text-base leading-relaxed max-w-sm whitespace-pre-line"
                 style={{ fontFamily: "var(--font-jost)", fontWeight: 300 }}
               >
                 {stage.description}
