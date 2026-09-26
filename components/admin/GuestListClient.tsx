@@ -171,12 +171,14 @@ export default function GuestListClient() {
     const phone = guest.phone.replace(/[^0-9]/g, "").replace(/^0/, "62");
     const inviteUrl = `${window.location.origin}/invitation/${guest.invitationCode}`;
     const message =
-      `Halo ${guest.name}! 👋\n\n` +
-      `Kami dengan penuh kebahagiaan mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami. 💍\n\n` +
-      `Silakan buka link undangan digital Anda di bawah ini:\n` +
-      `${inviteUrl}\n\n` +
-      `Kode undangan: *${guest.invitationCode}*\n\n` +
-      `Mohon konfirmasi kehadiran Anda melalui link tersebut. Terima kasih! 🙏`;
+      `Assalamu’alaikum Wr. Wb.\n\n` +
+      `Yth. Bapak/Ibu/Saudara/i *${guest.name}*,\n\n` +
+      `Dengan penuh rasa syukur, kami ingin menyampaikan kabar bahagia sekaligus mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan yang InshaAllah akan dilaksanakan pada *10 Oktober 2026*.\n\n` +
+      `Informasi lengkap mengenai waktu dan lokasi acara dapat dilihat melalui undangan berikut:\n\n` +
+      `🔗 ${inviteUrl}\n\n` +
+      `Besar harapan kami agar Bapak/Ibu/Saudara/i berkenan hadir dan turut memberikan doa restu di hari bahagia tersebut.\n\n` +
+      `Terima kasih atas perhatian dan doa baiknya. 🤍\n\n` +
+      `Wassalamu’alaikum Wr. Wb.`;
     const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(waUrl, "_blank");
 
