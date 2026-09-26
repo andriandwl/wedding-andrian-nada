@@ -202,7 +202,7 @@ export default function GuestForm({ initialData, guestId }: Props) {
           </button>
           <input
             type="number"
-            min={1}
+            min={0}
             max={20}
             value={form.maxPax}
             onChange={(e) => setField("maxPax", Number(e.target.value))}
