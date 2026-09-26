@@ -13,10 +13,6 @@ export default function LivePhotoSection() {
             Live Moments
           </p>
           <h2 className="mt-2 font-serif text-3xl">Photo Gallery</h2>
-          <p className="mx-auto mt-2 max-w-sm text-[0.72rem] leading-loose opacity-70">
-            Arahkan kursor atau tekan &amp; tahan tiap foto untuk
-            menghidupkannya.
-          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
