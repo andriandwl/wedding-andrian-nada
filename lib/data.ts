@@ -18,6 +18,9 @@ import gambarhero6 from "@/assets/gambar-hero6.jpeg";
 import gambarhero7 from "@/assets/gambar-hero7.jpeg";
 import gambarhero8 from "@/assets/gambar-hero8.jpeg";
 import gambarhero9 from "@/assets/gambar-hero9.jpeg";
+import gambarhero13 from "@/assets/gambar13.png";
+import gambarhero14 from "@/assets/gambar14.png";
+import gambarhero15 from "@/assets/gambar15.png";
 
 import gambar11 from "@/assets/gambar11.jpeg";
 
@@ -269,7 +272,7 @@ export const storyStages: StoryStage[] = [
     photos: [
       {
         id: 301,
-        src: gambar12,
+        src: gambarhero14,
         alt: "The proposal moment",
         width: 600,
         height: 750,
@@ -299,22 +302,15 @@ export const storyStages: StoryStage[] = [
     photos: [
       {
         id: 401,
-        src: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80",
+        src: gambarhero13,
         alt: "Bali ceremony venue",
         width: 600,
         height: 750,
       },
       {
         id: 402,
-        src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80",
+        src: gambarhero15,
         alt: "Beach wedding setup",
-        width: 600,
-        height: 750,
-      },
-      {
-        id: 403,
-        src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80",
-        alt: "Wedding details",
         width: 600,
         height: 750,
       },
