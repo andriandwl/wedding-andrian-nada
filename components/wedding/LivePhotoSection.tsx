@@ -13,6 +13,9 @@ export default function LivePhotoSection() {
             Live Moments
           </p>
           <h2 className="mt-2 font-serif text-3xl">Photo Gallery</h2>
+          <p className="text-[0.64rem] uppercase tracking-[0.32em]">
+            Nada & Andrian
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
