@@ -20,7 +20,7 @@ import gambarhero8 from "@/assets/gambar-hero8.jpeg";
 import gambarhero9 from "@/assets/gambar-hero9.jpeg";
 import gambarhero13 from "@/assets/gambar13.png";
 import gambarhero14 from "@/assets/gambar14.png";
-import gambarhero15 from "@/assets/gambar15.png";
+import gambarhero16 from "@/assets/gambar16.png";
 
 import gambar11 from "@/assets/gambar11.jpeg";
 
@@ -309,7 +309,7 @@ export const storyStages: StoryStage[] = [
       },
       {
         id: 402,
-        src: gambarhero15,
+        src: gambarhero16,
         alt: "Beach wedding setup",
         width: 600,
         height: 750,
