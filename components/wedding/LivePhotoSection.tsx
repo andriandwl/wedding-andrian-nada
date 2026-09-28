@@ -14,7 +14,7 @@ export default function LivePhotoSection() {
           </p>
           <h2 className="mt-2 font-serif text-3xl">Photo Gallery</h2>
           <p className="text-[0.64rem] uppercase tracking-[0.32em]">
-            Nada & Andrian
+            Nada and Andrian
           </p>
         </div>
 
