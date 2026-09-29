@@ -2,10 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { Caveat } from "next/font/google";
 import { galleryImages } from "@/lib/data";
 
 import coupleImg from "@/assets/brideandgroom.jpeg";
 import { MobileHero } from "./MobileHero";
+
+const handwriting = Caveat({ subsets: ["latin"], weight: "600" });
 
 // ── Bride / Groom themes ──────────────────────────────────────────────────────
 const BRIDE_THEME = {
@@ -302,7 +305,7 @@ export function CoupleStory({ settings }: { settings?: any }) {
 
         {/* Shared photo */}
         <div
-          className="relative mx-auto"
+          className="relative mx-auto mt-24 md:mt-0"
           style={{ maxWidth: 520, animation: "fadeSlideUp 0.9s ease both" }}
         >
           <div
@@ -315,6 +318,72 @@ export function CoupleStory({ settings }: { settings?: any }) {
               zIndex: 0,
             }}
           />
+          {/* Hand-drawn doodle arrows hinting the photo is hoverable/tappable: above corners on mobile, beside on desktop */}
+          {/* {(["left", "right"] as const).map((pos) => {
+            const color = pos === "left" ? BRIDE_THEME.main : GROOM_THEME.main;
+            const delay = pos === "left" ? "0s" : "0.6s";
+            return (
+              <div
+                key={pos}
+                className={`absolute z-10 flex flex-col pointer-events-none transition-opacity duration-500 bottom-full mb-1 md:mb-0 md:bottom-auto md:top-[12%] ${
+                  pos === "left"
+                    ? "left-0 items-start md:left-auto md:right-full md:mr-2"
+                    : "right-0 items-end md:right-auto md:left-full md:ml-2"
+                }`}
+                style={{ opacity: hovered ? 0 : 1 }}
+              >
+                <div
+                  className="flex flex-col"
+                  style={{
+                    alignItems: pos === "left" ? "flex-start" : "flex-end",
+                    animation: `hintSway 3.2s ease-in-out ${delay} infinite`,
+                    transformOrigin: pos === "left" ? "top left" : "top right",
+                  }}
+                >
+                  <span
+                    className={`${handwriting.className} whitespace-nowrap text-lg md:text-2xl leading-none`}
+                    style={{
+                      color,
+                      transform: `rotate(${pos === "left" ? -8 : 8}deg)`,
+                    }}
+                  >
+                    {pos === "left" ? "sentuh aku ♡" : "♡ aku juga!"}
+                  </span>
+                  <svg
+                    viewBox="0 0 100 72"
+                    className="w-16 md:w-24 h-auto -mt-1"
+                    style={{
+                      color,
+                      transform: pos === "right" ? "scaleX(-1)" : undefined,
+                      filter: `drop-shadow(0 2px 4px ${color}55)`,
+                    }}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path
+                      pathLength={1}
+                      d="M8 6 C 20 2, 34 10, 32 22 C 30 33, 16 32, 19 23 C 23 11, 46 17, 58 34 C 65 45, 73 52, 86 56"
+                      style={{
+                        strokeDasharray: 1,
+                        animation: `drawArrow 3.2s ease-in-out ${delay} infinite`,
+                      }}
+                    />
+                    <path
+                      pathLength={1}
+                      d="M73 45 C 78 50, 82 53, 87 56 C 81 58, 76 62, 72 67"
+                      style={{
+                        strokeDasharray: 1,
+                        animation: `drawHead 3.2s ease-in-out ${delay} infinite`,
+                      }}
+                    />
+                  </svg>
+                </div>
+              </div>
+            );
+          })} */}
           <div
             className="relative overflow-hidden"
             style={{
@@ -356,24 +425,25 @@ export function CoupleStory({ settings }: { settings?: any }) {
                       ? `inset 0 0 0 3px ${theme.main}`
                       : "none",
                   }}
-                  onMouseEnter={() => setHovered(side)}
-                  onMouseLeave={() => setHovered(null)}
+                  // hover only for mouse; touch devices use the tap toggle below
+                  onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(side)}
+                  onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(null)}
                   onClick={() => setHovered(hovered === side ? null : side)}
                 />
               );
             })}
             {/* Hovered person's info shown on the opposite (dimmed) half */}
-            {hovered && (
+            {/* {hovered && (
               <div
                 key={hovered}
                 className="absolute top-0 bottom-0 w-1/2 flex items-center p-2 sm:p-4 pointer-events-none"
                 style={{ [hovered === "bride" ? "right" : "left"]: 0 }}
               >
-                {/* <div
+                <div
                   className="w-full rounded-2xl"
                   style={{ background: "var(--cream)" }}
                 >
-                  <PersonListCard
+                  <PersonList
                     person={hovered === "bride" ? bride : groom}
                     theme={hovered === "bride" ? BRIDE_THEME : GROOM_THEME}
                     parentLabel={
@@ -381,9 +451,9 @@ export function CoupleStory({ settings }: { settings?: any }) {
                     }
                     active
                   />
-                </div> */}
+                </div>
               </div>
-            )}
+            )} */}
           </div>
           {/* Name tags matching each side of the photo */}
           <div className="mt-4 flex justify-between px-2">
@@ -444,6 +514,20 @@ export function CoupleStory({ settings }: { settings?: any }) {
         @keyframes fadeSlideUp {
           from { opacity: 0; transform: translateY(28px); }
           to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes drawArrow {
+          0%       { stroke-dashoffset: 1; opacity: 1; }
+          45%, 85% { stroke-dashoffset: 0; opacity: 1; }
+          100%     { stroke-dashoffset: 0; opacity: 0; }
+        }
+        @keyframes drawHead {
+          0%, 40%  { stroke-dashoffset: 1; opacity: 1; }
+          55%, 85% { stroke-dashoffset: 0; opacity: 1; }
+          100%     { stroke-dashoffset: 0; opacity: 0; }
+        }
+        @keyframes hintSway {
+          0%, 100% { transform: rotate(-3deg) translateY(0); }
+          50%      { transform: rotate(3deg) translateY(-4px); }
         }
       `,
         }}
