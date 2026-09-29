@@ -48,7 +48,9 @@ function PersonList({
       style={{
         background: theme.tint,
         border: `1px solid ${active ? theme.main : theme.border}`,
-        boxShadow: active ? `0 0 0 3px ${theme.border}, 0 20px 40px ${theme.border}` : "none",
+        boxShadow: active
+          ? `0 0 0 3px ${theme.border}, 0 20px 40px ${theme.border}`
+          : "none",
         opacity: dimmed ? 0.45 : 1,
         filter: dimmed ? "grayscale(0.6)" : "none",
         animation: "fadeSlideUp 0.9s ease both",
@@ -80,10 +82,10 @@ function PersonList({
       <ul className="space-y-3">
         {rows.map((r) => (
           <li key={r.label} className="flex gap-3">
-            <span
+            {/* <span
               className="mt-[7px] shrink-0 rounded-full"
               style={{ width: 7, height: 7, background: theme.main }}
-            />
+            /> */}
             <div>
               <p
                 className="text-[0.58rem] tracking-[0.22em] uppercase"
@@ -108,10 +110,10 @@ function PersonList({
           </li>
         ))}
         <li className="flex gap-3">
-          <span
+          {/* <span
             className="mt-[7px] shrink-0 rounded-full"
             style={{ width: 7, height: 7, background: theme.main }}
-          />
+          /> */}
           <a
             href={person.instagram}
             target="_blank"
@@ -344,9 +346,15 @@ export function CoupleStory({ settings }: { settings?: any }) {
                       : active
                         ? theme.tint
                         : "transparent",
-                    backdropFilter: dimmed ? "grayscale(0.8) blur(1px)" : "none",
-                    WebkitBackdropFilter: dimmed ? "grayscale(0.8) blur(1px)" : "none",
-                    boxShadow: active ? `inset 0 0 0 3px ${theme.main}` : "none",
+                    backdropFilter: dimmed
+                      ? "grayscale(0.8) blur(1px)"
+                      : "none",
+                    WebkitBackdropFilter: dimmed
+                      ? "grayscale(0.8) blur(1px)"
+                      : "none",
+                    boxShadow: active
+                      ? `inset 0 0 0 3px ${theme.main}`
+                      : "none",
                   }}
                   onMouseEnter={() => setHovered(side)}
                   onMouseLeave={() => setHovered(null)}
@@ -354,6 +362,28 @@ export function CoupleStory({ settings }: { settings?: any }) {
                 />
               );
             })}
+            {/* Hovered person's info shown on the opposite (dimmed) half */}
+            {hovered && (
+              <div
+                key={hovered}
+                className="absolute top-0 bottom-0 w-1/2 flex items-center p-2 sm:p-4 pointer-events-none"
+                style={{ [hovered === "bride" ? "right" : "left"]: 0 }}
+              >
+                {/* <div
+                  className="w-full rounded-2xl"
+                  style={{ background: "var(--cream)" }}
+                >
+                  <PersonListCard
+                    person={hovered === "bride" ? bride : groom}
+                    theme={hovered === "bride" ? BRIDE_THEME : GROOM_THEME}
+                    parentLabel={
+                      hovered === "bride" ? "Putri dari" : "Putra dari"
+                    }
+                    active
+                  />
+                </div> */}
+              </div>
+            )}
           </div>
           {/* Name tags matching each side of the photo */}
           <div className="mt-4 flex justify-between px-2">
