@@ -23,10 +23,14 @@ function PersonList({
   person,
   theme,
   parentLabel = "Putra / Putri dari",
+  active = false,
+  dimmed = false,
 }: {
   person: { role: string; name: string; parents: string; instagram: string };
   theme: { main: string; border: string; tint: string };
   parentLabel?: string;
+  active?: boolean;
+  dimmed?: boolean;
 }) {
   const rows = [
     // { label: "Nama Lengkap", value: person.name },
@@ -40,10 +44,13 @@ function PersonList({
   ];
   return (
     <div
-      className="w-full rounded-2xl p-6 md:p-8"
+      className="w-full rounded-2xl p-6 md:p-8 transition-all duration-500"
       style={{
         background: theme.tint,
-        border: `1px solid ${theme.border}`,
+        border: `1px solid ${active ? theme.main : theme.border}`,
+        boxShadow: active ? `0 0 0 3px ${theme.border}, 0 20px 40px ${theme.border}` : "none",
+        opacity: dimmed ? 0.45 : 1,
+        filter: dimmed ? "grayscale(0.6)" : "none",
         animation: "fadeSlideUp 0.9s ease both",
       }}
     >
@@ -222,6 +229,7 @@ export function CoupleStory({ settings }: { settings?: any }) {
     parents: settings?.groomParents || "Bapak Dal Haryanto & Ibu Sukimah",
     instagram: settings?.groomInstagram || "https://instagram.com",
   };
+  const [hovered, setHovered] = useState<"bride" | "groom" | null>(null);
 
   return (
     <section
@@ -320,6 +328,32 @@ export function CoupleStory({ settings }: { settings?: any }) {
               className="w-full h-auto object-cover"
               sizes="(max-width: 560px) 100vw, 520px"
             />
+            {/* ponytail: split at 50% — bride left, groom right; move the split if the photo changes */}
+            {(["bride", "groom"] as const).map((side) => {
+              const theme = side === "bride" ? BRIDE_THEME : GROOM_THEME;
+              const dimmed = hovered !== null && hovered !== side;
+              const active = hovered === side;
+              return (
+                <div
+                  key={side}
+                  className="absolute top-0 bottom-0 w-1/2 transition-all duration-500"
+                  style={{
+                    [side === "bride" ? "left" : "right"]: 0,
+                    background: dimmed
+                      ? "rgba(30,20,24,0.55)"
+                      : active
+                        ? theme.tint
+                        : "transparent",
+                    backdropFilter: dimmed ? "grayscale(0.8) blur(1px)" : "none",
+                    WebkitBackdropFilter: dimmed ? "grayscale(0.8) blur(1px)" : "none",
+                    boxShadow: active ? `inset 0 0 0 3px ${theme.main}` : "none",
+                  }}
+                  onMouseEnter={() => setHovered(side)}
+                  onMouseLeave={() => setHovered(null)}
+                  onClick={() => setHovered(hovered === side ? null : side)}
+                />
+              );
+            })}
           </div>
           {/* Name tags matching each side of the photo */}
           <div className="mt-4 flex justify-between px-2">
@@ -350,11 +384,15 @@ export function CoupleStory({ settings }: { settings?: any }) {
             person={bride}
             theme={BRIDE_THEME}
             parentLabel="Putri dari"
+            active={hovered === "bride"}
+            dimmed={hovered === "groom"}
           />
           <PersonList
             person={groom}
             theme={GROOM_THEME}
             parentLabel="Putra dari"
+            active={hovered === "groom"}
+            dimmed={hovered === "bride"}
           />
         </div>
       </div>
