@@ -372,20 +372,20 @@ export function CoupleStory({ settings }: { settings?: any }) {
           >
             <span className="inline-flex items-center gap-2 md:gap-4">
               {/* arrows tilted down toward the photo: bride → left half, groom → right half */}
-              <DoodleArrow
+              {/* <DoodleArrow
                 color={BRIDE_THEME.main}
                 delay="0s"
                 flip
                 tilt={35}
                 className="w-10 md:w-16 h-auto"
-              />
+              /> */}
               Bride &amp; Groom
-              <DoodleArrow
+              {/* <DoodleArrow
                 color={GROOM_THEME.main}
                 delay="0.6s"
                 tilt={35}
                 className="w-10 md:w-16 h-auto"
-              />
+              /> */}
             </span>
           </h2>
           <BotanicalDivider wide />
