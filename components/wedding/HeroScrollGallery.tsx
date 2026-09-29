@@ -2,13 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Caveat } from "next/font/google";
 import { galleryImages } from "@/lib/data";
 
 import coupleImg from "@/assets/brideandgroom.jpeg";
 import { MobileHero } from "./MobileHero";
-
-const handwriting = Caveat({ subsets: ["latin"], weight: "600" });
 
 // ── Bride / Groom themes ──────────────────────────────────────────────────────
 const BRIDE_THEME = {
@@ -162,6 +159,81 @@ function PersonList({
 
 // ── Reusable primitives ────────────────────────────────────────────────────────
 
+function DoodleArrow({
+  color,
+  delay,
+  flip = false,
+  tilt = 0,
+  className,
+}: {
+  color: string;
+  delay: string;
+  flip?: boolean;
+  tilt?: number; // extra clockwise rotation (deg) before mirroring; steeper = points more downward
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 100 72"
+      className={className}
+      style={{
+        color,
+        transform: `${flip ? "scaleX(-1) " : ""}rotate(${tilt}deg)`,
+        filter: `drop-shadow(0 2px 4px ${color}55)`,
+      }}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path
+        pathLength={1}
+        d="M8 6 C 20 2, 34 10, 32 22 C 30 33, 16 32, 19 23 C 23 11, 46 17, 58 34 C 65 45, 73 52, 86 56"
+        style={{
+          strokeDasharray: 1,
+          animation: `drawArrow 3.2s ease-in-out ${delay} infinite`,
+        }}
+      />
+      <path
+        pathLength={1}
+        d="M73 45 C 78 50, 82 53, 87 56 C 81 58, 76 62, 72 67"
+        style={{
+          strokeDasharray: 1,
+          animation: `drawHead 3.2s ease-in-out ${delay} infinite`,
+        }}
+      />
+    </svg>
+  );
+}
+
+// Rounded chevron-arrow in a soft circle; nudges toward the side it points at
+function HintArrow({ dir }: { dir: "left" | "right" }) {
+  return (
+    <span
+      className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 rounded-full"
+      style={{
+        background: "currentColor",
+        boxShadow: "0 3px 10px rgba(0,0,0,0.12)",
+        animation: `${dir === "left" ? "nudgeLeft" : "nudgeRight"} 1.6s ease-in-out infinite`,
+      }}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        className="w-3.5 h-3.5 md:w-4 md:h-4"
+        fill="none"
+        stroke="white"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ transform: dir === "left" ? "scaleX(-1)" : undefined }}
+      >
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </span>
+  );
+}
+
 function BotanicalDivider({ wide = false }: { wide?: boolean }) {
   return (
     <div
@@ -298,16 +370,66 @@ export function CoupleStory({ settings }: { settings?: any }) {
               lineHeight: 0.95,
             }}
           >
-            Bride &amp; Groom
+            <span className="inline-flex items-center gap-2 md:gap-4">
+              {/* arrows tilted down toward the photo: bride → left half, groom → right half */}
+              <DoodleArrow
+                color={BRIDE_THEME.main}
+                delay="0s"
+                flip
+                tilt={35}
+                className="w-10 md:w-16 h-auto"
+              />
+              Bride &amp; Groom
+              <DoodleArrow
+                color={GROOM_THEME.main}
+                delay="0.6s"
+                tilt={35}
+                className="w-10 md:w-16 h-auto"
+              />
+            </span>
           </h2>
           <BotanicalDivider wide />
+          <p
+            className="text-center text-sm md:text-base mb-1"
+            style={{
+              fontFamily: "var(--font-jost)",
+              color: "var(--warm-gray)",
+            }}
+          >
+            Choose your story ✨
+          </p>
         </header>
 
         {/* Shared photo */}
         <div
-          className="relative mx-auto mt-24 md:mt-0"
+          className="relative mx-auto mt-24"
           style={{ maxWidth: 520, animation: "fadeSlideUp 0.9s ease both" }}
         >
+          {/* Tap hint: title centered above the photo, bride/groom lines over the left/right corners */}
+          <div
+            className="absolute bottom-full inset-x-0 mb-2 z-10 pointer-events-none transition-opacity duration-500"
+            style={{ opacity: hovered ? 0 : 1 }}
+          >
+            <div
+              className="flex justify-between text-[0.7rem] md:text-xs tracking-[0.22em] uppercase"
+              style={{ fontFamily: "var(--font-jost)" }}
+            >
+              <span
+                className="inline-flex items-center gap-2"
+                style={{ color: BRIDE_THEME.main }}
+              >
+                <HintArrow dir="left" />
+                Tap Bride
+              </span>
+              <span
+                className="inline-flex items-center gap-2"
+                style={{ color: GROOM_THEME.main }}
+              >
+                Tap Groom
+                <HintArrow dir="right" />
+              </span>
+            </div>
+          </div>
           <div
             className="absolute pointer-events-none"
             style={{
@@ -318,72 +440,7 @@ export function CoupleStory({ settings }: { settings?: any }) {
               zIndex: 0,
             }}
           />
-          {/* Hand-drawn doodle arrows hinting the photo is hoverable/tappable: above corners on mobile, beside on desktop */}
-          {/* {(["left", "right"] as const).map((pos) => {
-            const color = pos === "left" ? BRIDE_THEME.main : GROOM_THEME.main;
-            const delay = pos === "left" ? "0s" : "0.6s";
-            return (
-              <div
-                key={pos}
-                className={`absolute z-10 flex flex-col pointer-events-none transition-opacity duration-500 bottom-full mb-1 md:mb-0 md:bottom-auto md:top-[12%] ${
-                  pos === "left"
-                    ? "left-0 items-start md:left-auto md:right-full md:mr-2"
-                    : "right-0 items-end md:right-auto md:left-full md:ml-2"
-                }`}
-                style={{ opacity: hovered ? 0 : 1 }}
-              >
-                <div
-                  className="flex flex-col"
-                  style={{
-                    alignItems: pos === "left" ? "flex-start" : "flex-end",
-                    animation: `hintSway 3.2s ease-in-out ${delay} infinite`,
-                    transformOrigin: pos === "left" ? "top left" : "top right",
-                  }}
-                >
-                  <span
-                    className={`${handwriting.className} whitespace-nowrap text-lg md:text-2xl leading-none`}
-                    style={{
-                      color,
-                      transform: `rotate(${pos === "left" ? -8 : 8}deg)`,
-                    }}
-                  >
-                    {pos === "left" ? "sentuh aku ♡" : "♡ aku juga!"}
-                  </span>
-                  <svg
-                    viewBox="0 0 100 72"
-                    className="w-16 md:w-24 h-auto -mt-1"
-                    style={{
-                      color,
-                      transform: pos === "right" ? "scaleX(-1)" : undefined,
-                      filter: `drop-shadow(0 2px 4px ${color}55)`,
-                    }}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path
-                      pathLength={1}
-                      d="M8 6 C 20 2, 34 10, 32 22 C 30 33, 16 32, 19 23 C 23 11, 46 17, 58 34 C 65 45, 73 52, 86 56"
-                      style={{
-                        strokeDasharray: 1,
-                        animation: `drawArrow 3.2s ease-in-out ${delay} infinite`,
-                      }}
-                    />
-                    <path
-                      pathLength={1}
-                      d="M73 45 C 78 50, 82 53, 87 56 C 81 58, 76 62, 72 67"
-                      style={{
-                        strokeDasharray: 1,
-                        animation: `drawHead 3.2s ease-in-out ${delay} infinite`,
-                      }}
-                    />
-                  </svg>
-                </div>
-              </div>
-            );
-          })} */}
+
           <div
             className="relative overflow-hidden"
             style={{
@@ -426,8 +483,12 @@ export function CoupleStory({ settings }: { settings?: any }) {
                       : "none",
                   }}
                   // hover only for mouse; touch devices use the tap toggle below
-                  onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(side)}
-                  onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(null)}
+                  onPointerEnter={(e) =>
+                    e.pointerType === "mouse" && setHovered(side)
+                  }
+                  onPointerLeave={(e) =>
+                    e.pointerType === "mouse" && setHovered(null)
+                  }
                   onClick={() => setHovered(hovered === side ? null : side)}
                 />
               );
@@ -511,6 +572,14 @@ export function CoupleStory({ settings }: { settings?: any }) {
       <style
         dangerouslySetInnerHTML={{
           __html: `
+        @keyframes nudgeLeft {
+          0%, 100% { transform: translateX(0); }
+          50%      { transform: translateX(-4px); }
+        }
+        @keyframes nudgeRight {
+          0%, 100% { transform: translateX(0); }
+          50%      { transform: translateX(4px); }
+        }
         @keyframes fadeSlideUp {
           from { opacity: 0; transform: translateY(28px); }
           to   { opacity: 1; transform: translateY(0); }
