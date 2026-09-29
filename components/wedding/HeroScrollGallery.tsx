@@ -389,15 +389,6 @@ export function CoupleStory({ settings }: { settings?: any }) {
             </span>
           </h2>
           <BotanicalDivider wide />
-          <p
-            className="text-center text-sm md:text-base mb-1"
-            style={{
-              fontFamily: "var(--font-jost)",
-              color: "var(--warm-gray)",
-            }}
-          >
-            Choose your story ✨
-          </p>
         </header>
 
         {/* Shared photo */}
