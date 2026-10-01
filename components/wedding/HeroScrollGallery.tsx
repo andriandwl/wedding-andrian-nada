@@ -616,6 +616,12 @@ export default function HeroScrollGallery({
   // FIX: track viewport width to conditionally run GSAP on desktop only
   const [isMobile, setIsMobile] = useState(false);
 
+  // Always start from the top on refresh instead of the browser's restored scroll position
+  useEffect(() => {
+    history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
