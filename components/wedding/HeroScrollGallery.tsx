@@ -208,12 +208,12 @@ function DoodleArrow({
 }
 
 // Rounded chevron-arrow in a soft circle; nudges toward the side it points at
-function HintArrow({ dir }: { dir: "left" | "right" }) {
+function HintArrow({ dir, color }: { dir: "left" | "right"; color?: string }) {
   return (
     <span
       className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 rounded-full"
       style={{
-        background: "currentColor",
+        background: color ?? "currentColor",
         boxShadow: "0 3px 10px rgba(0,0,0,0.12)",
         animation: `${dir === "left" ? "nudgeLeft" : "nudgeRight"} 1.6s ease-in-out infinite`,
       }}
@@ -393,31 +393,32 @@ export function CoupleStory({ settings }: { settings?: any }) {
 
         {/* Shared photo */}
         <div
-          className="relative mx-auto mt-24"
+          className="relative mx-auto mt-16"
           style={{ maxWidth: 520, animation: "fadeSlideUp 0.9s ease both" }}
         >
           {/* Tap hint: title centered above the photo, bride/groom lines over the left/right corners */}
           <div
-            className="absolute bottom-full inset-x-0 mb-2 z-10 pointer-events-none transition-opacity duration-500"
-            style={{ opacity: hovered ? 0 : 1 }}
+            className="absolute top-0 inset-x-0 z-10 px-4 pt-4 pb-12 md:px-6 md:pt-8 pointer-events-none transition-opacity duration-500"
+            style={{
+              opacity: hovered ? 0 : 1,
+              borderRadius: "24px 24px 0 0",
+              background:
+                "linear-gradient(to bottom, rgba(30,20,24,0.45), transparent)",
+              color: "#fff",
+              textShadow: "0 1px 6px rgba(0,0,0,0.35)",
+            }}
           >
             <div
               className="flex justify-between text-[0.7rem] md:text-xs tracking-[0.22em] uppercase"
               style={{ fontFamily: "var(--font-jost)" }}
             >
-              <span
-                className="inline-flex items-center gap-2"
-                style={{ color: BRIDE_THEME.main }}
-              >
-                <HintArrow dir="left" />
+              <span className="inline-flex items-center gap-2">
+                <HintArrow dir="left" color={BRIDE_THEME.main} />
                 Tap Bride
               </span>
-              <span
-                className="inline-flex items-center gap-2"
-                style={{ color: GROOM_THEME.main }}
-              >
+              <span className="inline-flex items-center gap-2">
                 Tap Groom
-                <HintArrow dir="right" />
+                <HintArrow dir="right" color={GROOM_THEME.main} />
               </span>
             </div>
           </div>
