@@ -157,6 +157,144 @@ function PersonList({
   );
 }
 
+function PersonListCard({
+  person,
+  theme,
+  parentLabel = "Putra / Putri dari",
+  active = false,
+  dimmed = false,
+}: {
+  person: { role: string; name: string; parents: string; instagram: string };
+  theme: { main: string; border: string; tint: string };
+  parentLabel?: string;
+  active?: boolean;
+  dimmed?: boolean;
+}) {
+  const rows = [
+    // { label: "Nama Lengkap", value: person.name },
+    {
+      label: parentLabel,
+      value: person.parents
+        .split("&")
+        .map((s) => s.trim())
+        .join(" & "),
+    },
+  ];
+  return (
+    <div
+      className="w-full rounded-2xl p-6 md:p-8 transition-all duration-500"
+      style={{
+        background: theme.tint,
+        border: `1px solid ${active ? theme.main : theme.border}`,
+        boxShadow: active
+          ? `0 0 0 3px ${theme.border}, 0 20px 40px ${theme.border}`
+          : "none",
+        opacity: dimmed ? 0.45 : 1,
+        filter: dimmed ? "grayscale(0.6)" : "none",
+        animation: "fadeSlideUp 0.9s ease both",
+      }}
+    >
+      <div className="mb-4 inline-flex items-center gap-2">
+        <span
+          style={{ width: 22, height: 1, background: theme.main, opacity: 0.6 }}
+        />
+        <p
+          className="text-[0.62rem] tracking-[0.32em] uppercase"
+          style={{ color: theme.main, fontFamily: "var(--font-jost)" }}
+        >
+          {person.role}
+        </p>
+      </div>
+      <h3
+        style={{
+          fontFamily: "var(--font-cormorant)",
+          fontSize: "clamp(1.5rem, 4.5vw, 1.5rem)",
+          color: "var(--dark-warm)",
+          fontWeight: 400,
+          lineHeight: 1.1,
+          marginBottom: "1rem",
+        }}
+      >
+        {person.name}
+      </h3>
+      <ul className="space-y-3">
+        {rows.map((r) => (
+          <li key={r.label} className="flex gap-3">
+            {/* <span
+              className="mt-[7px] shrink-0 rounded-full"
+              style={{ width: 7, height: 7, background: theme.main }}
+            /> */}
+            <div>
+              <p
+                className="text-[0.58rem] tracking-[0.22em] uppercase"
+                style={{
+                  color: "var(--warm-gray)",
+                  fontFamily: "var(--font-jost)",
+                }}
+              >
+                {r.label}
+              </p>
+              <p
+                className="text-[0.9rem]"
+                style={{
+                  color: "var(--dark-warm)",
+                  fontFamily: "var(--font-jost)",
+                  lineHeight: 1.5,
+                }}
+              >
+                {r.value}
+              </p>
+            </div>
+          </li>
+        ))}
+        <li className="flex gap-3">
+          {/* <span
+            className="mt-[7px] shrink-0 rounded-full"
+            style={{ width: 7, height: 7, background: theme.main }}
+          /> */}
+          <a
+            href={person.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 group"
+          >
+            <span
+              className="flex items-center justify-center rounded-full transition-transform group-hover:scale-110"
+              style={{
+                width: 30,
+                height: 30,
+                border: `1px solid ${theme.border}`,
+                color: theme.main,
+              }}
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </span>
+            <span
+              className="text-[0.72rem] tracking-[0.16em] uppercase"
+              style={{ color: theme.main, fontFamily: "var(--font-jost)" }}
+            >
+              Instagram
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
 // ── Reusable primitives ────────────────────────────────────────────────────────
 
 function DoodleArrow({
@@ -535,8 +673,16 @@ export function CoupleStory({ settings }: { settings?: any }) {
         {/* Hidden while a side is hovered/tapped — the overlay on the photo shows it instead */}
         {!hovered && (
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <PersonList person={bride} theme={BRIDE_THEME} parentLabel="Putri dari" />
-            <PersonList person={groom} theme={GROOM_THEME} parentLabel="Putra dari" />
+            <PersonListCard
+              person={bride}
+              theme={BRIDE_THEME}
+              parentLabel="Putri dari"
+            />
+            <PersonListCard
+              person={groom}
+              theme={GROOM_THEME}
+              parentLabel="Putra dari"
+            />
           </div>
         )}
       </div>
