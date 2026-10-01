@@ -114,7 +114,7 @@ function PersonList({
             className="mt-[7px] shrink-0 rounded-full"
             style={{ width: 7, height: 7, background: theme.main }}
           /> */}
-          <a
+          {/* <a
             href={person.instagram}
             target="_blank"
             rel="noopener noreferrer"
@@ -150,7 +150,7 @@ function PersonList({
             >
               Instagram
             </span>
-          </a>
+          </a> */}
         </li>
       </ul>
     </div>
@@ -486,7 +486,7 @@ export function CoupleStory({ settings }: { settings?: any }) {
               );
             })}
             {/* Hovered person's info shown on the opposite (dimmed) half */}
-            {/* {hovered && (
+            {hovered && (
               <div
                 key={hovered}
                 className="absolute top-0 bottom-0 w-1/2 flex items-center p-2 sm:p-4 pointer-events-none"
@@ -506,7 +506,7 @@ export function CoupleStory({ settings }: { settings?: any }) {
                   />
                 </div>
               </div>
-            )} */}
+            )}
           </div>
           {/* Name tags matching each side of the photo */}
           <div className="mt-4 flex justify-between px-2">
@@ -532,22 +532,13 @@ export function CoupleStory({ settings }: { settings?: any }) {
         </div>
 
         {/* Bride (pink) + Groom (blue) lists */}
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <PersonList
-            person={bride}
-            theme={BRIDE_THEME}
-            parentLabel="Putri dari"
-            active={hovered === "bride"}
-            dimmed={hovered === "groom"}
-          />
-          <PersonList
-            person={groom}
-            theme={GROOM_THEME}
-            parentLabel="Putra dari"
-            active={hovered === "groom"}
-            dimmed={hovered === "bride"}
-          />
-        </div>
+        {/* Hidden while a side is hovered/tapped — the overlay on the photo shows it instead */}
+        {!hovered && (
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            <PersonList person={bride} theme={BRIDE_THEME} parentLabel="Putri dari" />
+            <PersonList person={groom} theme={GROOM_THEME} parentLabel="Putra dari" />
+          </div>
+        )}
       </div>
 
       <div
