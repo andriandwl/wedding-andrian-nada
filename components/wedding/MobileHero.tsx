@@ -27,6 +27,24 @@ export function MobileHero({
   const particlesRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Start video immediately on mount — don't wait for GSAP to load
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    // ponytail: React sometimes skips the `muted` attribute → iOS blocks autoplay. Force it on the property.
+    el.muted = true;
+    el.play().catch(() => {
+      // Autoplay blocked — wait for first user interaction then retry
+      const resumeVideo = () => {
+        el.play().catch(() => {});
+        document.removeEventListener("touchstart", resumeVideo, true);
+        document.removeEventListener("click", resumeVideo, true);
+      };
+      document.addEventListener("touchstart", resumeVideo, { once: true, capture: true });
+      document.addEventListener("click", resumeVideo, { once: true, capture: true });
+    });
+  }, []);
+
   useEffect(() => {
     let ctx: { revert(): void } | null = null;
 
@@ -200,25 +218,6 @@ export function MobileHero({
         }
       }, containerRef);
 
-      // ── 7. Reliably start video on mobile (iOS requires explicit .play()) ──
-      if (videoRef.current) {
-        videoRef.current.play().catch(() => {
-          // Autoplay blocked — wait for first user interaction then retry
-          const resumeVideo = () => {
-            videoRef.current?.play().catch(() => {});
-            document.removeEventListener("touchstart", resumeVideo, true);
-            document.removeEventListener("click", resumeVideo, true);
-          };
-          document.addEventListener("touchstart", resumeVideo, {
-            once: true,
-            capture: true,
-          });
-          document.addEventListener("click", resumeVideo, {
-            once: true,
-            capture: true,
-          });
-        });
-      }
     };
 
     init();
@@ -250,6 +249,7 @@ export function MobileHero({
           muted
           playsInline
           preload="auto"
+          poster="/mobile-hero-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: 0.55, objectPosition: "center 20%" }}
         >

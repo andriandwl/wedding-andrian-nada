@@ -751,7 +751,8 @@ export default function HeroScrollGallery({
   const heroOverlayRef = useRef<HTMLDivElement>(null);
 
   // FIX: track viewport width to conditionally run GSAP on desktop only
-  const [isMobile, setIsMobile] = useState(false);
+  // null until measured on the client, so mobile never starts the desktop video
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   // Always start from the top on refresh instead of the browser's restored scroll position
   useEffect(() => {
@@ -768,7 +769,7 @@ export default function HeroScrollGallery({
 
   useEffect(() => {
     // FIX: skip GSAP scroll animation on mobile — show static gallery instead
-    if (isMobile) return;
+    if (isMobile !== false) return;
 
     let ctx: { revert(): void } | null = null;
 
@@ -1024,9 +1025,8 @@ export default function HeroScrollGallery({
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
             style={{ opacity: 0.88 }}
-          >
-            <source src="/desktop-hero2.mp4" type="video/mp4" />
-          </video>
+            src={isMobile === false ? "/desktop-hero2.mp4" : undefined}
+          />
 
           {/* Multi-layer gradient overlay for text legibility */}
           <div
