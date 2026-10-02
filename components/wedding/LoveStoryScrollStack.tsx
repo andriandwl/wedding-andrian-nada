@@ -45,7 +45,7 @@ export default function LoveStoryScrollStack() {
             scrollTrigger: {
               trigger: titleRef.current,
               start: "top 80%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             },
           },
         );
@@ -72,7 +72,7 @@ export default function LoveStoryScrollStack() {
               trigger: panel,
               start: "top 60%", // trigger as panel enters viewport
               end: "+=300", // over 300px of scroll
-              scrub: 0.8,
+              scrub: true, // no lag: photos track scroll exactly, so fast scrolls never land on a blank stack
             },
           });
 
@@ -114,7 +114,7 @@ export default function LoveStoryScrollStack() {
                 scrollTrigger: {
                   trigger: panel,
                   start: "top 65%",
-                  toggleActions: "play none none reverse",
+                  toggleActions: "play none none none",
                 },
               },
             );

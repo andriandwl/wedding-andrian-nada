@@ -154,7 +154,7 @@ export function MobileHero({
               scrollTrigger: {
                 trigger: gallerySec.current,
                 start: "top 82%",
-                toggleActions: "play none none reverse",
+                toggleActions: "play none none none",
               },
             },
           );
@@ -172,7 +172,7 @@ export function MobileHero({
               scrollTrigger: {
                 trigger: gallerySec.current,
                 start: "top 82%",
-                toggleActions: "play none none reverse",
+                toggleActions: "play none none none",
               },
             },
           );
@@ -211,7 +211,7 @@ export function MobileHero({
               scrollTrigger: {
                 trigger: galleryHeader,
                 start: "top 88%",
-                toggleActions: "play none none reverse",
+                toggleActions: "play none none none",
               },
             },
           );
