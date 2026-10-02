@@ -59,7 +59,7 @@ export default function GuestForm({ initialData, guestId }: Props) {
     // Simple client-side validation
     const errs: FieldErrors = {};
     if (!form.name.trim()) errs.name = ["Nama wajib diisi"];
-    if (form.maxPax < 1) errs.maxPax = ["Minimal 1"];
+    if (form.maxPax < 0) errs.maxPax = ["Minimal 0"];
     if (form.maxPax > 20) errs.maxPax = ["Maksimal 20"];
     if (Object.keys(errs).length) {
       setFieldErrors(errs);
