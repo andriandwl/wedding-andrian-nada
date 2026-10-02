@@ -173,11 +173,12 @@ export default function GuestListClient() {
     const message =
       `Assalamu’alaikum Wr. Wb.\n\n` +
       `Yth. Bapak/Ibu/Saudara/i *${guest.name}*,\n\n` +
-      `Dengan penuh rasa syukur, kami ingin menyampaikan kabar bahagia sekaligus mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan yang InshaAllah akan dilaksanakan pada *10 Oktober 2026*.\n\n` +
+      `Dengan penuh rasa syukur, kami ingin menyampaikan kabar bahagia sekaligus mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan *Denada Putri & Andrian Dwi Haryanto* yang InshaAllah akan dilaksanakan pada *10 Oktober 2026*.\n\n` +
       `Informasi lengkap mengenai waktu dan lokasi acara dapat dilihat melalui undangan berikut:\n\n` +
       `🔗 ${inviteUrl}\n\n` +
       `Besar harapan kami agar Bapak/Ibu/Saudara/i berkenan hadir dan turut memberikan doa restu di hari bahagia tersebut.\n\n` +
       `Terima kasih atas perhatian dan doa baiknya. 🤍\n\n` +
+      `Denada Putri & Andrian Dwi Haryanto\n\n` +
       `Wassalamu’alaikum Wr. Wb.`;
     const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(waUrl, "_blank");
