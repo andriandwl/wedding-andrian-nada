@@ -30,7 +30,7 @@ export interface InvitationSettings {
   bank1Name: string;
   bank1AccountName: string;
   bank1AccountNumber: string;
-  
+
   bank2Name: string;
   bank2AccountName: string;
   bank2AccountNumber: string;
@@ -75,7 +75,7 @@ const defaultSettings: InvitationSettings = {
 
   bank2Name: "Mandiri",
   bank2AccountName: "Andrian Dwi Haryanto",
-  bank2AccountNumber: "1370024475667",
+  bank2AccountNumber: "1330029946217",
 
   ewalletName: "GoPay / OVO / Dana",
   ewalletAccountName: "Denada Putri",
@@ -456,39 +456,83 @@ export default function InvitationSettingsClient() {
               <SectionTitle title="Kirim Hadiah (Bank Transfer)" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
                 <div className="space-y-3">
-                  <p className="text-xs font-semibold text-gray-500 uppercase">Bank 1</p>
-                  <FormField label="Nama Bank (Cth: BCA)" value={settings.bank1Name} onChange={v => update("bank1Name", v)} />
-                  <FormField label="Nama Pemilik Rekening" value={settings.bank1AccountName} onChange={v => update("bank1AccountName", v)} />
-                  <FormField label="Nomor Rekening" value={settings.bank1AccountNumber} onChange={v => update("bank1AccountNumber", v)} />
+                  <p className="text-xs font-semibold text-gray-500 uppercase">
+                    Bank 1
+                  </p>
+                  <FormField
+                    label="Nama Bank (Cth: BCA)"
+                    value={settings.bank1Name}
+                    onChange={(v) => update("bank1Name", v)}
+                  />
+                  <FormField
+                    label="Nama Pemilik Rekening"
+                    value={settings.bank1AccountName}
+                    onChange={(v) => update("bank1AccountName", v)}
+                  />
+                  <FormField
+                    label="Nomor Rekening"
+                    value={settings.bank1AccountNumber}
+                    onChange={(v) => update("bank1AccountNumber", v)}
+                  />
                 </div>
                 <div className="space-y-3">
-                  <p className="text-xs font-semibold text-gray-500 uppercase">Bank 2</p>
-                  <FormField label="Nama Bank (Cth: Mandiri)" value={settings.bank2Name} onChange={v => update("bank2Name", v)} />
-                  <FormField label="Nama Pemilik Rekening" value={settings.bank2AccountName} onChange={v => update("bank2AccountName", v)} />
-                  <FormField label="Nomor Rekening" value={settings.bank2AccountNumber} onChange={v => update("bank2AccountNumber", v)} />
+                  <p className="text-xs font-semibold text-gray-500 uppercase">
+                    Bank 2
+                  </p>
+                  <FormField
+                    label="Nama Bank (Cth: Mandiri)"
+                    value={settings.bank2Name}
+                    onChange={(v) => update("bank2Name", v)}
+                  />
+                  <FormField
+                    label="Nama Pemilik Rekening"
+                    value={settings.bank2AccountName}
+                    onChange={(v) => update("bank2AccountName", v)}
+                  />
+                  <FormField
+                    label="Nomor Rekening"
+                    value={settings.bank2AccountNumber}
+                    onChange={(v) => update("bank2AccountNumber", v)}
+                  />
                 </div>
               </div>
 
               <div className="border-t border-gray-100 pt-6">
                 <SectionTitle title="E-Wallet (GoPay/OVO/Dana)" />
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
-                  <FormField label="Label (Cth: GoPay / OVO)" value={settings.ewalletName} onChange={v => update("ewalletName", v)} />
-                  <FormField label="Atas Nama" value={settings.ewalletAccountName} onChange={v => update("ewalletAccountName", v)} />
-                  <FormField label="Nomor Telepon/Akun" value={settings.ewalletAccountNumber} onChange={v => update("ewalletAccountNumber", v)} />
+                  <FormField
+                    label="Label (Cth: GoPay / OVO)"
+                    value={settings.ewalletName}
+                    onChange={(v) => update("ewalletName", v)}
+                  />
+                  <FormField
+                    label="Atas Nama"
+                    value={settings.ewalletAccountName}
+                    onChange={(v) => update("ewalletAccountName", v)}
+                  />
+                  <FormField
+                    label="Nomor Telepon/Akun"
+                    value={settings.ewalletAccountNumber}
+                    onChange={(v) => update("ewalletAccountNumber", v)}
+                  />
                 </div>
               </div>
 
               <div className="border-t border-gray-100 pt-6">
                 <SectionTitle title="Alamat Pengiriman Kado Fisik" />
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
-                  <FormField label="Penerima" value={settings.giftAddressNames} onChange={v => update("giftAddressNames", v)} />
-                  <FormField 
-                    label="Alamat Pengiriman Lengkap" 
-                    value={settings.giftAddressFull} 
-                    onChange={v => update("giftAddressFull", v)} 
-                    multiline 
-                    rows={4} 
-                    className="sm:col-span-2" 
+                  <FormField
+                    label="Penerima"
+                    value={settings.giftAddressNames}
+                    onChange={(v) => update("giftAddressNames", v)}
+                  />
+                  <FormField
+                    label="Alamat Pengiriman Lengkap"
+                    value={settings.giftAddressFull}
+                    onChange={(v) => update("giftAddressFull", v)}
+                    multiline
+                    rows={4}
+                    className="sm:col-span-2"
                   />
                 </div>
               </div>
@@ -499,7 +543,8 @@ export default function InvitationSettingsClient() {
             <div className="space-y-6 animate-in fade-in duration-300">
               <SectionTitle title="Gaya Bingkai Polaroid" />
               <p className="text-sm text-gray-500 -mt-3">
-                Pilih tampilan bingkai foto yang akan digunakan tamu di Virtual Photobooth.
+                Pilih tampilan bingkai foto yang akan digunakan tamu di Virtual
+                Photobooth.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -509,19 +554,31 @@ export default function InvitationSettingsClient() {
                       id: "classic" as const,
                       label: "Classic",
                       desc: "Latar krem hangat, teks cokelat rose",
-                      preview: { bg: "#FFFEF9", text: "#52363E", accent: "#D88C9C" },
+                      preview: {
+                        bg: "#FFFEF9",
+                        text: "#52363E",
+                        accent: "#D88C9C",
+                      },
                     },
                     {
                       id: "dark" as const,
                       label: "Dark Elegant",
                       desc: "Latar gelap, teks krem & rose",
-                      preview: { bg: "#1a0a0e", text: "#FBE7EB", accent: "#D88C9C" },
+                      preview: {
+                        bg: "#1a0a0e",
+                        text: "#FBE7EB",
+                        accent: "#D88C9C",
+                      },
                     },
                     {
                       id: "minimal" as const,
                       label: "Minimal",
                       desc: "Latar putih bersih, teks hitam",
-                      preview: { bg: "#FFFFFF", text: "#111111", accent: "#888888" },
+                      preview: {
+                        bg: "#FFFFFF",
+                        text: "#111111",
+                        accent: "#888888",
+                      },
                     },
                   ] satisfies {
                     id: "classic" | "dark" | "minimal";
@@ -530,15 +587,12 @@ export default function InvitationSettingsClient() {
                     preview: { bg: string; text: string; accent: string };
                   }[]
                 ).map((style) => {
-                  const isSelected =
-                    settings.photoboothFrameStyle === style.id;
+                  const isSelected = settings.photoboothFrameStyle === style.id;
                   return (
                     <button
                       key={style.id}
                       type="button"
-                      onClick={() =>
-                        update("photoboothFrameStyle", style.id)
-                      }
+                      onClick={() => update("photoboothFrameStyle", style.id)}
                       className={`rounded-2xl border-2 p-4 text-left transition-all duration-150 ${
                         isSelected
                           ? "border-rose-400 shadow-md shadow-rose-100"
@@ -625,7 +679,9 @@ export default function InvitationSettingsClient() {
                     Perubahan langsung berlaku
                   </p>
                   <p className="text-xs text-rose-600 mt-0.5">
-                    Foto yang sudah diupload tamu tidak berubah. Style baru hanya berlaku untuk foto yang diambil setelah perubahan disimpan.
+                    Foto yang sudah diupload tamu tidak berubah. Style baru
+                    hanya berlaku untuk foto yang diambil setelah perubahan
+                    disimpan.
                   </p>
                 </div>
               </div>
@@ -634,9 +690,17 @@ export default function InvitationSettingsClient() {
                 <SectionTitle title="Link & QR Code" />
                 <div className="mt-4 space-y-3">
                   {[
-                    { label: "Halaman Photobooth", path: "/photobooth", icon: "📷" },
+                    {
+                      label: "Halaman Photobooth",
+                      path: "/photobooth",
+                      icon: "📷",
+                    },
                     { label: "Galeri Tamu", path: "/gallery", icon: "🖼️" },
-                    { label: "Slideshow Proyektor", path: "/slideshow", icon: "📺" },
+                    {
+                      label: "Slideshow Proyektor",
+                      path: "/slideshow",
+                      icon: "📺",
+                    },
                   ].map((link) => (
                     <div
                       key={link.path}
@@ -645,8 +709,12 @@ export default function InvitationSettingsClient() {
                       <div className="flex items-center gap-2">
                         <span>{link.icon}</span>
                         <div>
-                          <p className="text-sm font-medium text-gray-800">{link.label}</p>
-                          <p className="text-xs text-gray-400 font-mono">{link.path}</p>
+                          <p className="text-sm font-medium text-gray-800">
+                            {link.label}
+                          </p>
+                          <p className="text-xs text-gray-400 font-mono">
+                            {link.path}
+                          </p>
                         </div>
                       </div>
                       <a
@@ -663,7 +731,6 @@ export default function InvitationSettingsClient() {
               </div>
             </div>
           )}
-
         </div>
       </div>
     </div>

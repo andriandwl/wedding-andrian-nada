@@ -279,7 +279,7 @@ export default function GiftSection({ settings }: { settings?: any }) {
     {
       bank: settings?.bank2Name || "Mandiri",
       accountName: settings?.bank2AccountName || "Andrian Dwi Haryanto",
-      accountNumber: settings?.bank2AccountNumber || "1370024475667",
+      accountNumber: settings?.bank2AccountNumber || "1330029946217",
       logo: (settings?.bank2Name || "MDR").slice(0, 3).toUpperCase(),
     },
   ];
