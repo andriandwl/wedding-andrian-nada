@@ -156,7 +156,7 @@ function BankCard({
 
       {/* Bank logo badge */}
       <div className="flex items-center justify-between">
-        <div
+        {/* <div
           className="flex items-center justify-center rounded-lg"
           style={{
             width: 48,
@@ -176,7 +176,7 @@ function BankCard({
           >
             {logo}
           </span>
-        </div>
+        </div> */}
         <span
           className="text-[0.6rem] tracking-[0.22em] uppercase"
           style={{
