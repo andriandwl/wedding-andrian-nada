@@ -12,6 +12,7 @@ import LivePhotoSection from "@/components/wedding/LivePhotoSection";
 import { WishesLink } from "@/components/wedding/WishesLink";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
+import SectionDivider from "@/components/wedding/SectionDivider";
 import MusicPlayer from "@/components/wedding/MusicPlayer";
 
 import { connectDB } from "@/lib/db";
@@ -38,8 +39,11 @@ export default async function PublicInvitationPage() {
       <Navbar hideRsvp />
       <HeroScrollGallery settings={setting} />
       <CoupleStory settings={setting} />
+      <SectionDivider />
       <TransitionSection settings={setting} />
+      <SectionDivider />
       <LoveStoryScrollStack />
+      <SectionDivider />
       <LivePhotoSection />
       <WishesLink />
       <GiftSection settings={setting} />

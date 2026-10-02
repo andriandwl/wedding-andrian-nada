@@ -132,7 +132,7 @@ export default function LoveStoryScrollStack() {
     <section
       ref={sectionRef}
       id="story"
-      className="relative w-full bg-[#FBE7EB] py-24 overflow-hidden"
+      className="relative w-full bg-[#FBE7EB] py-16 md:py-24 lg:py-28 overflow-hidden"
     >
       {/* ── Section title ── */}
       <div className="px-6 mb-20 text-center">

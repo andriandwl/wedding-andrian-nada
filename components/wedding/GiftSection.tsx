@@ -331,7 +331,7 @@ export default function GiftSection({ settings }: { settings?: any }) {
     <section
       id="gift"
       ref={sectionRef}
-      className="relative w-full py-28 px-6 overflow-hidden"
+      className="relative w-full py-16 md:py-24 lg:py-28 px-6 overflow-hidden"
       style={{ background: "#211e1b" }}
     >
       {/* Ambient glow blobs */}

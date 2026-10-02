@@ -12,7 +12,7 @@ export default async function WishesSection() {
     .lean();
 
   return (
-    <section id="wishes" className="relative w-full py-28 px-6 bg-[#FBE7EB]">
+    <section id="wishes" className="relative w-full py-16 md:py-24 lg:py-28 px-6 bg-[#FBE7EB]">
       <div className="max-w-xl mx-auto flex flex-col items-center gap-8">
         <span
           className="text-[#D88C9C] text-xs tracking-[0.22em] uppercase"

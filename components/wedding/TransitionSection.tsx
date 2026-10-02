@@ -129,7 +129,6 @@ export default function TransitionSection({ settings }: { settings?: any }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const quoteRef = useRef<HTMLQuoteElement>(null);
   const dateRef = useRef<HTMLDivElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
 
   // ponytail: memoised so useCountdown's effect doesn't re-fire every render
   // (a fresh Date ref each render = infinite setState loop).
@@ -153,7 +152,7 @@ export default function TransitionSection({ settings }: { settings?: any }) {
       gsap.registerPlugin(ScrollTrigger);
       ctx = gsap.context(() => {
         gsap.fromTo(
-          [dividerRef.current, quoteRef.current, dateRef.current],
+          [quoteRef.current, dateRef.current],
           { opacity: 0, y: 40 },
           {
             opacity: 1,
@@ -177,7 +176,7 @@ export default function TransitionSection({ settings }: { settings?: any }) {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full py-32 px-6 flex flex-col items-center overflow-hidden"
+      className="relative w-full py-16 md:py-24 lg:py-28 px-6 flex flex-col items-center overflow-hidden"
       style={{ background: "var(--cream)" }}
     >
       {/* Grain texture */}
@@ -188,22 +187,6 @@ export default function TransitionSection({ settings }: { settings?: any }) {
           backgroundSize: "200px 200px",
         }}
       />
-
-      {/* Divider */}
-      <div
-        ref={dividerRef}
-        className="flex items-center gap-5 w-full max-w-xl mb-16"
-        style={{ opacity: 0 }}
-      >
-        <div className="flex-1 h-px bg-[#D88C9C]/40" />
-        <span
-          className="text-[#D88C9C] text-2xl select-none"
-          style={{ fontFamily: "var(--font-great-vibes)" }}
-        >
-          ✦
-        </span>
-        <div className="flex-1 h-px bg-[#D88C9C]/40" />
-      </div>
 
       {/* Quote */}
       <blockquote

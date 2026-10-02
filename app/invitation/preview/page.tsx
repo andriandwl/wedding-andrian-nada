@@ -11,6 +11,7 @@ import LivePhotoSection from "@/components/wedding/LivePhotoSection";
 import RSVPSectionDynamic from "@/components/wedding/RSVPSectionDynamic";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
+import SectionDivider from "@/components/wedding/SectionDivider";
 import MusicPlayer from "@/components/wedding/MusicPlayer";
 
 import { connectDB } from "@/lib/db";
@@ -59,12 +60,15 @@ export default async function PreviewPage() {
 
       {/* Section 2: Couple profiles + love story timeline */}
       <CoupleStory settings={setting} />
+      <SectionDivider />
 
       {/* Section 3: Quote + event details + countdown */}
       <TransitionSection settings={setting} />
+      <SectionDivider />
 
       {/* Section 4: Love story with polaroid stack animation */}
       <LoveStoryScrollStack />
+      <SectionDivider />
 
       {/* Section 5: Live Photos gallery */}
       <LivePhotoSection />

@@ -120,7 +120,7 @@ export default function RSVPSectionDynamic({
     <section
       id="rsvp"
       ref={sectionRef}
-      className="relative w-full py-32 px-6 bg-[#52363E] overflow-hidden"
+      className="relative w-full py-16 md:py-24 lg:py-28 px-6 bg-[#52363E] overflow-hidden"
     >
       {/* Background texture */}
       <div
