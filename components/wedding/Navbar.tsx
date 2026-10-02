@@ -42,7 +42,7 @@ export default function Navbar({ hideRsvp = false }: { hideRsvp?: boolean }) {
 
         {/* Nav links — hidden on small mobile */}
         <ul className="hidden sm:flex items-center gap-6">
-          {["Photos", "Story", "FAQ"].map((item) => (
+          {["Photos", "Story"].map((item) => (
             <li key={item}>
               <Link
                 href={`#${item.toLowerCase()}`}
@@ -57,19 +57,19 @@ export default function Navbar({ hideRsvp = false }: { hideRsvp?: boolean }) {
 
         {/* RSVP button */}
         {!hideRsvp && (
-        <Link
-          href="#rsvp"
-          className="
+          <Link
+            href="#rsvp"
+            className="
             shrink-0
             px-5 py-2 rounded-full
             bg-[#52363E] text-[#FBE7EB]
             font-sans text-xs tracking-[0.14em] uppercase
             hover:bg-[#D88C9C] transition-colors duration-300
           "
-          style={{ fontFamily: "var(--font-jost)" }}
-        >
-          RSVP
-        </Link>
+            style={{ fontFamily: "var(--font-jost)" }}
+          >
+            RSVP
+          </Link>
         )}
       </nav>
     </header>
