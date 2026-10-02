@@ -9,7 +9,6 @@ import TransitionSection from "@/components/wedding/TransitionSection";
 import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
 import LivePhotoSection from "@/components/wedding/LivePhotoSection";
 import RSVPSectionDynamic from "@/components/wedding/RSVPSectionDynamic";
-import { WishesLink } from "@/components/wedding/WishesSection";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
 import MusicPlayer from "@/components/wedding/MusicPlayer";
@@ -71,10 +70,7 @@ export default async function PreviewPage() {
       <LivePhotoSection />
 
       {/* Section 6: RSVP form */}
-      <RSVPSectionDynamic code="PREVIEW" guestInfo={sanitizedGuest as any} />
-
-      {/* Section 7: Link to wishes page */}
-      <WishesLink code="preview" />
+      <RSVPSectionDynamic code="preview" guestInfo={sanitizedGuest as any} />
 
       {/* Section 6: Gift / digital transfer */}
       <GiftSection settings={setting} />

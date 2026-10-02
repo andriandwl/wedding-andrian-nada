@@ -9,7 +9,7 @@ import HeroScrollGallery, {
 import TransitionSection from "@/components/wedding/TransitionSection";
 import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
 import LivePhotoSection from "@/components/wedding/LivePhotoSection";
-import { WishesLink } from "@/components/wedding/WishesSection";
+import { WishesLink } from "@/components/wedding/WishesLink";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
 import MusicPlayer from "@/components/wedding/MusicPlayer";

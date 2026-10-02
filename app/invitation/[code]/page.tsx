@@ -11,7 +11,6 @@ import TransitionSection from "@/components/wedding/TransitionSection";
 import LoveStoryScrollStack from "@/components/wedding/LoveStoryScrollStack";
 import LivePhotoSection from "@/components/wedding/LivePhotoSection";
 import RSVPSectionDynamic from "@/components/wedding/RSVPSectionDynamic";
-import { WishesLink } from "@/components/wedding/WishesSection";
 import GiftSection from "@/components/wedding/GiftSection";
 import Footer from "@/components/wedding/Footer";
 import MusicPlayer from "@/components/wedding/MusicPlayer";
@@ -88,9 +87,6 @@ export default async function InvitationPage({ params }: Props) {
 
       {/* Section 6: RSVP form */}
       <RSVPSectionDynamic code={params.code} guestInfo={sanitizedGuest} />
-
-      {/* Section 7: Link to wishes page */}
-      <WishesLink code={params.code} />
 
       {/* Section 6: Gift / digital transfer */}
       <GiftSection settings={setting} />

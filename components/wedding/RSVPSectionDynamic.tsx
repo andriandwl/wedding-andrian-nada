@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 interface GuestInfo {
   _id: string;
@@ -396,6 +397,18 @@ export default function RSVPSectionDynamic({
             </button>
           </form>
         )}
+        {/* Section 7: Link to wishes page */}
+        <Link
+          href={
+            code
+              ? `/invitation/wishes?code=${encodeURIComponent(code)}`
+              : "/invitation/wishes"
+          }
+          className="rounded-full border border-[#FBE7EB]/30 px-8 py-3 mt-6 text-xs tracking-[0.22em] uppercase text-[#FBE7EB] transition-colors hover:bg-[#FBE7EB] hover:text-[#52363E]"
+          style={{ fontFamily: "var(--font-jost)" }}
+        >
+          Lihat Ucapan &amp; Doa →
+        </Link>
       </div>
     </section>
   );

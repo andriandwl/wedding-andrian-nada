@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { connectDB } from "@/lib/db";
 import Guest from "@/models/Guest";
 
@@ -73,21 +72,6 @@ export default async function WishesSection() {
           </ul>
         )}
       </div>
-    </section>
-  );
-}
-
-// Button placed on invitation pages, linking to /invitation/wishes
-export function WishesLink({ code }: { code?: string }) {
-  return (
-    <section className="w-full py-16 px-6 bg-[#FBE7EB] flex justify-center">
-      <Link
-        href={code ? `/invitation/wishes?code=${encodeURIComponent(code)}` : "/invitation/wishes"}
-        className="rounded-full border border-[#52363E]/30 px-8 py-3 text-xs tracking-[0.22em] uppercase text-[#52363E] transition-colors hover:bg-[#52363E] hover:text-[#FBE7EB]"
-        style={{ fontFamily: "var(--font-jost)" }}
-      >
-        Lihat Ucapan &amp; Doa →
-      </Link>
     </section>
   );
 }
