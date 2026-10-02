@@ -145,11 +145,24 @@ export default function TransitionSection({ settings }: { settings?: any }) {
 
   useEffect(() => {
     let ctx: { revert(): void } | null = null;
+    let ro: ResizeObserver | null = null;
     const init = async () => {
       const gsapModule = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       const gsap = gsapModule.default;
       gsap.registerPlugin(ScrollTrigger);
+      // Page height shifts after mount (hero swaps desktop→MobileHero, lazy images load),
+      // leaving every ScrollTrigger start stale → sections stay opacity:0 on screen.
+      // ponytail: one global observer here refreshes all triggers on the page.
+      let lastH = document.body.scrollHeight;
+      ro = new ResizeObserver(() => {
+        const h = document.body.scrollHeight;
+        if (h !== lastH) {
+          lastH = h;
+          ScrollTrigger.refresh();
+        }
+      });
+      ro.observe(document.body);
       ctx = gsap.context(() => {
         gsap.fromTo(
           [quoteRef.current, dateRef.current],
@@ -170,7 +183,10 @@ export default function TransitionSection({ settings }: { settings?: any }) {
       }, sectionRef.current!);
     };
     init();
-    return () => ctx?.revert();
+    return () => {
+      ro?.disconnect();
+      ctx?.revert();
+    };
   }, []);
 
   return (
