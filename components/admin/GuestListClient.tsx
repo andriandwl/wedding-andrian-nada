@@ -180,7 +180,8 @@ export default function GuestListClient() {
       `Terima kasih atas perhatian dan doa baiknya. 🤍\n\n` +
       `Denada Putri & Andrian Dwi Haryanto\n\n` +
       `Wassalamu’alaikum Wr. Wb.`;
-    const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    // wa.me redirect breaks 4-byte emoji (🔗 🤍 → �); api.whatsapp.com keeps them
+    const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
     window.open(waUrl, "_blank");
 
     // Auto-update status ke INVITED jika masih NOT INVITED
