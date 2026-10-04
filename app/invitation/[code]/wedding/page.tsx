@@ -16,7 +16,9 @@ type Props = { params: { code: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await connectDB();
-  const guest: any = await Guest.findOne({ invitationCode: params.code }).lean();
+  const guest: any = await Guest.findOne({
+    invitationCode: params.code,
+  }).lean();
   if (!guest) return { title: "Undangan Tidak Ditemukan" };
   return { title: `Pernikahan Nada & Andrian - Undangan untuk ${guest.name}` };
 }
@@ -55,7 +57,10 @@ export default async function SimpleInvitationPage({ params }: Props) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#2a1a1f]/85 via-[#2a1a1f]/20 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 px-6 pb-16 text-center text-white">
-          <p className="text-[0.65rem] tracking-[0.3em] uppercase opacity-80" style={sans}>
+          <p
+            className="text-[0.65rem] tracking-[0.3em] uppercase opacity-80"
+            style={sans}
+          >
             The Wedding of
           </p>
           <h1 className="mt-2 text-5xl italic font-light" style={serif}>
@@ -63,7 +68,12 @@ export default async function SimpleInvitationPage({ params }: Props) {
           </h1>
           {date && (
             <p className="mt-3 text-sm tracking-widest" style={sans}>
-              {fmt({ weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+              {fmt({
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
             </p>
           )}
           <p className="mt-8 text-xs opacity-80" style={sans}>
@@ -87,7 +97,9 @@ export default async function SimpleInvitationPage({ params }: Props) {
         <p className="mt-1 text-xs text-[#A6808B]" style={sans}>
           Putri dari {s.brideParents}
         </p>
-        <p className="my-6 text-3xl text-[#D88C9C]" style={serif}>&amp;</p>
+        <p className="my-6 text-3xl text-[#D88C9C]" style={serif}>
+          &amp;
+        </p>
         <h2 className="text-3xl" style={serif}>
           {s.groomFullName || "Andrian Dwi Haryanto"}
         </h2>
@@ -99,12 +111,20 @@ export default async function SimpleInvitationPage({ params }: Props) {
       {/* Event */}
       <section className="px-6 pb-16">
         <div className="max-w-xl mx-auto rounded-2xl border border-[#D88C9C]/30 bg-white/50 p-8 text-center">
-          <p className="text-[0.65rem] tracking-[0.3em] uppercase text-[#D88C9C]" style={sans}>
+          <p
+            className="text-[0.65rem] tracking-[0.3em] uppercase text-[#D88C9C]"
+            style={sans}
+          >
             Waktu &amp; Tempat
           </p>
           {date && (
             <p className="mt-4 text-2xl" style={serif}>
-              {fmt({ weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+              {fmt({
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
             </p>
           )}
           <div className="mt-4 space-y-1 text-sm" style={sans}>
@@ -114,7 +134,10 @@ export default async function SimpleInvitationPage({ params }: Props) {
           <p className="mt-6 text-xl" style={serif}>
             {s.venueName}
           </p>
-          <p className="mt-1 text-xs text-[#A6808B] whitespace-pre-line" style={sans}>
+          <p
+            className="mt-1 text-xs text-[#A6808B] whitespace-pre-line"
+            style={sans}
+          >
             {[s.venueAddress, s.venueCity].filter(Boolean).join("\n")}
           </p>
           {s.mapsLink && (
@@ -137,7 +160,7 @@ export default async function SimpleInvitationPage({ params }: Props) {
       />
       <GiftSection settings={JSON.parse(JSON.stringify(s))} />
       <Footer />
-      <MusicPlayer />
+      {/* <MusicPlayer /> */}
     </main>
   );
 }
