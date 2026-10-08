@@ -100,6 +100,13 @@ export default async function InvitationPage({ params }: Props) {
           >
             8 Oktober · Hari Istimewa Sang Mempelai
           </p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/birthday-cake.webp"
+            alt="Kue ulang tahun"
+            loading="lazy"
+            className="mx-auto mt-8 w-full max-w-[260px]"
+          />
           <h2
             className="mt-5"
             style={{
