@@ -74,30 +74,54 @@ export default async function InvitationPage({ params }: Props) {
       {/* Section 1: Full-screen hero → scroll-morphing collage */}
       <HeroScrollGallery guestName={guest.name} settings={setting} />
 
-      {/* Bride's birthday — ponytail: hardcoded to 8 Oct, auto-hides other days */}
-      {new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Jakarta" }).endsWith("-10-08") && (
-        <section className="px-6 py-12 text-center text-[#52363E]">
-          <div className="max-w-xl mx-auto rounded-2xl bg-[#D88C9C]/15 border border-[#D88C9C]/40 p-6">
-            <p className="text-3xl">🎂</p>
-            <h2
-              className="mt-2 text-3xl italic"
-              style={{ fontFamily: "var(--font-cormorant)" }}
-            >
-              Selamat Ulang Tahun, {setting.brideName || "Nada"}!
-            </h2>
-            <p
-              className="mt-3 text-sm leading-relaxed"
-              style={{ fontFamily: "var(--font-jost)" }}
-            >
-              Semoga panjang umur, sehat selalu, dan penuh berkah menyambut hari
-              bahagia yang tinggal sebentar lagi.
-            </p>
-          </div>
-        </section>
-      )}
-
       {/* Section 2: Couple profiles + love story timeline */}
       <CoupleStory settings={setting} />
+
+      {/* Bride's birthday — ponytail: hardcoded to 8 Oct, auto-hides other days */}
+      {new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Jakarta" }).endsWith("-10-08") && (
+        <section
+          className="w-full px-6 pb-20 text-center"
+          style={{ background: "var(--cream)" }}
+        >
+          <SectionDivider />
+          <p
+            className="mt-12"
+            style={{
+              fontFamily: "var(--font-great-vibes)",
+              fontSize: "clamp(1.6rem, 5vw, 2.4rem)",
+              color: "#D88C9C",
+            }}
+          >
+            Happy Birthday
+          </p>
+          <p
+            className="mt-2 text-[0.64rem] tracking-[0.38em] uppercase"
+            style={{ fontFamily: "var(--font-jost)", color: "var(--warm-gray)" }}
+          >
+            8 Oktober · Hari Istimewa Sang Mempelai
+          </p>
+          <h2
+            className="mt-5"
+            style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(2.2rem, 7vw, 3.4rem)",
+              fontWeight: 300,
+              color: "var(--dark-warm)",
+              lineHeight: 1,
+            }}
+          >
+            {setting.brideName || "Nada"}
+          </h2>
+          <p
+            className="mx-auto mt-6 max-w-md text-sm leading-relaxed italic"
+            style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.1rem", color: "var(--dark-warm)" }}
+          >
+            Selamat ulang tahun untuk sang mempelai wanita. Semoga panjang umur,
+            sehat selalu, dan dilimpahi keberkahan, tepat dua hari sebelum
+            melangkah ke hari bahagia.
+          </p>
+        </section>
+      )}
 
       {/* Section 3: Quote + event details + countdown */}
       <TransitionSection settings={setting} />
